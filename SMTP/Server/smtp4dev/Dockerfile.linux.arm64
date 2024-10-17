@@ -1,0 +1,11 @@
+FROM --platform=linux/arm64 mcr.microsoft.com/dotnet/aspnet:8.0.8 AS runtime
+COPY out /app
+VOLUME ["/smtp4dev"]
+WORKDIR /
+ENV XDG_CONFIG_HOME /
+ENV ASPNETCORE_HTTP_PORTS 80
+ENV SERVEROPTIONS__URLS http://*:80
+EXPOSE 80
+EXPOSE 25
+EXPOSE 143
+ENTRYPOINT ["dotnet", "/app/Rnwood.Smtp4dev.dll"]
