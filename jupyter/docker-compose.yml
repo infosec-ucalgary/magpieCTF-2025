@@ -1,0 +1,11 @@
+services:
+  ctf_service:
+    container_name: jupyter
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8888"
+      - "22:22"
+    stdin_open: true
+    tty: true
