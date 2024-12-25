@@ -3,3 +3,4 @@ objs/
 *.o
 *.d
 .gdb_history
+.vscode/
