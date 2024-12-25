@@ -5,7 +5,7 @@ DEBUG_FLAGS := $(FLAGS) -ggdb3 -g
 
 all: stack2
 debug:
-	gcc $(DEBUG_FLAGS) chal.c -o ../solve/stack2 
+	gcc $(DEBUG_FLAGS) chal.c -o stack2
 
 clean:
 	rm stack2
