@@ -1,0 +1,5 @@
+objs/
+*.bin
+*.o
+*.d
+.gdb_history
