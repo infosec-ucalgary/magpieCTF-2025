@@ -3,12 +3,12 @@
 FLAGS		:= -Wl,-z,relro,-z,now -fstack-protector-all
 DEBUG_FLAGS := $(FLAGS) -ggdb3 -g
 
-all: stack2
+all: challenge
 debug:
-	gcc $(DEBUG_FLAGS) chal.c -o stack2
+	gcc $(DEBUG_FLAGS) chal.c -o printf3
 
 clean:
-	rm stack2
+	rm printf3
 
-stack2: chal.c
-	gcc $(FLAGS) chal.c -o stack2
+challenge: chal.c
+	gcc $(FLAGS) chal.c -o printf3
