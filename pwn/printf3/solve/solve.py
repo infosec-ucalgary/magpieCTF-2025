@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
 # $ pwn template --libc libc-2.31.so stack2
-from threading import stack_size
 from pwn import *
 
 # Set up pwntools for the correct architecture
