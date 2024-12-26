@@ -5,10 +5,10 @@ DEBUG_FLAGS := $(FLAGS) -ggdb3 -g
 
 all: challenge
 debug:
-	gcc $(DEBUG_FLAGS) chal.c -o stack3
+	gcc $(DEBUG_FLAGS) chal.c -o BINARY_NAME
 
 clean:
-	rm stack3
+	rm BINARY_NAME
 
 challenge: chal.c
-	gcc $(FLAGS) chal.c -o stack3
+	gcc $(FLAGS) chal.c -o BINARY_NAME

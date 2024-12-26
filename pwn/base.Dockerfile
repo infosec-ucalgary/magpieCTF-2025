@@ -26,4 +26,4 @@ CMD ["bin/nsjail", \
     "-E", "TERM=xterm", \
     "--cwd", "/home/$USERNAME", \
     "--", \
-    "/home/$USERNAME/printf3"]
+    "/home/$USERNAME/BINARY_NAME"]
