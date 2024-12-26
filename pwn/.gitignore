@@ -4,3 +4,6 @@ objs/
 *.d
 .gdb_history
 .vscode/
+*.deb
+*.tar.xz
+
