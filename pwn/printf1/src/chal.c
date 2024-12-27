@@ -31,12 +31,14 @@ int main() {
     // read the flag into the buffer
     read_flag(flag_buffer);
 
-    // -- exploit --
-    printf("Say something: ");
-    fgets(buffer, BUFFER_SIZE - 1, stdin);
-    printf("You said: ");
-    printf(buffer);
-    puts("Doesn't seem very interesting.");
+    while (true) {
+        // -- exploit --
+        printf("Say something: ");
+        fgets(buffer, BUFFER_SIZE - 1, stdin);
+        printf("You said: ");
+        printf(buffer);
+        puts("Doesn't seem very interesting.");
+    }
 
     return 0;
 }
