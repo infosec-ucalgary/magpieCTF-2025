@@ -41,6 +41,7 @@ int main() {
     // stack vars
     char buffer[BUFFER_SIZE];
     char *flag_ptr = flag_buffer;
+    char *flag_ptr_ptr = flag_ptr;
 
     // main loop
     while (true) {
@@ -54,13 +55,6 @@ int main() {
         fscanf(stdin, "%d", &choice);
         getchar(); // this consumes the space, or else this program becomes
                    // impossible
-
-        /*
-        Originally, there was no switch statement here and the two cases were
-        merged together, the reason why this exists is because there was no
-        possible exploit, because you simply couldn't change the flag_ptr
-        because %n writes (at most) a short
-        */
 
         switch (choice) {
         case 1:
@@ -81,4 +75,6 @@ int main() {
             exit(1);
         }
     }
+
+    return 0;
 }
