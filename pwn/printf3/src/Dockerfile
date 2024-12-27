@@ -1,16 +1,20 @@
 FROM nsjailcontainer
 
-# setup
+# setup OS
 RUN apt-get update
+RUN apt-get install -y gcc make
+
+# setup challenge
 ARG USERNAME=magpie
 RUN useradd -m $USERNAME
 RUN chmod a-w /home/$USERNAME
 RUN chmod o+x /home/$USERNAME
 
 # building the challenge in the container
+# the || true is for steps that might fail
 WORKDIR /home/$USERNAME
 COPY . ./
-RUN make clean
+RUN make clean || true
 RUN make
 RUN rm Makefile *.c
 

@@ -47,7 +47,7 @@ int main() {
         int choice = -1;
 
         // asking for a choice
-        puts("-- stack2 --");
+        puts("-- printf3 --");
         puts("1) say something");
         puts("2) read the flag");
         printf("> ");
