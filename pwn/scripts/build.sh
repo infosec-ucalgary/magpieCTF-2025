@@ -1,5 +1,5 @@
 #!/bin/sh
-source ./constants.sh
+source ./scripts/constants.sh
 
 CWD=$(pwd)
 
