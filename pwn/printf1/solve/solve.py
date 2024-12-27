@@ -86,4 +86,3 @@ for i in range(6, 9):
 # reassemble the flag
 flag = "".join(map(lambda x: bytes.fromhex(x).decode('utf-8')[::-1], flag_parts))
 io.success(f"Flag is: {flag}.")
-
