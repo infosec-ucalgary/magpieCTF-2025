@@ -26,7 +26,7 @@ void read_flag(char *buffer) {
 void vuln() {
     // stack vars
     char buffer[BUFFER_SIZE];
-    unsigned long *loc = NULL;
+    unsigned long long loc = 0;
 
     puts("Now the flag isn't on the stack! Good luck dealing with ASLR!");
 
@@ -37,9 +37,9 @@ void vuln() {
     printf(buffer);
 
     printf("Where do you want to read from? ");
-    fscanf(stdin, "%ld", loc);
+    fscanf(stdin, "%lld", &loc);
     getchar();
-    memcpy(buffer, loc, BUFFER_SIZE - 1);
+    memcpy(buffer, (void *)loc, BUFFER_SIZE - 1);
     buffer[BUFFER_SIZE - 1] = 0;
 
     printf("I bet this isn't very interesting: %s\n", buffer);
