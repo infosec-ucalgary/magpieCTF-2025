@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template --host localhost --port 4001 --libc ./libc.so.6 printf1/src/printf1
+# $ pwn template --host localhost --port 4001 --libc ../../libc.so.6 printf1/src/printf1
 from pwn import *
 
 # Set up pwntools for the correct architecture
@@ -21,14 +21,14 @@ port = int(args.PORT or 4001)
 if args.LOCAL_LIBC:
     libc = exe.libc
 elif args.LOCAL:
-    library_path = libcdb.download_libraries('./libc.so.6')
+    library_path = libcdb.download_libraries('../../libc.so.6')
     if library_path:
         exe = context.binary = ELF.patch_custom_libraries(exe.path, library_path)
         libc = exe.libc
     else:
-        libc = ELF('./libc.so.6')
+        libc = ELF('../../libc.so.6')
 else:
-    libc = ELF('./libc.so.6')
+    libc = ELF('../../libc.so.6')
 
 def start_local(argv=[], *a, **kw):
     '''Execute the target binary locally'''
