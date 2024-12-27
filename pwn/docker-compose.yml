@@ -35,6 +35,33 @@ services:
       - 4004:6201
     networks:
       - magpiesctf2025
+  stack1:
+    privileged: true
+    container_name: "stack1"
+    build: ./stack1/src/
+    restart: unless-stopped
+    ports:
+      - 4005:6201
+    networks:
+      - magpiesctf2025
+  stack2:
+    privileged: true
+    container_name: "stack2"
+    build: ./stack2/src/
+    restart: unless-stopped
+    ports:
+      - 4006:6201
+    networks:
+      - magpiesctf2025
+  stack3:
+    privileged: true
+    container_name: "stack3"
+    build: ./stack3/src/
+    restart: unless-stopped
+    ports:
+      - 4007:6201
+    networks:
+      - magpiesctf2025
 
 networks:
   magpiesctf2025:
