@@ -41,7 +41,6 @@ int main() {
     // stack vars
     char buffer[BUFFER_SIZE];
     char *flag_ptr = flag_buffer;
-    char *flag_ptr_ptr = flag_ptr;
 
     // main loop
     while (true) {
