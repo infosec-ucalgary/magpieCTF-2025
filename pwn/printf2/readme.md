@@ -1,5 +1,7 @@
 # printf2
 
+>Difficulty: intermediate
+
 The flag is located withtin the global `.data` section of the program, the hacker has to defeat ASLR and have the program copy the contents of `flag_buffer` into `buffer`.
 
 The intended exploit is as follows:

@@ -1,5 +1,7 @@
 # printf3
 
+>Difficulty: hard
+
 The flag is again located in the `.data` section, but this time there is
 no helping `memcpy` function. The hacker must alter `flag_ptr` using either:
 
