@@ -5,6 +5,10 @@ source ./.scripts/constants.sh
 # Dockerfiles, and .gitignores
 
 for chal in $CHALS; do
+    if [[ $chal != *"$1"* ]]; then
+        continue
+    fi
+
     # updating the docker file
     cp -uv ./base.Dockerfile "$chal/src/Dockerfile"
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Dockerfile"
