@@ -36,7 +36,7 @@ int main() {
     fgets(buffer, BUFFER_SIZE - 1, stdin);
     printf("You said: ");
     printf(buffer);
-    printf("Doesn't seem very interesting.");
+    puts("Doesn't seem very interesting.");
 
     return 0;
 }
