@@ -1,0 +1,41 @@
+services:
+  printf1:
+    privileged: true
+    container_name: "printf1"
+    build: ./printf1/src/
+    restart: unless-stopped
+    ports:
+      - 4001:6201
+    networks:
+      - magpiesctf2025
+  printf2:
+    privileged: true
+    container_name: "printf2"
+    build: ./printf2/src/
+    restart: unless-stopped
+    ports:
+      - 4002:6201
+    networks:
+      - magpiesctf2025
+  printf3:
+    privileged: true
+    container_name: "printf3"
+    build: ./printf3/src/
+    restart: unless-stopped
+    ports:
+      - 4003:6201
+    networks:
+      - magpiesctf2025
+  printf4:
+    privileged: true
+    container_name: "printf4"
+    build: ./printf4/src/
+    restart: unless-stopped
+    ports:
+      - 4004:6201
+    networks:
+      - magpiesctf2025
+
+networks:
+  magpiesctf2025:
+    driver: bridge
