@@ -83,11 +83,16 @@ void admin_login() {
         exit(1);
     }
 
+    char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
+    if (buffer == NULL) {
+        puts("Failed to allocate memory for buffer, cannot proceed.");
+        exit(-2);
+    }
+
     // read flag into buffer
-    printf("Only you can be trusted with this... ");
-    fgets(stdout, FLAG_SIZE - 1, fd);
+    fgets(buffer, FLAG_SIZE - 1, fd);
     fclose(fd);
-    puts("");
+    printf("Only you can be trusted with this... %s\n", buffer);
 }
 
 int main(int argc, char **argv) {
