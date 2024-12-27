@@ -9,18 +9,18 @@ help () {
 
 case "$1" in
     build)
-        ./scripts/build.sh
+        ./.scripts/build.sh
         ;;
     regenerate)
-        ./scripts/regenerate.sh
+        ./.scripts/regenerate.sh
         ;;
     prune)
-        ./scripts/prune.sh
+        ./.scripts/prune.sh
         ;;
     reset)
-        ./scripts/prune.sh
-        ./scripts/regenerate.sh
-        ./scripts/build.sh
+        ./.scripts/prune.sh
+        ./.scripts/regenerate.sh
+        ./.scripts/build.sh
         ;;
     *)
         help
