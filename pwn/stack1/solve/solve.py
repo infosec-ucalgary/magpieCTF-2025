@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template --host localhost --port 4005 --libc ../../libc.so.6 stack1/src/stack1
+# $ pwn template --host localhost --port 4005 --libc ../../libc.so.6 ../src/stack1
 from pwn import *
 
 # Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or 'stack1/src/stack1')
+exe = context.binary = ELF(args.EXE or '../src/stack1')
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
