@@ -5,7 +5,8 @@ DEBUG_FLAGS := $(FLAGS) -ggdb3 -g
 
 all: challenge
 debug:
-	gcc $(DEBUG_FLAGS) chal.c -o BINARY_NAME
+	gcc $(DEBUG_FLAGS) chal.c -o BINARY_NAME \
+	-Wl,-rpath="$(PWD)/../../" -Wl,--dynamic-linker="$(PWD)/../../ld-linux-x86-64.so.2"
 
 clean:
 	rm BINARY_NAME
