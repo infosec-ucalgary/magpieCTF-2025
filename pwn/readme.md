@@ -6,3 +6,7 @@ The challenge series `printf` are (obviously) challenges whose main exploit uses
 
 The challenge series `stack` are ret2win challenges i.e., the hacker is supposed to use some form of exploit
 to redirect execution to some `win` function.
+
+## Sources
+
+- https://gist.github.com/jrelo/f5c976fdc602688a0fd40288fde6d886
