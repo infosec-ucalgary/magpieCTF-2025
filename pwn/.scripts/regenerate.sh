@@ -10,11 +10,9 @@ for chal in $CHALS; do
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Dockerfile"
 
     # updating the makefile
-    if [[ $chal != *"stack"* ]]; then
-        cp -uv ./base.Makefile "$chal/src/Makefile"
-        sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Makefile"
-    fi
-    echo "$chal" > "$chal/src/.gitignore"
+    cp -uv ./base.Makefile "$chal/src/Makefile"
+    sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Makefile"
+    echo "$chal" >"$chal/src/.gitignore"
 
     # building challenges in debug
     cd "$chal/src"
