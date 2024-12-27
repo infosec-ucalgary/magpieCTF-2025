@@ -55,13 +55,6 @@ int main() {
         getchar(); // this consumes the space, or else this program becomes
                    // impossible
 
-        /*
-        Originally, there was no switch statement here and the two cases were
-        merged together, the reason why this exists is because there was no
-        possible exploit, because you simply couldn't change the flag_ptr
-        because %n writes (at most) a short
-        */
-
         switch (choice) {
         case 1:
             // exploit goes here
