@@ -1,6 +1,6 @@
+include ./flags.mk
 .PHONY: all
 
-FLAGS		:= -Wl,-z,relro,-z,now -fstack-protector-all
 DEBUG_FLAGS := $(FLAGS) -ggdb3 -g
 
 all: challenge
