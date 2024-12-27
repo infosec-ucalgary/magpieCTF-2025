@@ -6,8 +6,8 @@ source ./constants.sh
 
 for chal in $CHALS; do
     cp -uv ./base.Dockerfile "$chal/src/Dockerfile"
-    cp -uv ./base.Makefile "$chal/src/Makefile"
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Makefile"
-    sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Dockerfile"
+    # cp -uv ./base.Makefile "$chal/src/Makefile"
+    #sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Dockerfile"
     echo "$chal" > "$chal/src/.gitignore"
 done
