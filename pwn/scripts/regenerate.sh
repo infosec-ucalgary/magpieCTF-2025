@@ -1,9 +1,8 @@
 #!/bin/sh
+source ./constants.sh
 
 # This automagically updates & configures the challenges' Makefiles.
 # Dockerfiles, and .gitignores
-
-CHALS=$(echo printf{1..4} stack{1..3})
 
 for chal in $CHALS; do
     cp -uv ./base.Dockerfile "$chal/src/Dockerfile"
