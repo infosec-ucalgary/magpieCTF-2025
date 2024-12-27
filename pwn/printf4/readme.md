@@ -1,5 +1,7 @@
 # printf4
 
+>Difficulty: expert
+
 This is going to be a ropchain using printf.
 
 >Originally, there was no switch statement here and the two cases were
