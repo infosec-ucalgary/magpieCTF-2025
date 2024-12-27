@@ -8,3 +8,7 @@ The intended exploit is as follows:
 1. use this leak to calculate the address of `flag_buffer`, defeating ASLR
 1. input the address of `flag_buffer` into the program, which will copy the contents of `flag_buffer` into `buffer`
 1. the flag will be printed out to the screen
+
+## Handouts
+
+- program
