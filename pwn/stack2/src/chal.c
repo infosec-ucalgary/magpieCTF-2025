@@ -129,12 +129,12 @@ int main(int argc, char **argv) {
             change_password(&user);
             break;
         case 3: // exit
-            exit(0);
-            break;
+            goto LOOP_EXIT; // terrible goto statement
         default:
             break;
         }
     }
 
+LOOP_EXIT:
     return 0;
 }
