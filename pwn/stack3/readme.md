@@ -2,7 +2,14 @@
 
 >Difficulty: intermediate
 
-This is similar but quite different to the other stack challenges. This time there is ASLR and stack canaries and the exploit is *relatively* hidden.
+This is similar but quite different to the other stack challenges.
+This time there is ASLR and stack canaries and the exploit is *relatively* hidden.
+
+>The reason why this program is vulnerable to a ret2win or ret2libc is because the user input is combined with the format string
+>before the formatting by `printf` happens. Therefore, if any user input contains format strings, they will get evaluated
+>when all the other *intentional* format characters do as well.
+>
+>Some hackers might miss this, so it's a good chance to test their logic and ability to figure out what code is doing.
 
 The intended exploit is as follows:
 
