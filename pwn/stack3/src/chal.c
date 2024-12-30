@@ -116,8 +116,13 @@ int login(char *__username, char *__password) {
              "organizers.");
         exit(-2);
     }
+
+    // this function isn't vulnerable, because if __username or __password have
+    // format characters, they won't get evaluated. Unlike the call in
+    // `log_entry`
     snprintf(message, LEN_POST, "Attempted login, username %s, password %s.",
              __username, __password);
+
     log_entry(message);
     free(message);
 
