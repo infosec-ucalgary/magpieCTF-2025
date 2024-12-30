@@ -82,7 +82,7 @@ void win() {
         exit(1);
     }
 
-    char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
+    char *buffer = malloc(sizeof(char) * FLAG_SIZE);
     if (buffer == NULL) {
         puts("Failed to allocate memory for buffer, cannot proceed.");
         exit(-2);
