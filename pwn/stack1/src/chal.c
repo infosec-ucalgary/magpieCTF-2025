@@ -6,7 +6,6 @@
 #define FLAG_SIZE 128
 #define BUFFER_SIZE 0x100
 
-#define USERS 8
 #define LENGTH 16
 #define DEFAULT_USERNAME "Christina"
 #define DEFAULT_PASSWORD "Crypto"
@@ -75,7 +74,7 @@ void change_password() {
     free(buffer);
 }
 
-void admin_login() {
+void win() {
     // open the file
     FILE *fd = fopen(FLAG, "r");
     if (fd == 0) {
@@ -136,9 +135,8 @@ int main(int argc, char **argv) {
         case 3: // admin sign in
             if (user_g->admin == 0) {
                 puts("You are not authorized to view this.");
-                continue;
             } else {
-                admin_login();
+                win();
             }
             break;
         case 4: // exit
