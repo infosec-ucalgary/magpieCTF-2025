@@ -72,7 +72,7 @@ void change_password(user_t *cmp) {
     free(buffer);
 }
 
-void admin_login() {
+void win() {
     // open the file
     FILE *fd = fopen(FLAG, "r");
     if (fd == 0) {
