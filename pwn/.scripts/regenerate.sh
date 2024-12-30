@@ -44,7 +44,7 @@ for chal in $CHALS; do
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Dockerfile"
 
     # updating the makefile
-    cp -uv ./base.Makefile "$chal/src/Makefile"
+    cp -uv ./base.mk "$chal/src/Makefile"
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Makefile"
     echo "$chal" >"$chal/src/.gitignore"
 
