@@ -134,7 +134,25 @@ int login(char *__username, char *__password) {
     return 1;
 }
 
-void win() {}
+void win() {
+    // open the file
+    FILE *fd = fopen(FLAG, "r");
+    if (fd == 0) {
+        puts("Flag cannot be found, contact the CTF organizers.");
+        exit(1);
+    }
+
+    char *buffer = malloc(sizeof(char) * FLAG_SIZE);
+    if (buffer == NULL) {
+        puts("Failed to allocate memory for buffer, cannot proceed.");
+        exit(-2);
+    }
+
+    // read flag into buffer
+    fgets(buffer, FLAG_SIZE - 1, fd);
+    fclose(fd);
+    printf("Only you can be trusted with this... %s\n", buffer);
+}
 
 int main(int argc, char **argv) {
     // setup io
