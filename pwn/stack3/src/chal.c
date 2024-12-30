@@ -97,9 +97,9 @@ void menu(int __auth) {
 int login(char *__username, char *__password) {
     // getting the username and password
     printf("Username: ");
-    fgets(__username, LEN_USERNAME, stdin);
+    fgets(__username, LEN_POST, stdin); // intentional vulnerability here, the read size is waaay bigger than the buffer size
     printf("Password: ");
-    fgets(__password, LEN_PASSWORD, stdin);
+    fgets(__password, LEN_POST, stdin); // intentional vulnerability here, the read size is waaay bigger than the buffer size
 
     // sanitizing for proper output
     __username[strlen(__username) - 1] = '\0';
