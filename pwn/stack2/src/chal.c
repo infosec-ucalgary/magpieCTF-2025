@@ -6,7 +6,6 @@
 #define FLAG_SIZE 128
 #define BUFFER_SIZE 0x100
 
-#define USERS 8
 #define LENGTH 16
 #define DEFAULT_USERNAME "Christina"
 #define DEFAULT_PASSWORD "Crypto"
