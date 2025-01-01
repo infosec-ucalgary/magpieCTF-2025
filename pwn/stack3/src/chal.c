@@ -105,7 +105,7 @@ int login(char *__username, char *__password) {
           stdin); // intentional vulnerability here, the read size is waaay
                   // bigger than the buffer size
 
-    // sanitizing for proper output
+    // this makes the output nicer (this shouldn't affect solvability)
     __username[strlen(__username) - 1] = '\0';
     __password[strlen(__password) - 1] = '\0';
 
