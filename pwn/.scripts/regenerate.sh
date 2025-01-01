@@ -55,6 +55,16 @@ for chal in $CHALS; do
     cd - 1>&2 2>/dev/null
 done
 
+# for stack1
+check_canary stack1
+if [[ $? -ne 0 ]]; then
+    echo "stack1 has a canary, this is incorrect."
+fi
+check_pie stack1
+if [[ $? -ne 0 ]]; then
+    echo "stack1 has pie, this is incorrect."
+fi
+
 # for stack2
 check_canary stack2
 if [[ $? -ne 0 ]]; then
@@ -62,5 +72,15 @@ if [[ $? -ne 0 ]]; then
 fi
 check_pie stack2
 if [[ $? -ne 0 ]]; then
-    echo "stack2 has a canary, this is incorrect."
+    echo "stack2 has pie, this is incorrect."
+fi
+
+# for stack3
+check_canary stack3
+if [[ $? -ne 1 ]]; then
+    echo "stack3 doesn't have a canary, this is incorrect."
+fi
+check_pie stack3
+if [[ $? -ne 1 ]]; then
+    echo "stack3 doesn't have pie, this is incorrect."
 fi
