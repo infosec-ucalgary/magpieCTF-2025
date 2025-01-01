@@ -29,6 +29,14 @@ void log_entry(char *__input) {
         return;
     }
 
+    // malloc a chunk for logging
+    logs_g[num_logs_g] = malloc(sizeof(char) * LEN_LOGS * MAX_LOGS);
+    if (logs_g[num_logs_g] == NULL) {
+        puts("Failed to allocate memory for logs_g, cannot proceed.");
+        exit(-1);
+    }
+    num_logs_g += 1;
+
     // log is formatted:
     // 1. hostname
     // 2. time
@@ -168,15 +176,6 @@ int main(int argc, char **argv) {
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IONBF, 0);
 
-    // setup logs
-    for (int i = 0; i < MAX_LOGS; ++i) {
-        logs_g[i] = malloc(sizeof(char) * LEN_LOGS * MAX_LOGS);
-        if (logs_g[i] == NULL) {
-            puts("Failed to allocate memory for logs_g, cannot proceed.");
-            exit(-1);
-        }
-    }
-
     // setup username & password
     int auth = 0;
     char username[LEN_USERNAME]; // vulnerable! ret2win here
@@ -225,7 +224,8 @@ int main(int argc, char **argv) {
 LEAVE_MAIN:
     // cleanup
     for (int i = 0; i < MAX_LOGS; ++i) {
-        free(logs_g[i]);
+        if (logs_g[i] != NULL)
+            free(logs_g[i]);
     }
 
     return 0;
