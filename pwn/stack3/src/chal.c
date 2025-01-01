@@ -194,22 +194,32 @@ int main(int argc, char **argv) {
         getchar();
 
         // perform choice
+        // using goto statements because I wanna fuck with the participants
         switch (option) {
         case 1:
-            auth = login(username, password);
-            break;
+            goto CASE_1;
         case 2:
-            if (auth == 0) {
-                puts("Unauthorized.");
-            } else {
-                view_logs();
-            }
-            break;
+            goto CASE_2;
         case 3:
-            goto LEAVE_MAIN;
+            goto CASE_3;
         default:
             break;
         }
+
+    CASE_1:
+        auth = login(username, password);
+        goto LOOP_END;
+    CASE_2:
+        if (auth == 0) {
+            puts("Unauthorized.");
+        } else {
+            view_logs();
+        }
+        goto LOOP_END;
+    CASE_3:
+        goto LEAVE_MAIN;
+    LOOP_END:
+        continue;
     }
 
 LEAVE_MAIN:
