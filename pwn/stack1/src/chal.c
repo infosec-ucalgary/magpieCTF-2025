@@ -6,33 +6,36 @@
 #define FLAG_SIZE 128
 #define BUFFER_SIZE 0x100
 
-#define LENGTH 16
-#define DEFAULT_USERNAME "Christina"
+#define FIELD_LENGTH 16
+#define DEFAULT_USERNAME "Cristina"
 #define DEFAULT_PASSWORD "Crypto"
 
 typedef struct _user {
-    char username[LENGTH];
-    char password[LENGTH];
+    char username[FIELD_LENGTH];
+    char password[FIELD_LENGTH];
     int admin;
 } user_t;
 
-user_t *user_g = NULL;
+// struct used to overflow
+user_t user_g = {
+    .username = DEFAULT_USERNAME, .password = DEFAULT_PASSWORD, .admin = 0};
 
-int login() {
-    char local_user[LENGTH];
-    char local_pass[LENGTH];
+int login(user_t *__user) {
+    // buffers
+    char local_user[FIELD_LENGTH];
+    char local_pass[FIELD_LENGTH];
 
     printf("Username: ");
-    fgets(local_user, LENGTH - 1, stdin);
+    fgets(local_user, FIELD_LENGTH - 1, stdin);
 
     printf("Password: ");
-    fgets(local_pass, LENGTH - 1, stdin);
+    fgets(local_pass, FIELD_LENGTH - 1, stdin);
 
-    // compare the two
-    if (strcmp(local_user, user_g->username) != 0) {
+    // using strncmp so that it doesn't compare the newline that's in local_xxxx
+    if (strncmp(local_user, __user->username, strlen(__user->username)) != 0) {
         return 0;
     }
-    if (strcmp(local_pass, user_g->password) != 0) {
+    if (strncmp(local_pass, __user->password, strlen(__user->password)) != 0) {
         return 0;
     }
 
@@ -48,7 +51,7 @@ void menu() {
     printf("> ");
 }
 
-void change_username() {
+void change_username(user_t *__user) {
     char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
     if (buffer == NULL) {
         puts("Failed to allocate memory for buffer, cannot proceed.");
@@ -57,11 +60,11 @@ void change_username() {
 
     printf("Enter new username: ");
     fgets(buffer, BUFFER_SIZE - 1, stdin);
-    strcpy(user_g->username, buffer); // vulnerable!
+    strcpy(__user->username, buffer); // vulnerable!
     free(buffer);
 }
 
-void change_password() {
+void change_password(user_t *__user) {
     char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
     if (buffer == NULL) {
         puts("Failed to allocate memory for buffer, cannot proceed.");
@@ -70,14 +73,14 @@ void change_password() {
 
     printf("Enter new password: ");
     fgets(buffer, BUFFER_SIZE - 1, stdin);
-    strcpy(user_g->password, buffer); // vulnerable!
+    strcpy(__user->password, buffer); // vulnerable!
     free(buffer);
 }
 
 void win() {
     // open the file
     FILE *fd = fopen(FLAG, "r");
-    if (fd == 0) {
+    if (fd < 0) {
         puts("Flag cannot be found, contact the CTF organizers.");
         exit(1);
     }
@@ -92,6 +95,7 @@ void win() {
     fgets(buffer, FLAG_SIZE - 1, fd);
     fclose(fd);
     printf("Only you can be trusted with this... %s\n", buffer);
+    exit(0);
 }
 
 int main(int argc, char **argv) {
@@ -99,17 +103,8 @@ int main(int argc, char **argv) {
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IONBF, 0);
 
-    // setup user
-    user_g = malloc(sizeof(user_t));
-    if (user_g == NULL) {
-        puts("Failed to allocate memory for user_g, cannot proceed.");
-        exit(-1);
-    }
-    strncpy(user_g->username, DEFAULT_USERNAME, LENGTH - 1);
-    strncpy(user_g->password, DEFAULT_PASSWORD, LENGTH - 1);
-
     // login
-    if (!login()) {
+    if (!login(&user_g)) {
         puts("Intruder!");
         exit(1);
     }
@@ -123,17 +118,18 @@ int main(int argc, char **argv) {
 
         // get choice
         fscanf(stdin, "%d", &option);
+        getchar();
 
         // perform choice
         switch (option) {
         case 1: // change username
-            change_username();
+            change_username(&user_g);
             break;
         case 2: // change password
-            change_password();
+            change_password(&user_g);
             break;
         case 3: // admin sign in
-            if (user_g->admin == 0) {
+            if (user_g.admin == 0) {
                 puts("You are not authorized to view this.");
             } else {
                 win();
