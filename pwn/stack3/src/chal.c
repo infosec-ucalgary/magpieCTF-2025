@@ -35,7 +35,6 @@ void log_entry(char *__input) {
         puts("Failed to allocate memory for logs_g, cannot proceed.");
         exit(-1);
     }
-    num_logs_g += 1;
 
     // log is formatted:
     // 1. hostname
@@ -77,7 +76,9 @@ void log_entry(char *__input) {
 
     // use snprintf to format everything, unsafe!
     // unsafe due to user input potentially having format characters
-    snprintf(logs_g[num_logs_g++], LEN_LOGS, post, hostname, raw_time);
+
+    // incrementing the log count
+    num_logs_g += 1;
 
     // cleanup
     free(hostname);
