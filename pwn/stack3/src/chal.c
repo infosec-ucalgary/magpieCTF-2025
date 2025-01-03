@@ -40,7 +40,7 @@ void log_entry(char *__input) {
     // 1. hostname
     // 2. time
     // 3. user input << unsafe!
-    char pre_format[] = "%s @ %s: ";
+    char pre_format[] = "[%s @ %s]: ";
 
     // this function is complicated by design, an attempt to obscure the exploit
     char *hostname = malloc(sizeof(char) * LEN_HOSTNAME);
@@ -66,16 +66,19 @@ void log_entry(char *__input) {
     hostname[LEN_HOSTNAME - 1] = '\0';
 
     // format time
-    time_t rawtime;
-    time(&rawtime);
-    strftime(raw_time, LEN_TIME, "%x - %I:%M%p", localtime(&rawtime));
+    time_t time_struct;
+    time(&time_struct);
+    strftime(raw_time, LEN_TIME, "%x - %I:%M%p", localtime(&time_struct));
+    raw_time[LEN_TIME - 1] = '\0';
 
     // combine format string and user input together, unsafe!
     strncpy(post, pre_format, LEN_POST);
     strncat(post, __input, LEN_POST - strlen(post));
+    post[LEN_POST - 1] = '\0';
 
     // use snprintf to format everything, unsafe!
     // unsafe due to user input potentially having format characters
+    snprintf(logs_g[num_logs_g], LEN_LOGS, post, hostname, raw_time);
 
     // incrementing the log count
     num_logs_g += 1;
