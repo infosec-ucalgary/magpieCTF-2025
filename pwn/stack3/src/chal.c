@@ -182,8 +182,8 @@ int main(int argc, char **argv) {
 
     // setup username & password
     int auth = 0;
-    char username[LEN_USERNAME]; // vulnerable! ret2win here
-    char password[LEN_PASSWORD]; // vulnerable! ret2win here
+    char username[LEN_USERNAME]; // vulnerable! ret2win/libc here
+    char password[LEN_PASSWORD]; // vulnerable! ret2win/libc here
 
     // main loop
     while (1) {
