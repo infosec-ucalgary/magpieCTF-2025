@@ -1,21 +1,18 @@
 # stack2
 
->Difficulty: easy
+>Difficulty: medium
 
-Similar to `stack1`, but this time the `user_g` variable is now on the stack. What the hacker is *supposed*
-to do is; abuse `strcpy` to overflow the stack and overwrite the return address of `main` to `admin_login`.
+Backstory:
 
-The intended exploit is as follows:
+something.
 
-1. decompile the program to obtain the username and password
-1. change either the username or password, overflowing the struct to overwrite the return address of `main`
-1. exit the loop
-1. obtain the flag
+## Intended Solve
 
-This program **must not have** PIE nor stack canaries.
+The `win` function has some stack vars which the hacker can't possibly get right, therefore, they
+have to jump inside of the function with a valid, but fake `rbp` in order for the flag to be read correctly.
 
->The hacker could possibly ret2libc using this method, we might want to provide a flag worth additional
->points for this.
+Additionally, there is also a ret2libc. Instead of using `puts` to leak the addresses of functions in
+the `got`, they will use `printf`.
 
 ## Handouts
 
