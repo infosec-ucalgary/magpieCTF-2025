@@ -4,51 +4,73 @@
 
 #define FLAG "flag.txt"
 #define FLAG_SIZE 128
-#define BUFFER_SIZE 0x100
+#define BUFFER_SIZE 0x200
 
-#define FIELD_LENGTH 16
-#define DEFAULT_USERNAME "Cristina"
-#define DEFAULT_PASSWORD "Crypto"
+#define ERR_CHALLENGE_FAILURE 2
+#define ERR_NO_MALLOC 3
+#define ERR_OTHER 4
+
+#define WIN_USER "cristina33"
+#define WIN_CODE "01843101"
+
+#define FIELD_LENGTH 32
+#define NUM_USERS 4
 
 typedef struct _user {
     char username[FIELD_LENGTH];
-    char password[FIELD_LENGTH];
-    int admin;
+    char code[FIELD_LENGTH];
 } user_t;
 
-// struct used to overflow
-user_t user_g = {
-    .username = DEFAULT_USERNAME, .password = DEFAULT_PASSWORD, .admin = 0};
-
-int login(user_t *__user) {
-    // buffers
-    char local_user[FIELD_LENGTH];
-    char local_pass[FIELD_LENGTH];
-
-    printf("Username: ");
-    fgets(local_user, FIELD_LENGTH - 1, stdin);
-
-    printf("Password: ");
-    fgets(local_pass, FIELD_LENGTH - 1, stdin);
-
-    // using strncmp so that it doesn't compare the newline that's in local_xxxx
-    if (strncmp(local_user, __user->username, strlen(__user->username)) != 0) {
-        return 0;
-    }
-    if (strncmp(local_pass, __user->password, strlen(__user->password)) != 0) {
-        return 0;
-    }
-
-    return 1;
-}
+user_t user_table_g[NUM_USERS] = {
+    {.username = "hoover95", .code = "7123308"},
+    {.username = "runner86", .code = "7299126"},
+    {.username = "kaylined", .code = "5381272"},
+    {.username = "lenscroft12", .code = "7299126"},
+};
 
 void menu() {
     puts("-- NYPD Terminal v1 --");
     puts("1. Change username");
-    puts("2. Change password");
-    puts("3. Admin login");
-    puts("4. Exit");
+    puts("2. Admin login");
+    puts("3. Exit");
     printf("> ");
+}
+
+// this function makes ret2libc possible
+void gift() {
+    asm("pop rdi");
+    asm("ret");
+}
+
+int login(user_t *__user) {
+    // buffers
+    char local_user[FIELD_LENGTH];
+    char local_code[FIELD_LENGTH];
+
+    printf("Username: ");
+    fgets(local_user, FIELD_LENGTH - 1, stdin);
+
+    printf("Enter security code: ");
+    fgets(local_code, FIELD_LENGTH - 1, stdin);
+
+    // looking thru all the users to find a match
+    for (int i = 0; i < NUM_USERS; i++) {
+        // using strncmp & strlen to not include the \n that fgets includes
+        if (strncmp(local_user, user_table_g[i].username,
+                    strlen(user_table_g[i].username)) != 0) {
+            continue;
+        }
+        if (strncmp(local_code, user_table_g[i].code,
+                    strlen(user_table_g[i].code)) != 0) {
+            continue;
+        }
+
+        // the information was correct, copying the data onto the stack
+        memcpy(__user, &user_table_g[i], sizeof(user_t));
+    }
+
+    // the hacker didn't input a valid user
+    return NULL;
 }
 
 void change_username(user_t *__user) {
@@ -64,37 +86,36 @@ void change_username(user_t *__user) {
     free(buffer);
 }
 
-void change_password(user_t *__user) {
-    char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
-    if (buffer == NULL) {
-        puts("Failed to allocate memory for buffer, cannot proceed.");
-        exit(-2);
+void win(user_t __user) {
+    // check information
+    if (strcmp(__user.username, WIN_USER) != 0) {
+        puts("Intruder!");
+        exit(ERR_CHALLENGE_FAILURE);
+    }
+    if (strcmp(__user.code, WIN_CODE) != 0) {
+        puts("Intruder!");
+        exit(ERR_CHALLENGE_FAILURE);
     }
 
-    printf("Enter new password: ");
-    fgets(buffer, BUFFER_SIZE - 1, stdin);
-    strcpy(__user->password, buffer); // vulnerable!
-    free(buffer);
-}
-
-void win() {
     // open the file
     FILE *fd = fopen(FLAG, "r");
     if (fd < 0) {
         puts("Flag cannot be found, contact the CTF organizers.");
-        exit(1);
+        exit(ERR_OTHER);
     }
 
+    // malloc memory for the flag
     char *buffer = malloc(sizeof(char) * FLAG_SIZE);
     if (buffer == NULL) {
         puts("Failed to allocate memory for buffer, cannot proceed.");
-        exit(-2);
+        exit(ERR_NO_MALLOC);
     }
 
     // read flag into buffer
     fgets(buffer, FLAG_SIZE - 1, fd);
     fclose(fd);
     printf("Only you can be trusted with this... %s\n", buffer);
+    free(buffer);
     exit(0);
 }
 
@@ -103,8 +124,11 @@ int main(int argc, char **argv) {
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IONBF, 0);
 
+    // user struct on the stack
+    user_t user;
+
     // login
-    if (!login(&user_g)) {
+    if (!login(&user)) {
         puts("Intruder!");
         exit(1);
     }
@@ -118,24 +142,17 @@ int main(int argc, char **argv) {
 
         // get choice
         fscanf(stdin, "%d", &option);
-        getchar();
+        getchar(); // remove trailing newline
 
         // perform choice
         switch (option) {
         case 1: // change username
-            change_username(&user_g);
+            change_username(&user);
             break;
-        case 2: // change password
-            change_password(&user_g);
+        case 2: // try to win
+            win(user);
             break;
-        case 3: // admin sign in
-            if (user_g.admin == 0) {
-                puts("You are not authorized to view this.");
-            } else {
-                win();
-            }
-            break;
-        case 4: // exit
+        case 3: // exit
             exit(0);
             break;
         default:

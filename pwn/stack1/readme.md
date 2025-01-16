@@ -2,17 +2,18 @@
 
 >Difficulty: easy
 
-The hacker must abuse `strcpy` to overwrite the `admin` field of the `user_t` struct
-in order to bypass the authentication check.
+Backstory:
 
-The intended exploit is as follows:
+"We have discovered a hidden terminal claiming to be one of ours, but we've confirmed that it isn't.
+We suspect the hacker named *Niko* created it and we have a hunch that it has something to do with
+Cristina. Be careful."
 
-1. decompile the program to obtain the username and password
-1. change either the username or password and overflow it into the `admin` field
-1. choose option 3) for "admin sign in"
-1. obtain the flag
+## Intended Solve
 
->This is the only exploit possible as the `user_g` variable is located on the heap, away from everything else.
+There are two ways to solve this challenge:
+
+1. Abuse `strcpy` and the massive buffer to overflow the `user_t` struct on the stack, forging data to properly execute the `win` function
+2. Abuse `strcpy` yet again, but perform a ret2libc.
 
 ## Handouts
 
