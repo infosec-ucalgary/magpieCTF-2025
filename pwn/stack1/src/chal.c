@@ -153,12 +153,12 @@ int main(int argc, char **argv) {
             win(user);
             break;
         case 3: // exit
-            exit(0);
-            break;
+            goto LOOP_EXIT;
         default:
             break;
         }
     }
 
+LOOP_EXIT:
     return 0;
 }
