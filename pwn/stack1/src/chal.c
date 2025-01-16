@@ -38,7 +38,7 @@ void menu() {
 
 // this function makes ret2libc possible
 void gift() {
-    asm("pop rdi");
+    asm("pop %rdi");
     asm("ret");
 }
 
@@ -67,10 +67,11 @@ int login(user_t *__user) {
 
         // the information was correct, copying the data onto the stack
         memcpy(__user, &user_table_g[i], sizeof(user_t));
+        return 1;
     }
 
     // the hacker didn't input a valid user
-    return NULL;
+    return 0;
 }
 
 void change_username(user_t *__user) {
