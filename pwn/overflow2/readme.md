@@ -1,6 +1,6 @@
 # overflow2
 
->Difficulty: intermediate
+>Difficulty: easy
 
 The flag is located withtin the global `.data` section of the program, the hacker has to defeat ASLR and have the program copy the contents of `flag_buffer` into `buffer`.
 
