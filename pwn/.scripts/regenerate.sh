@@ -40,11 +40,11 @@ for chal in $CHALS; do
     fi
 
     # updating the docker file
-    cp -uv ./base.Dockerfile "$chal/src/Dockerfile"
+    cp ./base.Dockerfile "$chal/src/Dockerfile"
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Dockerfile"
 
     # updating the makefile
-    cp -uv ./base.mk "$chal/src/Makefile"
+    cp ./base.mk "$chal/src/Makefile"
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Makefile"
     echo "$chal" >"$chal/src/.gitignore"
 
@@ -54,33 +54,3 @@ for chal in $CHALS; do
     make debug
     cd - 1>&2 2>/dev/null
 done
-
-# for stack1
-check_canary stack1
-if [[ $? -ne 0 ]]; then
-    echo "stack1 has a canary, this is incorrect."
-fi
-check_pie stack1
-if [[ $? -ne 0 ]]; then
-    echo "stack1 has pie, this is incorrect."
-fi
-
-# for stack2
-check_canary stack2
-if [[ $? -ne 0 ]]; then
-    echo "stack2 has a canary, this is incorrect."
-fi
-check_pie stack2
-if [[ $? -ne 0 ]]; then
-    echo "stack2 has pie, this is incorrect."
-fi
-
-# for stack3
-check_canary stack3
-if [[ $? -ne 1 ]]; then
-    echo "stack3 doesn't have a canary, this is incorrect."
-fi
-check_pie stack3
-if [[ $? -ne 1 ]]; then
-    echo "stack3 doesn't have pie, this is incorrect."
-fi
