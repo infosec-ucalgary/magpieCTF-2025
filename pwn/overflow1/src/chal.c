@@ -4,7 +4,6 @@
 
 #define FLAG "flag.txt"
 #define FLAG_SIZE 128
-#define BUFFER_SIZE 0x200
 
 #define ERR_CHALLENGE_FAILURE 2
 #define ERR_NO_MALLOC 3
@@ -15,6 +14,7 @@
 
 #define FIELD_LENGTH 32
 #define NUM_USERS 4
+#define BUFFER_SIZE ((FIELD_LENGTH * 2) + 0x10)
 
 typedef struct _user {
     char username[FIELD_LENGTH];
@@ -34,12 +34,6 @@ void menu() {
     puts("2. Admin login");
     puts("3. Exit");
     printf("> ");
-}
-
-// this function makes ret2libc possible
-void gift() {
-    asm("pop %rdi");
-    asm("ret");
 }
 
 int login(user_t *__user) {
