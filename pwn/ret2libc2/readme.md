@@ -1,4 +1,4 @@
-# ret2win2
+# ret2libc2
 
 >Difficulty: hard
 

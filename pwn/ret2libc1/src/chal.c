@@ -7,10 +7,10 @@
 #define FLAG "flag.txt"
 #define FLAG_SIZE 128
 
-#define TARGET_USERNAME "Cristina"
-#define TARGET_PASSWORD "Crypto"
-#define LEN_USERNAME 0x80
-#define LEN_PASSWORD 0x80
+#define TARGET_USERNAME "n1k0th3gr3@t"
+#define TARGET_PASSWORD "cr1st1n@scks"
+#define LEN_USERNAME 0x40
+#define LEN_PASSWORD 0x40
 
 #define LEN_HOSTNAME 0x80
 #define LEN_TIME 0x80
@@ -22,6 +22,12 @@
 char *logs_g[MAX_LOGS] = {0};
 int num_logs_g = 0;
 
+void gift() {
+    asm("pop %rdi");
+    asm("ret");
+}
+
+// vulnerable function!
 void log_entry(char *__input) {
     // check if we can log
     if (num_logs_g >= MAX_LOGS) {
@@ -96,12 +102,12 @@ void view_logs() {
 }
 
 void menu(int __auth) {
-    puts("-- NYPD Terminal v3 --");
+    puts("-- N1k0's PC --");
     puts("1. Sign In");
     if (__auth == 1) {
         puts("2. View Audit Log");
+        puts("3. Exit");
     }
-    puts("3. Exit");
     printf("> ");
 }
 
@@ -129,8 +135,8 @@ int login(char *__username, char *__password) {
         exit(-2);
     }
 
-    // this function isn't vulnerable, because if __username or __password have
-    // format characters, they won't get evaluated. Unlike the call in
+    // the `login` function isn't vulnerable, however passing in format
+    // characters here makes this program vulnerable because of a logic error in
     // `log_entry`
     snprintf(message, LEN_POST, "Attempted login, username %s, password %s.",
              __username, __password);
@@ -138,41 +144,22 @@ int login(char *__username, char *__password) {
     log_entry(message);
     free(message);
 
-    // "authentication"
+    // checking username
     if (strncmp(__username, TARGET_USERNAME, strlen(TARGET_USERNAME)) != 0) {
         puts("Authentication failed.");
         return 0;
     }
+
+    // checking password
     if (strncmp(__password, TARGET_PASSWORD, strlen(TARGET_PASSWORD)) != 0) {
         puts("Authentication failed.");
         return 0;
     }
 
     // logging on success
-    printf("Authentication passed, welcome %s %s.\n", TARGET_USERNAME,
-           TARGET_PASSWORD);
+    printf("Welcome %s %s.\n", __username, __password);
 
     return 1;
-}
-
-void win() {
-    // open the file
-    FILE *fd = fopen(FLAG, "r");
-    if (fd == 0) {
-        puts("Flag cannot be found, contact the CTF organizers.");
-        exit(1);
-    }
-
-    char *buffer = malloc(sizeof(char) * FLAG_SIZE);
-    if (buffer == NULL) {
-        puts("Failed to allocate memory for buffer, cannot proceed.");
-        exit(-2);
-    }
-
-    // read flag into buffer
-    fgets(buffer, FLAG_SIZE - 1, fd);
-    fclose(fd);
-    printf("Only you can be trusted with this... %s\n", buffer);
 }
 
 int main(int argc, char **argv) {
@@ -182,8 +169,8 @@ int main(int argc, char **argv) {
 
     // setup username & password
     int auth = 0;
-    char username[LEN_USERNAME]; // vulnerable! ret2win/libc here
-    char password[LEN_PASSWORD]; // vulnerable! ret2win/libc here
+    char username[LEN_USERNAME]; // buffer overflow here!
+    char password[LEN_PASSWORD]; // buffer overflow here!
 
     // main loop
     while (1) {
@@ -200,29 +187,22 @@ int main(int argc, char **argv) {
         // using goto statements because I wanna fuck with the participants
         switch (option) {
         case 1:
-            goto CASE_1;
+            auth = login(username, password);
         case 2:
-            goto CASE_2;
+            if (auth == 0) {
+                puts("Unauthorized.");
+            } else {
+                view_logs();
+            }
         case 3:
-            goto CASE_3;
+            if (auth == 0) {
+                puts("Unauthorized.");
+            } else {
+                goto LEAVE_MAIN;
+            }
         default:
             break;
         }
-
-    CASE_1:
-        auth = login(username, password);
-        goto LOOP_END;
-    CASE_2:
-        if (auth == 0) {
-            puts("Unauthorized.");
-        } else {
-            view_logs();
-        }
-        goto LOOP_END;
-    CASE_3:
-        goto LEAVE_MAIN;
-    LOOP_END:
-        continue;
     }
 
 LEAVE_MAIN:
