@@ -1,1 +1,1 @@
-FLAGS		:= -Wl,-z,relro,-z,now -fstack-protector-all
+FLAGS		:= -Wl,-z,relro,-z,now -fstack-protector-all -pie
