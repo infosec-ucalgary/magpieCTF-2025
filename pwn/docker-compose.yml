@@ -17,46 +17,46 @@ services:
       - 4002:6201
     networks:
       - magpiesctf2025
-  printf3:
+  overflow1:
     privileged: true
-    container_name: "printf3"
-    build: ./printf3/src/
+    container_name: "overflow1"
+    build: ./overflow1/src/
     restart: unless-stopped
     ports:
       - 4003:6201
     networks:
       - magpiesctf2025
-  printf4:
+  overflow2:
     privileged: true
-    container_name: "printf4"
-    build: ./printf4/src/
+    container_name: "overflow2"
+    build: ./overflow2/src/
     restart: unless-stopped
     ports:
       - 4004:6201
     networks:
       - magpiesctf2025
-  stack1:
+  ret2win1:
     privileged: true
-    container_name: "stack1"
-    build: ./stack1/src/
+    container_name: "ret2win1"
+    build: ./ret2win1/src/
     restart: unless-stopped
     ports:
       - 4005:6201
     networks:
       - magpiesctf2025
-  stack2:
+  ret2win2:
     privileged: true
-    container_name: "stack2"
-    build: ./stack2/src/
+    container_name: "ret2win2"
+    build: ./ret2win2/src/
     restart: unless-stopped
     ports:
       - 4006:6201
     networks:
       - magpiesctf2025
-  stack3:
+  expert1:
     privileged: true
-    container_name: "stack3"
-    build: ./stack3/src/
+    container_name: "expert1"
+    build: ./expert1/src/
     restart: unless-stopped
     ports:
       - 4007:6201
