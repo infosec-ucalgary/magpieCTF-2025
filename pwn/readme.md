@@ -6,15 +6,13 @@ There are four *sections* of challenges, with two challenges per section:
 
 - **printf**: exploits using printf
 - **overflow**: overflows of various kinds
-- **ret2win**: overflows, specifically using ROP chains
+- **ret2libc**: exploits, specifically ret2libc
 - **expert**: really hard challenges, whatever they might be (or if we're even going to offer these)
 
-The *ret2win* challenges are guaranteed to...
+The *overflow* challenges are guaranteed to...
 
-- have their exploit use code redirection to some form of `win` function
-- an option to ret2libc and get a *root* flag instead of the provided *host* flag that's read by the `win` function
-
-The *overflow* challenges may have a `win` function too, but their scope is far more limited.
+- have a user flag, which is given to participants that trigger the `win` function
+- have a root flag, which is given to participants that spawn a shell via. ret2libc
 
 ## Sources
 

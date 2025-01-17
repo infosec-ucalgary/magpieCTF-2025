@@ -2,10 +2,13 @@
 
 >Difficulty: hard
 
-This challenge should have:
+- [x] stack canaries
+- [x] ASLR
+- ret2libc? yes
 
-- stack canaries
-- ASLR
+## Backstory
+
+something
 
 ## Intended Solve
 
