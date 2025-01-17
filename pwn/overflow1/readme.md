@@ -10,10 +10,8 @@ Cristina. Be careful."
 
 ## Intended Solve
 
-There are two ways to solve this challenge:
-
-1. Abuse `strcpy` and the massive buffer to overflow the `user_t` struct on the stack, forging data to properly execute the `win` function
-2. Abuse `strcpy` yet again, but perform a ret2libc.
+Abuse `strcpy` and the massive buffer to overflow the `user_t` struct on the stack,
+forging data to properly execute the `win` function.
 
 ## Handouts
 
