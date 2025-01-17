@@ -2,6 +2,16 @@
 
 >Difficulty: hard
 
+- [x] stack canaries
+- [x] ASLR
+- ret2libc? nope
+
+## Backstory
+
+something
+
+## Intended Solve
+
 The flag is again located in the `.data` section, but this time there is
 no helping `memcpy` function. The hacker must alter `flag_ptr` using either:
 
