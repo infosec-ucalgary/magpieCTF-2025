@@ -31,4 +31,4 @@ CMD ["/bin/nsjail", \
     "-E", "TERM=xterm", \
     "--cwd", "/ctf", \
     "--", \
-    "/ctf/ret2win1"]
+    "/ctf/ret2libc1"]
