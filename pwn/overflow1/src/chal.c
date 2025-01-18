@@ -23,6 +23,11 @@ user_t user_table_g[NUM_USERS] = {
     {.username = "lenscroft12", .code = "7299126"},
 };
 
+void gift() {
+    asm("pop %rdi");
+    asm("ret");
+}
+
 void menu() {
     puts("-- NYPD Terminal v1 --");
     puts("1. Change username");

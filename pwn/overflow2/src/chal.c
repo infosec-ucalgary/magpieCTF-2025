@@ -27,6 +27,11 @@ user_t user_table_g[NUM_USERS] = {
 char *g_edit_buffer;
 char *g_format;
 
+void gift() {
+    asm("pop %rdi");
+    asm("ret");
+}
+
 void read_flag(char *buffer) {
     // open the file
     FILE *fd = fopen(FLAG, "r");
