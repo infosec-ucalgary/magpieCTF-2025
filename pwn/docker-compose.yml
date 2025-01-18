@@ -5,7 +5,7 @@ services:
     build: ./printf1/src/
     restart: unless-stopped
     ports:
-      - 4001:6201
+      - 14001:6201
     networks:
       - magpiesctf2025
   printf2:
@@ -14,7 +14,7 @@ services:
     build: ./printf2/src/
     restart: unless-stopped
     ports:
-      - 4002:6201
+      - 14002:6201
     networks:
       - magpiesctf2025
   overflow1:
@@ -23,7 +23,7 @@ services:
     build: ./overflow1/src/
     restart: unless-stopped
     ports:
-      - 4003:6201
+      - 14003:6201
     networks:
       - magpiesctf2025
   overflow2:
@@ -32,25 +32,25 @@ services:
     build: ./overflow2/src/
     restart: unless-stopped
     ports:
-      - 4004:6201
+      - 14004:6201
     networks:
       - magpiesctf2025
-  ret2win1:
+  ret2libc1:
     privileged: true
-    container_name: "ret2win1"
-    build: ./ret2win1/src/
+    container_name: "ret2libc1"
+    build: ./ret2libc1/src/
     restart: unless-stopped
     ports:
-      - 4005:6201
+      - 14005:6201
     networks:
       - magpiesctf2025
-  ret2win2:
+  ret2libc2:
     privileged: true
-    container_name: "ret2win2"
-    build: ./ret2win2/src/
+    container_name: "ret2libc2"
+    build: ./ret2libc2/src/
     restart: unless-stopped
     ports:
-      - 4006:6201
+      - 14006:6201
     networks:
       - magpiesctf2025
   expert1:
@@ -59,7 +59,7 @@ services:
     build: ./expert1/src/
     restart: unless-stopped
     ports:
-      - 4007:6201
+      - 14007:6201
     networks:
       - magpiesctf2025
 
