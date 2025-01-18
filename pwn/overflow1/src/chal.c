@@ -97,7 +97,7 @@ void win(user_t __user) {
     FILE *fd = fopen(FLAG, "r");
     if (fd < 0) {
         puts("Flag cannot be found, contact the CTF organizers.");
-        exit(ERR_OTHER);
+        exit(ERR_NO_FLAG);
     }
 
     // malloc memory for the flag

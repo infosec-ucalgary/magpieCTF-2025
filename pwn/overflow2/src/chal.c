@@ -37,7 +37,7 @@ void read_flag(char *buffer) {
     FILE *fd = fopen(FLAG, "r");
     if (fd == 0) {
         puts("Flag cannot be found, contact the CTF organizers.");
-        exit(1);
+        exit(ERR_NO_FLAG);
     }
 
     // read flag into buffer
