@@ -1,10 +1,13 @@
 # overflow1
 
->Difficulty: easy
+>Difficulty: easy (easy ret2libc)
 
 - [ ] stack canaries
 - [ ] ASLR
 - ret2libc? yes
+
+ret2libc is hypothetically possible in this challenge since the struct that gets
+overwritten is on the stack.
 
 ## Backstory
 
@@ -14,8 +17,11 @@ Cristina. Be careful."
 
 ## Intended Solve
 
-Abuse `strcpy` and the massive buffer to overflow the `user_t` struct on the stack,
-forging data to properly execute the `win` function.
+Abuse the fact that a) the buffer is larger than the size of the string within the struct,
+and b) the fact that `strcpy` doesn't care how big the destination buffer is.
+
+The hacker is supposed to overwrite the currently logged in user's username and code to
+`cristina33` and `01843101` in order to win the challenge.
 
 ## Handouts
 

@@ -1,1 +1,1 @@
-magpies{aslr_isnt_foolproof}
+magpies{i_love_insecure_format_strings}
