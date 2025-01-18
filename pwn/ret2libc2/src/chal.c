@@ -6,7 +6,7 @@
 #include <time.h>
 
 #define BUFFER_SIZE 0x40
-#define READ_SIZE (BUFFER_SIZE * 3)
+#define READ_SIZE (BUFFER_SIZE * 4)
 
 #define USERNAME "n1k0th3gr3@t"
 #define PASSWORD "cr1st1n@scks"
