@@ -6,4 +6,5 @@ objs/
 .vscode/
 *.deb
 *.tar.xz
-
+build/
+dist/

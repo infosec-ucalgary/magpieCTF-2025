@@ -46,7 +46,7 @@ for chal in $CHALS; do
     # updating the makefile
     cp ./base.mk "$chal/src/Makefile"
     sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Makefile"
-    echo "$chal" >"$chal/src/.gitignore"
+    echo "$chal*" >"$chal/src/.gitignore"
 
     # building challenges in debug
     cd "$chal/src"
