@@ -14,13 +14,14 @@
 
 #define FIELD_LENGTH 32
 #define NUM_USERS 4
-#define BUFFER_SIZE ((FIELD_LENGTH * 2) + 0x10)
+#define BUFFER_SIZE ((FIELD_LENGTH * 4) + 0x10)
 
 typedef struct _user {
     char username[FIELD_LENGTH];
     char code[FIELD_LENGTH];
 } user_t;
 
+// suspects from the case files
 user_t user_table_g[NUM_USERS] = {
     {.username = "hoover95", .code = "7123308"},
     {.username = "runner86", .code = "7299126"},
