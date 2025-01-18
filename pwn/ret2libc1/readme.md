@@ -2,31 +2,27 @@
 
 >Difficulty: intermediate
 
-- [x] stack canaries
-- [x] ASLR
+- [ ] stack canaries
+- [ ] ASLR
 - ret2libc? yes
+
+A simple ret2libc, no ASLR nor canaries. Simple.
+
+>If ASLR is mistakenly enabled, the challenge is still solvable because you can
+>leak the address of `main`, then fix it after you enter in the password.
 
 ## Backstory
 
-something
+"It seems we've located Niko's PC online, it even has an insecure SSH login.
+But be careful, I highly doubt Niko would *intentionally* allow this."
 
 ## Intended Solve
 
-This is similar but quite different to the other stack challenges.
-This time there is ASLR and stack canaries and the exploit is *relatively* hidden.
+Because the `buffer` is a fraction of the size compared to what's being read, this challenge is automatically ret2libc.
 
->The reason why this is intermediate is because the difficulty isn't in how to exploit the program,
->the title should give it away that you're meant to ret2libc. The main difficulty is realizing
->where in the program does the exploit live.
+The intended solve is as follows:
 
-The intended exploit is as follows:
-
-1. realize that the logging function is vulnerable (the user can input format characters into `__input` which get evaluated by `snprintf`)
-1. sign in using the username and password from decompilation
-1. leak `main`'s return address (and therefore `main`) and the stack canary
-1. form a small rop chain using the vulnerable `login` function (buffer overflow)
-1. ret2libc
-
-## Handouts
-
-- program
+- use the prompt for the username to leak the stack canary
+- enter in the password, stack canary, `rbp` and use a partial overwrite of the return address to redirect execution back to main
+- from this loop, leak the addresses of the various functions
+- ret2libc

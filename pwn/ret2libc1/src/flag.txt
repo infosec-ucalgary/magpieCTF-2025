@@ -1,1 +1,1 @@
-magpies{beware_of_what_you_log}
+magpies{ret2libc_is_fun}
