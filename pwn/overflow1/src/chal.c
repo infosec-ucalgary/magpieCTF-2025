@@ -83,11 +83,11 @@ void change_username(user_t *__user) {
 
 void win(user_t __user) {
     // check information
-    if (strcmp(__user.username, WIN_USER) != 0) {
+    if (strncmp(__user.username, WIN_USER, strlen(WIN_USER)) != 0) {
         puts("Intruder!");
         exit(ERR_CHALLENGE_FAILURE);
     }
-    if (strcmp(__user.code, WIN_CODE) != 0) {
+    if (strncmp(__user.code, WIN_CODE, strlen(WIN_CODE)) != 0) {
         puts("Intruder!");
         exit(ERR_CHALLENGE_FAILURE);
     }
