@@ -6,7 +6,7 @@
 
 #define FIELD_LENGTH 32
 #define NUM_USERS 4
-#define READ_SIZE (FIELD_LENGTH * 4)
+#define READ_SIZE (FIELD_LENGTH * 8)
 
 typedef struct _user {
     char username[FIELD_LENGTH];
