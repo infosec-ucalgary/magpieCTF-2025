@@ -3,9 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "../../common.h"
 
-#define FLAG "flag.txt"
-#define FLAG_SIZE 128
 #define BUFFER_SIZE 0x100
 
 // default location for program to read flag into
