@@ -1,1 +1,1 @@
-magpies{printf_can_write_memory}
+magpies{printf_is_dangerous}

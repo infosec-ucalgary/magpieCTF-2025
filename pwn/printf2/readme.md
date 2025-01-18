@@ -1,22 +1,29 @@
 # printf2
 
->Difficulty: hard
+>Difficulty: intermediate (hard if they don't know what to do)
 
 - [x] stack canaries
 - [x] ASLR
 - ret2libc? nope
 
+ret2libc isn't possible unless the hacker can escape the while loop
+(which should be impossible unless they can somehow change `rip`)
+
 ## Backstory
 
-something
+"We've identified yet another zombie device belonging to *Niko*'s botnet.
+This variant of malware isn't so... helpful this time around. Good luck soldier."
 
 ## Intended Solve
 
-The flag is again located in the `.data` section, but this time there is
-no helping `memcpy` function. The hacker must alter `flag_ptr` using either:
+The flag is located in the global `.data` section again, but this time, the hacker
+is supposed to use `%n` to overwrite the `flag_ptr` located on the stack to point
+to somewhere that the hacker can access.
 
-- a saved `rbp` as a gadget
-- putting the gadget into the buffer and printing to that stack variable (my solve does this)
+There are two methods of overwriting `flag_ptr`.
+
+- use a saved `rbp` as a gadget
+- writing a gadget into the buffer and using that to change `flag_ptr`
 
 The intended exploit is as follows:
 
@@ -37,3 +44,7 @@ The intended exploit is as follows:
 
 - program
 - Dockerfile, or `libc.so.6` and the linker `ld-linux-x86_64.so.2`
+
+The reason why we're including the docker file is because the stack layout differs
+between versions of libc. Since this is a beginner challenge, I guess we should give
+this out.

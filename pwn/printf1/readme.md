@@ -1,6 +1,6 @@
 # printf1
 
->Difficulty: intermediate
+>Difficulty: easy
 
 - [x] stack canaries
 - [x] ASLR
@@ -8,11 +8,15 @@
 
 ## Backstory
 
-something
+"We've identified a zombie device, belonging to the hacker *Niko*, it's your task to
+break in and find whatever's on that machine."
 
 ## Intended Solve
 
-The flag is located withtin the global `.data` section of the program, the hacker has to defeat ASLR and have the program copy the contents of `flag_buffer` into `buffer`.
+The flag is located in the global `.data` section of the program,
+the hacker has to leak the return address of `vuln` in order to calculate the
+real address of `flag_buffer`. After which, the program will `memcpy` whatever
+address that was entered into the program into the local `buffer` on the stack.
 
 The intended exploit is as follows:
 
