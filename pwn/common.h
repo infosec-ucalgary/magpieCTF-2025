@@ -4,6 +4,7 @@
 #define ERR_CHALLENGE_FAILURE 2
 #define ERR_NO_MALLOC 3
 #define ERR_OTHER 4
+#define ERR_NO_FLAG 5
 
 #define FLAG "flag.txt"
 #define FLAG_SIZE 128
