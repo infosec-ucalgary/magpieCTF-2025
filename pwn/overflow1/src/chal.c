@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define FLAG "flag.txt"
-#define FLAG_SIZE 128
-
-#define ERR_CHALLENGE_FAILURE 2
-#define ERR_NO_MALLOC 3
-#define ERR_OTHER 4
+#include "../../common.h"
 
 #define WIN_USER "cristina33"
 #define WIN_CODE "01843101"

@@ -3,9 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
-
-#define FLAG "flag.txt"
-#define FLAG_SIZE 128
+#include "../../common.h"
 
 #define TARGET_USERNAME "n1k0th3gr3@t"
 #define TARGET_PASSWORD "cr1st1n@scks"
@@ -132,7 +130,7 @@ int login(char *__username, char *__password) {
     if (message == NULL) {
         puts("Couldn't allocate memory for message, contact the CTF "
              "organizers.");
-        exit(-2);
+        exit(ERR_NO_MALLOC);
     }
 
     // the `login` function isn't vulnerable, however passing in format
