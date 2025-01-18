@@ -63,6 +63,7 @@ int login(user_t *__user) {
     return 0;
 }
 
+// vulnerable! the buffer size is greater than the size of the string in the struct
 void change_username(user_t *__user) {
     char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
     if (buffer == NULL) {
