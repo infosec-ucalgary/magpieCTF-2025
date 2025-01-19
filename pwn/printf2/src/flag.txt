@@ -1,1 +1,1 @@
-magpies{printf_is_dangerous}
+magpieCTF{printf_is_dangerous}

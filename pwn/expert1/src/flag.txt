@@ -1,1 +1,1 @@
-magpies{saved_rbps_can_be_useful}
+magpieCTF{saved_rbps_can_be_useful}
