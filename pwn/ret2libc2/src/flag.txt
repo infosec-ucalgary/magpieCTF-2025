@@ -1,1 +1,1 @@
-magpies{beware_of_what_you_log}
+magpieCTF{beware_of_what_you_log}
