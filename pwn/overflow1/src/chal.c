@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../common.h"
+#include "./common.h"
 
 #define WIN_USER "cristina33"
 #define WIN_CODE "01843101"
