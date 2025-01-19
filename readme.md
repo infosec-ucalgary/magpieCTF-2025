@@ -2,6 +2,8 @@
 
 All the challenges for the 2025 magpies CTF.
 
+Flag format: `magpieCTF{}`
+
 The offered categories are:
 
 - cloud
@@ -12,3 +14,4 @@ The offered categories are:
 - pwn
 - rev
 - web
+
