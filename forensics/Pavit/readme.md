@@ -1,13 +1,16 @@
 # CTF Challenge: [Cat's content]
 
 ## Challenge Overview
-Challenge requires you to investigate a PCAP file and find hidden content.
+Challenge requires you to investigate all PCAP files and find hidden content to access the flag. 
+
+## Hints
+You might not need to investigate all the files
 
 ## Difficulty Level
-Medium
+Medium - Hard
 
 ## Estimated Time to Solve
-30mins
+30mins - 1 hour
 
 ## Tools required
 Wireshark or something similar
