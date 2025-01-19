@@ -17,7 +17,7 @@ WORKDIR /ctf
 COPY . ./
 RUN make clean || true
 RUN make
-RUN rm Makefile *.c Dockerfile flags.mk
+RUN rm Makefile *.c Dockerfile flags.mk *.h
 
 EXPOSE 6201
 
