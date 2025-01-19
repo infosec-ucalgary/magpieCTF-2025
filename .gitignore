@@ -8,7 +8,6 @@ objs/
 *.tar.xz
 build/
 dist/
-*.zip
 *.pyc
 .DS_store
 .vscode/
