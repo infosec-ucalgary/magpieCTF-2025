@@ -1,12 +1,5 @@
-from secret import flag
+#!/usr/bin/env python3
 from Crypto.Util.number import bytes_to_long
-from Crypto.Util.number import getPrime
-
-m=bytes_to_long(flag)
-bits=len(bin(m)[2:])
-k=getPrime(bits+16)
-n=0x1337
-with open("output.txt",'w') as f:
-    f.write(f"c = {m*n%k}\n")
-    f.write(f"k = {k}")
-    f.close()
+f=open('../output.txt','w')
+f.write(str(bytes_to_long(open('flag.txt', 'r').read().strip().encode())))
+f.close()
