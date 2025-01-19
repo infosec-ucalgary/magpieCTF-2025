@@ -41,7 +41,7 @@ done
 # setup
 which readelf 1>/dev/null 2>/dev/null
 if [[ $? -ne 0 ]]; then
-    echo "readelf isn't on the path, cannot verify stack canaries."
+    echo "readelf isn't on the path, cannot verify challenge functionality."
     exit 1
 fi
 
