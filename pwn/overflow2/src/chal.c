@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../common.h"
+#include "./common.h"
 
 #define FIELD_LENGTH 32
 #define NUM_USERS 4
