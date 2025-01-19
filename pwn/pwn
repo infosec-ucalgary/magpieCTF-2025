@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
+
 help () {
     echo "Usage: $0 <build|regenerate|prune|reset>"
-    echo -e "\tbuild\t\tRebuilds all the images."
-    echo -e "\tregenerate\tRebuilds each challenge's Dockerfile, Makefile and .gitignore."
-    echo -e "\tprune\t\tPrunes all built and dangling images."
-    echo -e "\treset\t\tExecutes prune, regenerate and build, in that order."
+    echo -e "\tbuild <images|progs>\t(Re)builds all binaries and docker iamges."
+    echo -e "\tregenerate\t\tRebuilds each challenge's Dockerfile, Makefile and .gitignore."
+    echo -e "\tclean\t\t\tRemoves all binaries, made images & dangling images."
+    echo -e "\treset\t\t\tExecutes clean, regenerate and build, in that order."
 }
 
 case "$1" in
@@ -16,13 +17,13 @@ case "$1" in
         shift 1
         ./.scripts/regenerate.sh "$@"
         ;;
-    prune)
+    clean)
         shift 1
-        ./.scripts/prune.sh "$@"
+        ./.scripts/clean.sh "$@"
         ;;
     reset)
         shift 1
-        ./.scripts/prune.sh "$@"
+        ./.scripts/clean.sh "$@"
         ./.scripts/regenerate.sh "$@"
         ./.scripts/build.sh "$@"
         ;;
