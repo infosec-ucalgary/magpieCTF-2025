@@ -14,6 +14,25 @@ The *overflow* challenges are guaranteed to...
 - have a user flag, which is given to participants that trigger the `win` function
 - have a root flag, which is given to participants that spawn a shell via. ret2libc
 
+## Building
+
+In a terminal run:
+
+```sh
+./pwn reset # cleans up, builds files, then challenges & images in that order
+```
+
+- `regenerate` builds all the programs
+  - the programs to be given out are in `dist/`
+  - the programs for testing and debugging are in the respective challenge folder
+- `build` builds all the docker images
+
+For building the images, the script expects to have [nsjail](https://github.com/google/nsjail) pre-built on your machine as a Docker image,
+and named `nsjailcontainer`.
+
+>Note:  
+>The docker compose file is for testing purposes only, do not use it in a production setting.
+
 ## Sources
 
 - <https://gist.github.com/jrelo/f5c976fdc602688a0fd40288fde6d886>
