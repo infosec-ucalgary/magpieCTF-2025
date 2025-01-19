@@ -3,7 +3,7 @@
 >Difficulty: intermediate
 
 - [ ] stack canaries
-- [ ] ASLR
+- [x] ASLR
 - ret2libc? yes
 
 A simple ret2libc, no ASLR nor canaries. Simple.
