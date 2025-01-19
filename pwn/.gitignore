@@ -1,0 +1,12 @@
+objs/
+*.bin
+*.o
+*.d
+.gdb_history
+.vscode/
+*.deb
+*.tar.xz
+build/
+dist/
+*.zip
+

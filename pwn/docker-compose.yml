@@ -1,0 +1,68 @@
+services:
+  printf1:
+    privileged: true
+    container_name: "printf1"
+    build: ./printf1/src/
+    restart: unless-stopped
+    ports:
+      - 14001:6201
+    networks:
+      - magpiesctf2025
+  printf2:
+    privileged: true
+    container_name: "printf2"
+    build: ./printf2/src/
+    restart: unless-stopped
+    ports:
+      - 14002:6201
+    networks:
+      - magpiesctf2025
+  overflow1:
+    privileged: true
+    container_name: "overflow1"
+    build: ./overflow1/src/
+    restart: unless-stopped
+    ports:
+      - 14003:6201
+    networks:
+      - magpiesctf2025
+  overflow2:
+    privileged: true
+    container_name: "overflow2"
+    build: ./overflow2/src/
+    restart: unless-stopped
+    ports:
+      - 14004:6201
+    networks:
+      - magpiesctf2025
+  ret2libc1:
+    privileged: true
+    container_name: "ret2libc1"
+    build: ./ret2libc1/src/
+    restart: unless-stopped
+    ports:
+      - 14005:6201
+    networks:
+      - magpiesctf2025
+  ret2libc2:
+    privileged: true
+    container_name: "ret2libc2"
+    build: ./ret2libc2/src/
+    restart: unless-stopped
+    ports:
+      - 14006:6201
+    networks:
+      - magpiesctf2025
+  expert1:
+    privileged: true
+    container_name: "expert1"
+    build: ./expert1/src/
+    restart: unless-stopped
+    ports:
+      - 14007:6201
+    networks:
+      - magpiesctf2025
+
+networks:
+  magpiesctf2025:
+    driver: bridge

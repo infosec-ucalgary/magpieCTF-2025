@@ -1,1 +1,0 @@
-# magpieCTF-2025
