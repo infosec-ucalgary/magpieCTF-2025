@@ -1,21 +1,12 @@
 #!/bin/bash
+
 source ./.scripts/constants.sh
 source ./.scripts/assert.sh
 
 # This automagically updates & configures the challenges' Makefiles.
 # Dockerfiles, and .gitignores
 
-function check_canary() {
-    # check for stack canary function
-    readelf -s "$1/src/$1" | grep -Eq "__stack_chk"
-    echo "$?"
-}
-
-function check_pie() {
-    # check for stack canary function
-    readelf -h "$1/src/$1" 2>/dev/null | grep "Type:" | grep -q "DYN"
-    echo "$?"
-}
+CWD=$(pwd)
 
 for chal in $CHALS; do
     if [[ $chal != *"$1"* ]]; then
@@ -23,40 +14,29 @@ for chal in $CHALS; do
     fi
 
     # updating the docker file
-    cp ./base.Dockerfile "$chal/src/Dockerfile"
-    sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Dockerfile"
+    cp ./base.Dockerfile "$CWD/$chal/src/Dockerfile"
+    sed -i "s/BINARY_NAME/$chal/g" "$CWD/$chal/src/Dockerfile"
 
     # updating the makefile
     cp ./base.mk "$chal/src/Makefile"
-    sed -i "s/BINARY_NAME/$chal/g" "$chal/src/Makefile"
-    echo "$chal*" >"$chal/src/.gitignore"
+    sed -i "s/BINARY_NAME/$chal/g" "$CWD/$chal/src/Makefile"
+    
+    # update the gitignore
+    echo "$chal*" > "$CWD/$chal/src/.gitignore"
+    echo "common.h" >> "$CWD/$chal/src/.gitignore"
+    echo "Makefile" >> "$CWD/$chal/src/.gitignore"
+    echo "Dockerfile" >> "$CWD/$chal/src/.gitignore"
+
+    # copying the header file
+    cp "$CWD/common.h" "$CWD/$chal/src/common.h"
 
     # building challenges in debug
-    cd "$chal/src"
+    cd "$CWD/$chal/src"
     make clean
     make debug
-    cd - 1>&2 2>/dev/null
+    cd "$CWD" 1>&2 2>/dev/null
 done
 
-# setup
-which readelf 1>/dev/null 2>/dev/null
-if [[ $? -ne 0 ]]; then
-    echo "readelf isn't on the path, cannot verify challenge functionality."
-    exit 1
-fi
+# checking the compilation
+check_chals
 
-# checking challenges for canaries
-assert_eq $(check_canary printf1) 0 "printf1 should have a canary"
-assert_eq $(check_canary printf2) 0 "printf2 should have a canary"
-assert_not_eq $(check_canary overflow1) 0 "overflow1 shouldn't have a canary"
-assert_not_eq $(check_canary overflow2) 0 "overflow2 shouldn't have a canary"
-assert_not_eq $(check_canary ret2libc1) 0 "ret2libc1 shouldn't have a canary"
-assert_eq $(check_canary ret2libc2) 0 "ret2libc2 should have a canary"
-
-# checking aslr
-assert_eq $(check_pie printf1) 0 "printf1 should have ASLR"
-assert_eq $(check_pie printf2) 0 "printf2 should have ASLR"
-assert_not_eq $(check_pie overflow1) 0 "overflow1 shouldn't have ASLR"
-assert_eq $(check_pie overflow2) 0 "overflow2 should have ASLR"
-assert_eq $(check_pie ret2libc1) 0 "ret2libc1 should have ASLR"
-assert_eq $(check_pie ret2libc2) 0 "ret2libc2 should have ASLR"
