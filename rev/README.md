@@ -1,1 +1,3 @@
-# magpieCTF-2025
+# Rev Challenges
+
+All the reverse engineering challenges reside here.
