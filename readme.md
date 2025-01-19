@@ -14,4 +14,3 @@ The offered categories are:
 - pwn
 - rev
 - web
-
