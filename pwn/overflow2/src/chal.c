@@ -141,7 +141,6 @@ int main() {
              "devs.");
         exit(ERR_NO_MALLOC);
     }
-
     g_format = malloc(sizeof(char) * FIELD_LENGTH);
     if (g_format == NULL) {
         puts("Couldn't allocate memory for g_format, contact the CTF devs.");
