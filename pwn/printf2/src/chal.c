@@ -80,6 +80,7 @@ int main() {
     printf("Linux netgear2 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
            time_buffer);
 
+    // -- exploit --
     vuln();
 
     return 0;
