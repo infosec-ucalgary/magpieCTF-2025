@@ -1,8 +1,8 @@
+#include "./common.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "./common.h"
 
 #define FIELD_LENGTH 32
 #define NUM_USERS 4
@@ -100,8 +100,10 @@ void vuln() {
         switch (option) {
         case 1:
             mode = USER;
+            break;
         case 2:
             mode = CODE;
+            break;
         case 3:
             goto LEAVE_VULN;
         default:
