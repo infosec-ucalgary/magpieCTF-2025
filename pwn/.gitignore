@@ -9,4 +9,4 @@ objs/
 build/
 dist/
 *.zip
-
+**/solve/flag*.txt
