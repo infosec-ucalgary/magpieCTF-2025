@@ -14,10 +14,8 @@ RUN chmod o+x /ctf
 # building the challenge in the container
 # the `|| true` is for steps that might fail
 WORKDIR /ctf
-COPY . ./
-RUN make clean || true
-RUN make
-RUN rm Makefile *.c Dockerfile flags.mk *.h
+COPY BINARY_NAME ./BINARY_NAME
+COPY flag*.txt ./
 
 EXPOSE 6201
 
