@@ -6,6 +6,14 @@
 - [x] ASLR
 - ret2libc? nope
 
+ret2libc is possible because `printf` can write memory. It's possible to;
+
+1. create a gadget
+1. use the gadget to overwrite the return address of `vuln`
+1. attempt to ret2libc
+
+However, because of the `exit` call, you can't actually benefit from overwriting the return address.
+
 ## Backstory
 
 "We've identified a zombie device, belonging to the hacker *Niko*, it's your task to
