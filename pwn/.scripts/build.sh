@@ -19,6 +19,20 @@ case "$1" in
         ;;
 esac
 
+# building progs
+if [ $PROGS -eq 1 ]; then
+    for chal in $CHALS; do
+        echo "Compiling $chal"
+        cd "$CWD/$chal/src"
+        make clean
+        make
+    done
+    cd $CWD
+
+    # checking the compilation
+    check_chals
+fi
+
 # building images
 if [ $IMAGES -eq 1 ]; then
     for chal in $CHALS; do
@@ -28,17 +42,3 @@ if [ $IMAGES -eq 1 ]; then
     done
     cd $CWD
 fi
-
-# building progs
-if [ $PROGS -eq 1 ]; then
-    for chal in $CHALS; do
-        echo "Compiling $chal"
-        cd "$CWD/$chal/src"
-        make debug
-    done
-    cd $CWD
-
-    # checking the compilation
-    check_chals
-fi
-

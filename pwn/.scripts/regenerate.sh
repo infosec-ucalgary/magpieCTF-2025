@@ -7,6 +7,7 @@ source ./.scripts/assert.sh
 # Dockerfiles, and .gitignores
 
 CWD=$(pwd)
+mkdir -p "$CWD/dist"
 
 for chal in $CHALS; do
     if [[ $chal != *"$1"* ]]; then
@@ -30,13 +31,15 @@ for chal in $CHALS; do
     # copying the header file
     cp "$CWD/common.h" "$CWD/$chal/src/common.h"
 
-    # building challenges in debug
+    # building challenges
     cd "$CWD/$chal/src"
     make clean
-    make debug
+    make
     cd "$CWD" 1>&2 2>/dev/null
+
+    # linking to dist
+    ln -sf "$CWD/$chal/src/$chal/" "$CWD/dist/$chal"
 done
 
 # checking the compilation
 check_chals
-
