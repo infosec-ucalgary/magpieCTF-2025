@@ -40,6 +40,12 @@ for chal in $CHALS; do
     # linking to dist
     ln -sf "$CWD/$chal/src/$chal" "$CWD/dist/$chal"
 
+    # asserting that the flags exist
+    if [[ ! -f "$CWD/$chal/src/flag.txt" ]]; then
+        echo "$chal is missing its flag, uh oh!"
+        exit -99999
+    fi
+
     # linking the flags
     ln -sf "$CWD/$chal/src/flag.txt" "$CWD/$chal/solve/flag.txt"
     if [[ -f "$CWD/$chal/src/flag.root.txt" ]]; then
