@@ -38,7 +38,13 @@ for chal in $CHALS; do
     cd "$CWD" 1>&2 2>/dev/null
 
     # linking to dist
-    ln -sf "$CWD/$chal/src/$chal/" "$CWD/dist/$chal"
+    ln -sf "$CWD/$chal/src/$chal" "$CWD/dist/$chal"
+
+    # linking the flags
+    ln -sf "$CWD/$chal/src/flag.txt" "$CWD/$chal/solve/flag.txt"
+    if [[ -f "$CWD/$chal/src/flag.root.txt" ]]; then
+        ln -sf "$CWD/$chal/src/flag.root.txt" "$CWD/$chal/solve/flag.root.txt"
+    fi
 done
 
 # checking the compilation
