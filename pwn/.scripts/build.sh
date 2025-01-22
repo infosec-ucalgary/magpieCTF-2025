@@ -24,6 +24,31 @@ ch*)
     ;;
 esac
 
+# shifting arguments over
+# echo "$@"
+# [[ -z "$@" ]] && echo "empty: $@"
+# [[ -n "$@" ]] && echo "non empty: $@"
+# exit 0
+
+function build_image() {
+    # vars
+    local prog="$1"
+
+    # setup
+    echo "Building image for $prog"
+    cd "$CWD/$prog/src"
+
+    # building the intermediate image with all the build shit
+    docker build . -t "$TAGROOT-$prog:build" --target build
+
+    # building the production image
+    docker build . -t "$TAGROOT-$prog:latest"
+}
+
+function get_program() {
+    echo ""
+}
+
 # checking for nsjail
 docker image ls | grep nsjail
 if [[ $? -ne 0 ]]; then
@@ -40,17 +65,17 @@ fi
 
 # building images
 if [ $IMAGES -eq 1 ]; then
-    for chal in $CHALS; do
-        # setup
-        echo "Building image for $chal"
-        cd "$CWD/$chal/src"
-
-        # building the intermediate image with all the build shit
-        docker build . -t "$TAGROOT-$chal:build" --target build
-
-        # building the production image
-        docker build . -t "$TAGROOT-$chal:latest"
-    done
+    if [[ -n "$@" ]]; then
+        echo "Building images: $@"
+        for prog in "$@"; do
+            build_image "$prog"
+        done
+    else
+        echo "Building all images"
+        for chal in $CHALS; do
+            build_image "$chal"
+        done
+    fi
     cd $CWD
 fi
 
@@ -72,11 +97,11 @@ if [ $PROGS -eq 1 ]; then
         tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$chal" --strip-components=1
         tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$chal.sha1.sig" --strip-components=1
         tar -xvf /tmp/image.tar -C "$CWD/$chal/src/" "ctf/$chal.debug" --strip-components=1
+
+        # clean up
+        rm -rf "/tmp/image.tar"
     done
     cd $CWD
-
-    # clean up
-    rm -rf "/tmp/image.tar"
 fi
 
 # checking the challenge flags
