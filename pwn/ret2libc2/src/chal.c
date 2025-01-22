@@ -219,7 +219,7 @@ int main(int argc, char **argv) {
     // some flare
     printf("ssh n1k0@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
            rand() % 256);
-    sleep(2);
+    sleep(1);
     printf("Linux balthazar 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
            time_buffer);
 
