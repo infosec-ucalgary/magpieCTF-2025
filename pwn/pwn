@@ -2,10 +2,10 @@
 
 help () {
     echo "Usage: $0 <build|regenerate|prune|reset>"
-    echo -e "\tbuild <images|progs>\t(Re)builds all binaries and docker iamges."
-    echo -e "\tregenerate\t\tRebuilds each challenge's Dockerfile, Makefile and .gitignore."
-    echo -e "\tclean\t\t\tRemoves all binaries, made images & dangling images."
-    echo -e "\treset\t\t\tExecutes clean, regenerate and build, in that order."
+    echo -e "\tbuild <images|progs|check>\tBuilds the images, programs & checks the flags of all."
+    echo -e "\tregenerate\t\t\tRebuilds each challenge's Dockerfile, Makefile and .gitignore."
+    echo -e "\tclean\t\t\t\tRemoves all binaries, made images & dangling images."
+    echo -e "\treset\t\t\t\tExecutes clean, regenerate and build, in that order."
 }
 
 case "$1" in
