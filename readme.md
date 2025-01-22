@@ -26,6 +26,8 @@ Here is the challenge folder structure:
         - readme.md # contains manifest of challenges
         - dist/ # contains all challenges (binaries mainly, or scripts)
                 # to be given to the participants
+                # sha1 signatures are good to provide
+                # (really only for files or compiled binaries), but optional
             binaries...
         - challenge1/
             # challenge files...
