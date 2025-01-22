@@ -51,6 +51,7 @@ if [ $PROGS -eq 1 ]; then
 
         # copying out the challenges
         tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$chal" --strip-components=1
+        tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$chal.sha1.sig" --strip-components=1
         tar -xvf /tmp/image.tar -C "$CWD/$chal/src/" "ctf/$chal.debug" --strip-components=1
     done
     cd $CWD
