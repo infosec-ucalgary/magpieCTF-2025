@@ -7,7 +7,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#define BUFFER_SIZE 0x100
+#define BUFFER_SIZE 0x60
 
 // default location for program to read flag into
 char flag_buffer[FLAG_SIZE];
