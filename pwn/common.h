@@ -7,6 +7,6 @@
 #define ERR_NO_FLAG 5
 
 #define FLAG "flag.txt"
-#define FLAG_SIZE 128
+#define FLAG_SIZE 64
 
 #endif /** __COMMON_PWN_CTF__ */
