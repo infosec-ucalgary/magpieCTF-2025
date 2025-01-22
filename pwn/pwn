@@ -2,26 +2,30 @@
 
 help () {
     echo "Usage: $0 <build|regenerate|prune|reset>"
-    echo -e "\tbuild <images|progs|check>\tBuilds the images, programs & checks the flags of all."
-    echo -e "\tregenerate\t\t\tRebuilds each challenge's Dockerfile, Makefile and .gitignore."
-    echo -e "\tclean\t\t\t\tRemoves all binaries, made images & dangling images."
-    echo -e "\treset\t\t\t\tExecutes clean, regenerate and build, in that order."
+    echo -e "\tbuild <images|progs|check> [images...]\tBuilds the images, programs & checks the flags of all."
+    echo -e "\tregenerate\t\t\t\tRebuilds each challenge's Dockerfile, Makefile and .gitignore."
+    echo -e "\tclean\t\t\t\t\tRemoves all binaries, made images & dangling images."
+    echo -e "\treset\t\t\t\t\tExecutes clean, regenerate and build, in that order."
 }
 
 case "$1" in
-    build)
+    bui*)
         shift 1
         ./.scripts/build.sh "$@"
         ;;
-    regenerate)
+    reb*)
+        shift 1
+        ./.scripts/build.sh "$@"
+        ;;
+    reg*)
         shift 1
         ./.scripts/regenerate.sh "$@"
         ;;
-    clean)
+    cle*)
         shift 1
         ./.scripts/clean.sh "$@"
         ;;
-    reset)
+    res*)
         shift 1
         ./.scripts/clean.sh "$@"
         ./.scripts/regenerate.sh "$@"
