@@ -62,7 +62,7 @@ int main() {
     // some flare
     printf("ssh n1k0@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
            rand() % 256);
-    sleep(2);
+    sleep(1);
     printf("Linux turnip 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
            time_buffer);
 
