@@ -7,10 +7,10 @@ PROGS=0
 
 # setting opts
 case "$1" in
-    images)
+    image*)
         IMAGES=1
         ;;
-    progs)
+    prog*)
         PROGS=1
         ;;
     *)
@@ -19,7 +19,23 @@ case "$1" in
         ;;
 esac
 
-# building progs
+# building images
+if [ $IMAGES -eq 1 ]; then
+    for chal in $CHALS; do
+        # setup
+        echo "Building image for $chal"
+        cd "$CWD/$chal/src"
+
+        # building the intermediate image with all the build shit
+        docker build . -t "$TAGROOT/$chal:build" --target build
+
+        # building the production image
+        docker build . -t "$TAGROOT/$chal:latest"
+    done
+    cd $CWD
+fi
+
+# building progs (requires containers be built)
 if [ $PROGS -eq 1 ]; then
     for chal in $CHALS; do
         echo "Compiling $chal"
@@ -31,14 +47,4 @@ if [ $PROGS -eq 1 ]; then
 
     # checking the compilation
     check_chals
-fi
-
-# building images
-if [ $IMAGES -eq 1 ]; then
-    for chal in $CHALS; do
-        echo "Building image for $chal"
-        cd "$CWD/$chal/src"
-        docker build . -t "$TAGROOT/$chal:latest"
-    done
-    cd $CWD
 fi
