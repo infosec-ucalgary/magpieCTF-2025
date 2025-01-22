@@ -20,6 +20,7 @@ WORKDIR /ctf
 COPY . ./
 RUN make clean || true
 RUN make
+RUN sha1sum /ctf/printf1 > /ctf/printf1.sha1.sig
 
 # trimming the image
 FROM base AS dist
