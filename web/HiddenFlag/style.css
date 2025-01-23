@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+    padding: 20px;
+    font-size: 18px; /* Increase the base font size */
+}
+
+h1 {
+    background-color: #444;
+    color: #fff;
+    padding: 20px 0; /* Increase padding for better spacing */
+    margin: 0;
+    font-size: 2em; /* Increase font size */
+}
+
+.journal-entry {
+    margin: 20px auto;
+    max-width: 800px; /* Increase max-width for better centering */
+    text-align: left;
+    font-size: 1.2em; /* Increase font size for journal entries */
+}
+
+.journal-entry p {
+    margin-bottom: 20px; /* Increase margin for better spacing */
+}
+
+.hidden-flag {
+    display: none;
+}
+
+.hidden-flag::after {
+    content: " (Inspect the page source to find the hidden flag)";
+    color: #888;
+}
