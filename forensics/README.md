@@ -15,11 +15,11 @@ Uncover the secrets hidden within the image and find the flag.
 
 ## Solution
 Run the following lines:
-```steghide extract -sf image_og.jpg```
-Leave paraphrase empty
-Decode password using Base64 (result -> my_secret_password)
-```unzip -P my_secret_password flag.zip```
-```cat flag.txt```
+- ```steghide extract -sf image_og.jpg```
+- Leave paraphrase empty
+- Decode password using Base64 (result -> my_secret_password)
+- ```unzip -P my_secret_password flag.zip```
+- ```cat flag.txt```
 
 
 ## Flag
