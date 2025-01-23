@@ -24,11 +24,13 @@ ch*)
     ;;
 esac
 
-# shifting arguments over
-# echo "$@"
-# [[ -z "$@" ]] && echo "empty: $@"
-# [[ -n "$@" ]] && echo "non empty: $@"
-# exit 0
+# shifting arguments
+shift 1
+
+# targets
+TARGETS="$CHALS"
+[[ -n "$@" ]] && TARGETS="$@"
+echo "Building $TARGETS"
 
 function build_image() {
     # vars
@@ -46,7 +48,25 @@ function build_image() {
 }
 
 function get_program() {
-    echo ""
+    # vars
+    local prog="$1"
+
+    # checking if image exists
+    docker image ls | grep "$TAGROOT-$prog" | grep build 1>&2 2>/dev/null
+    if [[ $? -ne 0 ]]; then
+        echo "Cannot extract $prog from $TAGROOT-$prog:build, because it does not exist."
+    fi
+
+    # exporting the image to a tar archive
+    docker export "$(docker create "$TAGROOT-$prog:build")" --output /tmp/image.tar
+
+    # copying out the proglenges
+    tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$prog" --strip-components=1
+    tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$prog.sha1.sig" --strip-components=1
+    tar -xvf /tmp/image.tar -C "$CWD/$prog/src/" "ctf/$prog.debug" --strip-components=1
+
+    # clean up
+    rm -rf "/tmp/image.tar"
 }
 
 # checking for nsjail
@@ -65,41 +85,19 @@ fi
 
 # building images
 if [ $IMAGES -eq 1 ]; then
-    if [[ -n "$@" ]]; then
-        echo "Building images: $@"
-        for prog in "$@"; do
-            build_image "$prog"
-        done
-    else
-        echo "Building all images"
-        for chal in $CHALS; do
-            build_image "$chal"
-        done
-    fi
+    for chal in "$TARGETS"; do
+        echo "Building image: $chal"
+        build_image $chal
+    done
     cd $CWD
 fi
 
-# building progs (requires containers be built)
+# building chals (requires containers be built)
 if [ $PROGS -eq 1 ]; then
     mkdir -p "$CWD/dist/"
-    for chal in $CHALS; do
-        # checking if image exists
-        docker image ls | grep "$TAGROOT-$chal" | grep build 1>&2 2>/dev/null
-        if [[ $? -ne 0 ]]; then
-            echo "Cannot extract $chal from $TAGROOT-$chal:build, because it does not exist."
-            continue
-        fi
-
-        # exporting the image to a tar archive
-        docker export "$(docker create "$TAGROOT-$chal:build")" --output /tmp/image.tar
-
-        # copying out the challenges
-        tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$chal" --strip-components=1
-        tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$chal.sha1.sig" --strip-components=1
-        tar -xvf /tmp/image.tar -C "$CWD/$chal/src/" "ctf/$chal.debug" --strip-components=1
-
-        # clean up
-        rm -rf "/tmp/image.tar"
+    for chal in $TARGETS; do
+        echo "Extracing program: $chal"
+        get_program $chal
     done
     cd $CWD
 fi
