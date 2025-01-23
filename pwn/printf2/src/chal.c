@@ -27,7 +27,7 @@ void read_flag(char *buffer) {
 void vuln() {
     // stack vars
     char buffer[BUFFER_SIZE];
-    char *flag_ptr = flag_buffer;
+    char *flag_ptr = 0;
 
     // main loop
     while (true) {
