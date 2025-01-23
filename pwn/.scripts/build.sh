@@ -19,7 +19,6 @@ while getopts "ipc" o; do
         CHECK=1
         ;;
     *) ;;
-
     esac
 done
 
