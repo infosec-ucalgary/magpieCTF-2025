@@ -7,28 +7,35 @@ PROGS=0
 CHECK=1
 
 # setting opts
-case "$1" in
-im*)
-    IMAGES=1
-    ;;
-pr*)
-    PROGS=1
-    ;;
-ch*)
-    CHECK=1
-    ;;
-*)
-    IMAGES=1
-    PROGS=1
-    CHECK=1
-    ;;
-esac
+while getopts "ipc" o; do
+    case "${o}" in
+    i*)
+        IMAGES=1
+        ;;
+    p*)
+        PROGS=1
+        ;;
+    c*)
+        CHECK=1
+        ;;
+    *) ;;
 
-# shifting arguments
-shift 1
+    esac
+done
+
+# if there are no flags
+if [[ $OPTIND -eq 1 ]]; then
+    IMAGES=1
+    PROGS=1
+    CHECK=1
+fi
+
+# shifting
+shift $((OPTIND - 1))
 
 # targets
 TARGETS="$CHALS"
+# echo "all: $@ IMAGES=$IMAGES PROGS=$PROGS CHECK=$CHECK"
 [[ -n "$@" ]] && TARGETS="$@"
 echo "Building $TARGETS"
 
