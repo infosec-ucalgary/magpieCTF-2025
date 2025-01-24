@@ -5,8 +5,6 @@ source ./.scripts/constants.sh
 CWD=$(pwd)
 
 ## cleanup
-# delete dist dir
-rm -rfv dist
 
 # remove challenges
 for chal in $CHALS; do
@@ -16,6 +14,7 @@ for chal in $CHALS; do
     echo "Deleted $chal"
 done
 
+# going back to the starting dir
 cd "$CWD"
 
 # removing images
