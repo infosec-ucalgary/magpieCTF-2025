@@ -68,19 +68,6 @@ int login(user_t *__user) {
     return 0;
 }
 
-// vulnerable! the buffer size is greater than the size of the string in the
-// struct
-void change_username(user_t *__user) {
-    char buffer[FIELD_LENGTH];
-
-    // get new username
-    printf("Enter new username: ");
-    fgets(buffer, BUFFER_SIZE, stdin);
-
-    // vulnerable! buffer is larger than user_t.username
-    strcpy(__user->username, buffer); // vulnerable!
-}
-
 void win(user_t __user) {
     // check information
     if (strncmp(__user.username, WIN_USER, strlen(WIN_USER)) != 0) {
@@ -142,7 +129,11 @@ int main(int argc, char **argv) {
         // perform choice
         switch (option) {
         case 1: // change username
-            change_username(&user);
+                // vulnerable! the buffer size is greater than the size of the
+                // string in the
+                // struct
+            printf("Enter new username: ");
+            fgets(user.username, BUFFER_SIZE, stdin);
             break;
         case 2: // try to win
             win(user);
