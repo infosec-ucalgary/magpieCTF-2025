@@ -1,7 +1,7 @@
+#include "./common.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "./common.h"
 
 #define WIN_USER "cristina33"
 #define WIN_CODE "01843101"
@@ -68,13 +68,14 @@ int login(user_t *__user) {
     return 0;
 }
 
-// vulnerable! the buffer size is greater than the size of the string in the struct
+// vulnerable! the buffer size is greater than the size of the string in the
+// struct
 void change_username(user_t *__user) {
-    char buffer[BUFFER_SIZE];
+    char buffer[FIELD_LENGTH];
 
     // get new username
     printf("Enter new username: ");
-    fgets(buffer, BUFFER_SIZE - 1, stdin);
+    fgets(buffer, BUFFER_SIZE, stdin);
 
     // vulnerable! buffer is larger than user_t.username
     strcpy(__user->username, buffer); // vulnerable!
