@@ -1,5 +1,7 @@
 # overflow2
 
+Author: oblivious_turnip
+
 >Difficulty: easy (hard ret2libc)
 
 - [ ] stack canaries (to make it easier)
@@ -8,6 +10,9 @@
 
 ret2libc is hypothetically possible because you could hypothetically create a rop-chain
 using the vulnerable format string.
+
+Host flag: `magpieCTF{i_love_insecure_format_strings}`
+Root flag: `magpieCTF{printf_can_create_rop_chains}`
 
 ## Backstory
 

@@ -1,5 +1,7 @@
 # ret2libc2
 
+Author: oblivious_turnip
+
 >Difficulty: hard
 
 - [x] stack canaries
@@ -15,6 +17,8 @@ This is a harder ret2libc because:
 For intermediate/advanced hackers, this is decently trivial.
 But for this will be harder for beginners that aren't used to dealing with
 these things.
+
+Flag: `magpieCTF{beware_of_what_you_log}`
 
 ## Backstory
 

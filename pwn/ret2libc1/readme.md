@@ -1,15 +1,19 @@
 # ret2libc1
 
+Author: oblivious_turnip
+
 >Difficulty: intermediate
 
 - [ ] stack canaries
 - [x] ASLR
 - ret2libc? yes
 
-A simple ret2libc, no ASLR nor canaries. Simple.
+A simple ret2libc, with ASLR (might change) nor canaries. Simple.
 
 >If ASLR is mistakenly enabled, the challenge is still solvable because you can
 >leak the address of `main`, then fix it after you enter in the password.
+
+Flag: `magpieCTF{ret2libc_is_fun}`
 
 ## Backstory
 

@@ -1,5 +1,7 @@
 # printf2
 
+Author: oblivious_turnip
+
 >Difficulty: intermediate (hard if they don't know what to do)
 
 - [x] stack canaries
@@ -8,6 +10,8 @@
 
 ret2libc isn't possible unless the hacker can escape the while loop
 (which should be impossible unless they can somehow change `rip`)
+
+Flag: `magpieCTF{printf_is_dangerous}`
 
 ## Backstory
 

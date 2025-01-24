@@ -1,5 +1,7 @@
 # overflow1
 
+Author: oblivious_turnip
+
 >Difficulty: easy (easy ret2libc)
 
 - [ ] stack canaries
@@ -8,6 +10,9 @@
 
 ret2libc is hypothetically possible in this challenge since the struct that gets
 overwritten is on the stack.
+
+Host flag: `magpieCTF{tony_hawk_loves_strcpy}`
+Root flag: `magpieCTF{mind_your_buffer_size}`
 
 ## Backstory
 
