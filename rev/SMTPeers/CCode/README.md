@@ -1,7 +1,7 @@
 # Royce-SMTP-C-Code
 
 Build using the makefile. 
-SMTP Library at https://github.com/somnisoft/smtp-client using CC0 License. SMTP4DEV at https://github.com/rnwood/smtp4dev (server). You will need SSLDev installed to compile.
+SMTP Library at https://github.com/somnisoft/smtp-client using CC0 License. SMTP4DEV at https://github.com/rnwood/smtp4dev (server). You will need SSLDev installed to compile `sudo apt-get install libssl-dev` 
 
 INSTRUCTIONS BEFORE RELEASE:
  - Omit the SMTP_DEBUG in the header
