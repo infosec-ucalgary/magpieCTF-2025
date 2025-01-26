@@ -1,0 +1,23 @@
+---
+services:
+  nginx:
+    build: .
+    restart: unless-stopped
+
+    #========================================================================
+    # These next two lines are critical. It is important we run in host mode
+    # so that we can apply iptables and tc rules to the host interface.
+    # NET_ADMIN provides the necessary capabilities.
+    #========================================================================
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+
+    #========================================================================
+    # Change the container ports here. Because we are running in host
+    # networking mode, we can't use the typical docker port mappings.
+    #========================================================================
+    environment:
+      NGINX_HTML_PORT: 9090 # This port will not be rate-limted.
+      NGINX_FLAG_PORT: 9091 # This port will be rate-limited.
+
