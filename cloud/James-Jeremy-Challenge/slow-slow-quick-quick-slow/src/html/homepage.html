@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    h1 {
+      font-family: 'VT323', monospace;
+      font-size: 50px;
+      text-decoration: underline;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    .footer {
+      position: fixed;
+      text-align: center;
+      bottom: 0px;
+      width: 100%;
+    }
+
+    .blink_me {
+      animation: blinker 2s linear infinite;
+    }
+
+    @keyframes blinker {
+      50% {
+        opacity: 0.1;
+      }
+    }
+
+    .hover-image {
+      transition: transform 0.09s steps(1, end);
+      height: auto;
+    }
+
+    .hover-image:hover {
+      transform: scale(1.2);
+      object-fit: cover;
+    }
+
+    .flying-image {
+      position: absolute;
+      top: 50%;
+      /* Start at the middle of the screen vertically */
+      left: -100px;
+      /* Start off-screen */
+      transform: translateY(-50%);
+      /* Center the image vertically */
+      animation: flyAcross 5s linear infinite;
+      /* Infinite animation */
+    }
+
+    @keyframes flyAcross {
+      0% {
+        left: -900px;
+        /* Start off-screen left */
+      }
+
+      100% {
+        left: 100vw;
+        /* End off-screen right */
+      }
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+    }
+
+    .level {
+      object-fit: cover;
+      margin: 50px;
+    }
+  </style>
+</head>
+
+<body background="background.jpg">
+  <img class="flying-image" src="assets/santa.gif" height="110">
+
+  <div id="title" style="text-align:center">
+    <span class="blink_me" style="text-align: center; vertical-align: middle; color: red">
+      <h1>Clikc button below for the flag! Totally free!</h1>
+    </span>
+  </div>
+
+  <div class="container" style="text-align: center;">
+    <img class="level" src="assets/andy.gif" alt="spicy Andy">
+    <a href="PLACEHOLDER_FLAG_URL/flag"><img class="hover-image" src="assets/push-me.jpg" alt="sweatin" width="400"
+        S></a>
+    <img class="level" src="assets/conan.gif" alt="CO.Nan!">
+  </div>
+
+  <img class="flying-image" src="assets/mrpeanut.gif" height="110">
+
+  <br><br><br><br><br><br><br><br>
+  <div style="text-align: center;">
+    <img class="www" src="assets/www.gif">
+    <img class="www" src="assets/www.gif">
+  </div>
+
+  <div class="footer">&#169 2025 Slow, Slow, Quick Quick, Slow - All Rights Reserved
+  </div>
+
+</body>
+
+</html>
