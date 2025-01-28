@@ -8,7 +8,7 @@
 
 #define FIELD_LENGTH 32
 #define NUM_USERS 4
-#define BUFFER_SIZE ((FIELD_LENGTH * 4) + 0x10)
+#define BUFFER_SIZE ((FIELD_LENGTH * 8) + 0x10)
 
 typedef struct _user {
     char username[FIELD_LENGTH];
@@ -42,10 +42,12 @@ int login(user_t *__user) {
     char local_code[FIELD_LENGTH];
 
     printf("Username: ");
-    fgets(local_user, FIELD_LENGTH - 1, stdin);
+    fgets(local_user, FIELD_LENGTH,
+          stdin); // fgets by default reads n - 1 bytes
 
     printf("Enter security code: ");
-    fgets(local_code, FIELD_LENGTH - 1, stdin);
+    fgets(local_code, FIELD_LENGTH,
+          stdin); // fgets by default reads n - 1 bytes
 
     // looking thru all the users to find a match
     for (int i = 0; i < NUM_USERS; i++) {
