@@ -37,7 +37,7 @@ function check_chals() {
     assert_eq $(check_pie dist/printf2) 0 "printf2 should have ASLR"
     assert_not_eq $(check_pie dist/overflow1) 0 "overflow1 shouldn't have ASLR"
     assert_eq $(check_pie dist/overflow2) 0 "overflow2 should have ASLR"
-    assert_eq $(check_pie dist/ret2libc1) 0 "ret2libc1 should have ASLR"
+    assert_not_eq $(check_pie dist/ret2libc1) 0 "ret2libc1 shouldn't have ASLR"
     assert_eq $(check_pie dist/ret2libc2) 0 "ret2libc2 should have ASLR"
 }
 
