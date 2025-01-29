@@ -1,34 +1,37 @@
-# magpieCTF 2025 CTF Challenge  
-**Author:** Mcveigth Ojeda  
+# Eyes Everywhere  
 
-# Challenge name:  
-**"Eyes Everywhere"**  
+Author: **Mcveigth Ojeda (Gato Matematico)**  
 
-## Description:  
-A security breach at a surveillance facility has left behind fragmented and corrupted images from a camera feed. Can you piece together the images, uncover hidden messages, and decode the final flag?  
+> Difficulty: **Easy/Medium**  
 
-## Difficulty:  
-Medium  / TBD?
+Flag: `magpieCTF{B1INDnES5_!s_4_PRIV47e_Ma7t3R_83twE3n_A_PER$on_aND_tHE_3YE5_Wi7H_wHIcH_tHey_w3rE_BorN}`  
 
-## Category:  
-Forensics, Steganography  
+---
 
-## Outline:  
-1. **Challenge Setup:**  
-   - Players are provided with a zip file containing multiple fragmented images labeled sequentially (e.g., `camera_1.jpg`, `camera_2.jpg`).    
+## Backstory  
+A security breach at a surveillance facility has left behind fragmented and corrupted images from a critical camera feed. Investigators suspect the attackers hid clues within the footage to taunt the facility’s security team. Your task is to reconstruct the corrupted data, uncover hidden messages, and decode the final flag to identify the perpetrators.  
 
-2. **Task Flow:**  
-   1. **Image Reconstruction:**  
-      - Players must identify which fragments correspond to each "camera feed" and piece them together to form a complete image.  
+---
 
-   2. **Steganography Analysis:**  
-      - Players may use `steghide` to extract embedded text files from the images.  
-      - These text files contain fragments of the flag in an encrypted or encoded format.  
+## Intended Solve  
+1. **Image Reconstruction**:  
+   - Players receive a zip file (`surveillance_feed.zip`) containing fragmented images (e.g., `camera_random_1.jpg`). These fragments are parts of a single larger image. When pieced together (manually or via tools like GIMP/Python PIL), the reconstructed image subtly hints at the flag’s theme.  
 
-   3. **Noise Removal and Decoding:**  
-      - Some of the extracted text files are obscured with random characters or noise.  
-      - Players must clean or filter the data to reveal meaningful portions of the flag.  
-      - Instructions for decryption or decoding may be partially hidden in the noise.  
+2. **Steganography Extraction**:  
+   - Each image contains embedded data via `steghide` (no password). Extracting from **any single image** reveals a text file with a fragment of the flag encoded in Base64 but obscured by random non-Base64 characters (e.g., `#m?a@gp!i^eCTF{...}`).  
 
-3. **Flag Assembly:**  
-   - After cleaning the text file fragments, players assemble them in the correct order and decode it to retrieve the complete flag.  
+3. **Noise Removal and Decoding**:  
+   - Players must filter out characters not allowed in Base64 (e.g., `!@#$%^&*`). Cleaned fragments resemble valid Base64 strings (e.g., `bWFncGllQ1RGe...`).  
+
+4. **Flag Assembly**:  
+   - Combine all cleaned Base64 fragments in order and decode to reveal the final flag.  
+
+---
+
+## Handouts  
+- `surveillance_feed.zip`: Contains 4–9 fragmented JPEG images (e.g., `camera_random_1.jpg`, `camera_random_2.jpg`).  
+
+---
+
+## Other  
+- **Tools Required**: `steghide`, image editors (GIMP), scripting tools (Python for automation).  
