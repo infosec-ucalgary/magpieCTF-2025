@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template --host localhost --port 4007 --libc ../../libc.so.6 ../src/stack3
+# $ pwn template --host localhost --port 14005 --libc ../../libc.so.6 ../src/ret2libc1.debug
 from pwn import *
 
 # Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or '../src/stack3')
+exe = context.binary = ELF(args.EXE or '../src/ret2libc1.debug')
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -13,22 +13,8 @@ exe = context.binary = ELF(args.EXE or '../src/stack3')
 # ./exploit.py DEBUG NOASLR
 # ./exploit.py GDB HOST=example.com PORT=4141 EXE=/tmp/executable
 host = args.HOST or 'localhost'
-port = int(args.PORT or 4007)
-
-# Use the specified remote libc version unless explicitly told to use the
-# local system version with the `LOCAL_LIBC` argument.
-# ./exploit.py LOCAL LOCAL_LIBC
-if args.LOCAL_LIBC:
-    libc = exe.libc
-elif args.LOCAL:
-    library_path = libcdb.download_libraries('../../libc.so.6')
-    if library_path:
-        exe = context.binary = ELF.patch_custom_libraries(exe.path, library_path)
-        libc = exe.libc
-    else:
-        libc = ELF('../../libc.so.6')
-else:
-    libc = ELF('../../libc.so.6')
+port = int(args.PORT or 14005)
+libc = ELF('../../libc.so.6')
 
 def start_local(argv=[], *a, **kw):
     '''Execute the target binary locally'''
@@ -72,14 +58,8 @@ continue
 
 io = start()
 
-# shellcode = asm(shellcraft.sh())
-# payload = fit({
-#     32: 0xdeadbeef,
-#     'iaaa': [1, 2, 'Hello', 3]
-# }, length=128)
-# io.send(payload)
-# flag = io.recv(...)
-# log.success(flag)
+usr = "n1k0th3gr3@t"
+pwd = "cr1st1n@scks"
 
 io.interactive()
 
