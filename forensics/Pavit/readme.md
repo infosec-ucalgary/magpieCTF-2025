@@ -1,16 +1,17 @@
-# CTF Challenge: [Cat's content]
+# CTF Challenge: Mansion-Recovery
 
 ## Challenge Overview
-Challenge requires you to investigate all PCAP files and find hidden content to access the flag. 
+After Krpyto's Mansion Security was compromised a PCAP file was recovered. Maybe this can lead us to the killer?
 
 ## Hints
-You might not need to investigate all the files
+You might have to manually decode a code at the end. 
+The final decoded flag will not be in format for example - MAGPIE{} it wont be inside the MAGPIE flag format it will just be a string
 
 ## Difficulty Level
-Medium - Hard
+Medium 
 
 ## Estimated Time to Solve
-30mins - 1 hour
+10-20 Minutes
 
 ## Tools required
-Wireshark or something similar
+Wireshark or Scapy and some brain
