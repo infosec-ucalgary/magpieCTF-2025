@@ -80,7 +80,7 @@ void menu() {
 
 void vuln() {
     // read flag
-    char flag_buffer[FLAG_SIZE];
+    char flag_buffer[FLAG_SIZE] = {0}; // because the formatting is bugging me
     read_flag(flag_buffer);
 
     // -- exploit --
