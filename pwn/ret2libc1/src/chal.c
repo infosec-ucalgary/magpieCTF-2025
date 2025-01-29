@@ -20,7 +20,7 @@ void gift() {
 
 // vulnerable!
 void vuln() {
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFFER_SIZE] = {0};
     puts("-- N1k0's PC --");
 
     // get the username
