@@ -53,7 +53,7 @@ int main() {
     srand(time(NULL));
 
     // time information
-    char time_buffer[BUFFER_SIZE];
+    char time_buffer[BUFFER_SIZE * 2];
     time_t time_struct;
     time(&time_struct);
     strftime(time_buffer, BUFFER_SIZE, "%a %b %d %k:%M:%S %Z %Y",
