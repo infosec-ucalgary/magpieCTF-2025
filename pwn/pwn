@@ -6,6 +6,7 @@ help () {
     echo -e "\t\t\t\tBuilds the images, programs & checks the flags of all."
     echo -e "\tregenerate\t\tRebuilds each challenge's Dockerfile, Makefile and .gitignore."
     echo -e "\tclean\t\t\tRemoves all binaries, made images & dangling images."
+    echo -e "\tlibc\t\t\tGets the linker and libc from any of the docker images."
     echo -e "\treset\t\t\tExecutes clean, regenerate and build, in that order."
 }
 
@@ -25,6 +26,10 @@ case "$1" in
     cle*)
         shift 1
         ./.scripts/clean.sh "$@"
+        ;;
+    lib*)
+        shift 1
+        ./.scripts/libc.sh "$@"
         ;;
     res*)
         shift 1
