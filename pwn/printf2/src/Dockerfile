@@ -14,12 +14,15 @@ RUN chmod o+x /ctf
 # intermediary image
 FROM base AS build
 
+# this argument is for building the debug challenge
+ARG MAKEROOT
+
 # building the challenge in the container
 # the `|| true` is for steps that might fail
 WORKDIR /ctf
 COPY . ./
 RUN make clean || true
-RUN make
+RUN make MAKEROOT="${MAKEROOT}"
 RUN sha1sum /ctf/printf2 > /ctf/printf2.sha1.sig
 
 # trimming the image
