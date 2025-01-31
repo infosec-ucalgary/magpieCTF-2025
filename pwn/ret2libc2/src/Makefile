@@ -3,8 +3,8 @@ include ./flags.mk
 
 PROG		:= ret2libc2
 GLOBAL_FLAGS:= $(FLAGS) -w
-DEBUG_FLAGS := $(GLOBAL_FLAGS) -ggdb3 -g -Wl,-rpath="../../" \
-				 -Wl,--dynamic-linker="../../ld-linux-x86-64.so.2"
+DEBUG_FLAGS := $(GLOBAL_FLAGS) -ggdb3 -g -Wl,-rpath="${MAKEROOT}" \
+				 -Wl,--dynamic-linker="${MAKEROOT}/ld-linux-x86-64.so.2"
 
 # main build target
 all: main
