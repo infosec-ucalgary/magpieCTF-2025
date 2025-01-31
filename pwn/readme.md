@@ -14,6 +14,12 @@ The *overflow* challenges are guaranteed to...
 - have a user flag, which is given to participants that trigger the `win` function
 - have a root flag, which is given to participants that spawn a shell via. ret2libc
 
+>For ret2libc challenges, some of the functions don't appear in the right locations...
+>despite the version of libc I'm using for testing being the exact same as the libc
+>running in the container.  
+>These are the same files, verified by sha1 hashes. These exploits are still possible,
+>it's just really weird.
+
 ## Building
 
 In a terminal run:
