@@ -25,7 +25,7 @@ void vuln() {
 
     // get the username
     printf("Username: ");
-    read(stdin, buffer, READ_SIZE); // vulnerable! read size is greater than the buffer size
+    read(0, buffer, READ_SIZE); // vulnerable! read size is greater than the buffer size
 
     // check the username
     if (strncmp(buffer, USERNAME, strlen(USERNAME)) != 0) {
@@ -35,7 +35,7 @@ void vuln() {
 
     // get the password
     printf("Welcome %s, enter your password: ", buffer);
-    read(stdin, buffer, READ_SIZE); // vulnerable! read size is greater than the buffer size
+    read(0, buffer, READ_SIZE); // vulnerable! read size is greater than the buffer size
 
     // check the password
     if (strncmp(buffer, PASSWORD, strlen(PASSWORD)) != 0) {
