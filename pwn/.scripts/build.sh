@@ -33,24 +33,22 @@ fi
 shift $((OPTIND - 1))
 
 # targets
-TARGETS="$CHALS"
-# echo "all: $@ IMAGES=$IMAGES PROGS=$PROGS CHECK=$CHECK"
+TARGETS=("$CHALS")
 [[ -n "$@" ]] && TARGETS="$@"
-echo "Building $TARGETS"
+#echo "all: $TARGETS IMAGES=$IMAGES PROGS=$PROGS CHECK=$CHECK"
 
 function build_image() {
     # vars
     local prog="$1"
 
     # setup
-    echo "Building image for $prog"
     cd "$CWD/$prog/src"
 
     # building the intermediate image with all the build shit
-    docker build . -t "$TAGROOT-$prog:build" --target build
+    docker build . -t "$TAGROOT-$prog:build" --target build --build-arg MAKEROOT="$CWD"
 
     # building the production image
-    docker build . -t "$TAGROOT-$prog:latest"
+    docker build . -t "$TAGROOT-$prog:latest" --build-arg MAKEROOT="$CWD"
 }
 
 function get_program() {
@@ -91,7 +89,11 @@ fi
 
 # building images
 if [ $IMAGES -eq 1 ]; then
-    for chal in "$TARGETS"; do
+    # logging
+    echo "Image targets: $TARGETS"
+
+    # building
+    for chal in $TARGETS; do
         echo "Building image: $chal"
         build_image $chal
     done
@@ -100,6 +102,10 @@ fi
 
 # building chals (requires containers be built)
 if [ $PROGS -eq 1 ]; then
+    # logging
+    echo "Program targets: $TARGETS"
+
+    # extracting
     mkdir -p "$CWD/dist/"
     for chal in $TARGETS; do
         echo "Extracing program: $chal"
