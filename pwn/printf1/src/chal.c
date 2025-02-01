@@ -31,7 +31,7 @@ void __attribute__((noreturn)) vuln() {
     char buffer[FLAG_SIZE];
     unsigned long long loc = 0;
 
-    puts("-- j@k3ware bot v1.2 --");
+    puts("-- netrunnerware bot v1.2 --");
 
     // for the plot
     strncpy(buffer, "vasvygengvba_cynaarq_njnvgvat_pbasvezngvba",
