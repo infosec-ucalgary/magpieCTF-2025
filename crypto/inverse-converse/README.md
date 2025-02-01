@@ -3,7 +3,7 @@
 ### Author: Christina He (tomato_tomatoes)
 
 ## Description
-Modular multiplicative inverse is an important fundamental concept.
+My relationship with Professor Richard Hash is defined by an "inverse" dynamic—where our approaches to cryptography couldn’t be more opposite. While I believe in innovation and adaptability, he is firmly rooted in tradition, advocating for methods that have stood the test of time. Where I see flexibility and evolution, he sees instability and risk. Our perspectives mirror each other’s in a way: he’s focused on maintaining a static, tried-and-true system, while I push for constant progress, knowing that staying the same in the face of growing threats is the real danger. In this inverse, our work complements yet challenges one another—he strives for preservation, and I, for transformation. But ultimately, it’s this very contrast that drives the future of cryptography forward.
 
 
 ## Hints
@@ -23,4 +23,4 @@ So given an integer 0<=h<m, k^{-1}kh=kk^{-1}h=khk^{-1}=h as multiplication is co
 By taking the inverse of 0x1337 and multiply with c we get 0x1337^{-1}c=0x1337^{-1}0x1337m=m \mod k. Since k is larger than than the bits of 0x1337 and m combined, we know m is the original plaintext value.
 
 ## Flag
-magpieCTF{1nv3rs3_und0_m4g1c}
+magpieCTF{1nv3rs3_cr34t3s_fr1ct10n}
