@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source ./.scripts/constants.sh
-source ./.scripts/assert.sh
+source ./scripts/constants.sh
+source ./scripts/assert.sh
 
 # This automagically updates & configures the challenges' Makefiles.
 # Dockerfiles, and .gitignores

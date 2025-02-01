@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./.scripts/constants.sh
+source ./scripts/constants.sh
 
 CWD=$(pwd)
 IMAGES=0
