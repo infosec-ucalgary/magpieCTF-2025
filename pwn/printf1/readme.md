@@ -8,15 +8,18 @@ Author: oblivious_turnip
 - [x] ASLR
 - ret2libc? nope
 
-ret2libc isn't possible here because of the call to
-`exit` in the `vuln` function.
+ret2libc isn't possible here because of the call to `exit` in the `vuln` function.
 
 Flag: `magpieCTF{aslr_isnt_foolproof}`
 
 ## Backstory
 
-"We've identified a zombie device, belonging to the hacker *Niko*, it's your task to
-break in and find whatever's on that machine."
+New email from cors@nypd.gov:
+
+'We've identified some infected routers belonging to a botnet, ran by the
+hacker named "Jake Kaylined" (known aliases "j@k3", "kaylined")
+coincidentally, one of our prime suspects in the murder of Cristina Krypto.
+It's your job to break into that router and see what you can find.'
 
 ## Intended Solve
 
