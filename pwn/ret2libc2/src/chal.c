@@ -7,14 +7,14 @@
 
 #define TARGET_USERNAME "n1k0th3gr3@t"
 #define TARGET_PASSWORD "cr1st1n@scks"
-#define LEN_USERNAME 0x20
-#define LEN_PASSWORD 0x20
+#define LEN_USERNAME 0x40
+#define LEN_PASSWORD 0x40
 #define READ_SIZE 0x100
 
 #define LEN_HOSTNAME 0x30
 #define LEN_TIME 0x30
 #define LEN_PRE (LEN_HOSTNAME + LEN_TIME) // pre = hostname & timestamp
-#define LEN_LOGMSG (LEN_USERNAME + LEN_PASSWORD + 0x40) // the log content
+#define LEN_LOGMSG (LEN_USERNAME + LEN_PASSWORD + 0x80) // the log content
 #define LEN_LOG (LEN_PRE + LEN_LOGMSG + 0x20)           // the length of the log
 #define MAX_LOGS 32
 
