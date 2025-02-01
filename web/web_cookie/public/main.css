@@ -1,0 +1,47 @@
+h1{
+    font-size: 90px;
+    font-family: garamond;
+}
+
+h3 {
+    font-size: 25px;
+    font-family: garamond;
+    margin-bottom: 5px;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(to bottom, black, purple);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+}
+
+button {
+    height: 50px;
+    border: solid;
+    border-radius: 2px;
+    border-color: white;
+    color: white;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.parentDiv {
+    height: 50vh;
+    width: 35%;
+    display: flex;
+}
+
+.childDiv {
+    margin: 30px;
+    border: solid;
+    border-radius: 2px;
+    border-color: white;
+    color: white;
+    height: 50vh;
+    width: 200%;
+}
