@@ -25,27 +25,31 @@ void read_flag(char *buffer) {
     fclose(fd);
 }
 
+// vulnerable! the hacker has arbitrary read access
 void __attribute__((noreturn)) vuln() {
     // stack vars
     char buffer[FLAG_SIZE];
     unsigned long long loc = 0;
 
-    puts("N1k0 says: try and defeat ASLR hacker!");
+    puts("-- j@k3ware bot v1.2 --");
+
+    // for the plot
+    strncpy(buffer, "xelcgb_vf_tbar", FLAG_SIZE); // says krypto_is_gone
 
     // -- exploit --
-    printf("I'll let you say something: ");
+    printf("Any commands? ");
     fgets(buffer, FLAG_SIZE - 1, stdin);
-    printf("You said: ");
+    printf("Roger, preparing to execute: ");
     printf(buffer); // vulnerable!
 
-    printf("I bet you don't know where to read from? ");
+    printf("Where do I start? ");
     fscanf(stdin, "%lld", &loc);
     getchar();
     memcpy(buffer, (void *)loc, FLAG_SIZE - 1);
     buffer[FLAG_SIZE - 1] = 0;
 
     // potentially printing out the flag
-    printf("I doubt this is interesting: %s\n", buffer);
+    printf("Finished command: %s\n", buffer);
 
     // preventing ret2libc
     exit(0);
@@ -69,7 +73,7 @@ int main() {
              localtime(&time_struct));
 
     // some flare
-    printf("ssh n1k0@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
+    printf("ssh j@k3@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
            rand() % 256);
     sleep(1);
     printf("Linux netgear1 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",

