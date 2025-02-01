@@ -1,5 +1,4 @@
 #include "./common.h"
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -84,7 +83,8 @@ void log_entry(char *__input, ssize_t nb) {
 
     // use snprintf to format everything, unsafe!
     // vulnerable! unsafe due to user input potentially having format characters
-    snprintf(logs_g[num_logs_g], fmin(nb, LEN_LOG), post, hostname, raw_time);
+    snprintf(logs_g[num_logs_g], nb < LEN_LOG ? nb : LEN_LOG, post, hostname,
+             raw_time);
 
     // incrementing the log count
     num_logs_g += 1;
