@@ -182,18 +182,21 @@ void vuln() {
         case 1:
             // += so that the hacker doesn't have to log in and out repeatedly
             auth += login(username, password);
+            break;
         case 2:
             if (auth == 0) {
                 puts("Unauthorized.");
             } else {
                 view_logs();
             }
+            break;
         case 3:
             if (auth == 0) {
                 puts("Unauthorized.");
             } else {
                 goto LEAVE_VULN;
             }
+            break;
         default:
             break;
         }
