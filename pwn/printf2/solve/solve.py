@@ -76,7 +76,7 @@ def send_payload(io: process | connect, _payload: bytes, newline: bool = True) -
     if newline:
         recv = io.recvuntil(b"\n", drop=True)
     else:
-        recv = io.recvuntil(b"n1k0", drop=True)
+        recv = io.recvuntil(b"j@k3", drop=True)
     return recv
 
 

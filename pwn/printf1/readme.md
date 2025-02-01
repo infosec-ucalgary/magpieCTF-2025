@@ -14,11 +14,11 @@ Flag: `magpieCTF{aslr_isnt_foolproof}`
 
 ## Backstory
 
-New email from cors@nypd.gov:
+New email from <cors@nypd.gov>:
 
 'We've identified some infected routers belonging to a botnet, ran by the
-hacker named "Jake Kaylined" (known aliases "j@k3", "kaylined")
-coincidentally, one of our prime suspects in the murder of Cristina Krypto.
+hacker named "*Jake Kaylined*" (known aliases "*j@k3*", "*kaylined*")
+coincidentally, one of our prime suspects in the murder of Christina Krypto.
 It's your job to break into that router and see what you can find.'
 
 ## Intended Solve
