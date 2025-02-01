@@ -14,12 +14,12 @@ def challenge(req):
         try:
             ciphertext=open('ciphertext.txt','r').read()
             public_key=open('public_key.pem','r').read()
-            msg = f"public key: {public_key}\nFlag ciphertext:{ciphertext}\nI can decrypt anything but the flag ciphertext for you\nGive me a base64 encoded ciphertext\n"
+            msg = f"public key: {public_key}\nFlag ciphertext:{ciphertext}\nDifference shall resolve into an existence in harmony\n"
             req.sendall(msg.encode())
             n=RSA.import_key(public_key).n
             cipher_input=str(req.recv(4096).decode().strip())
             if ciphertext==cipher_input:
-                req.sendall(b"Don't try to trick me\n")
+                req.sendall(b"One sided view will not result in balance\n")
             else:
                 d=read_private_key('private_key.pem').d
                 plaintext=pow(int(cipher_input, 16),d,n)
