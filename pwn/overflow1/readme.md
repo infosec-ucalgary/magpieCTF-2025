@@ -16,17 +16,35 @@ Root flag: `magpieCTF{mind_your_buffer_size}`
 
 ## Backstory
 
-"We have discovered a hidden terminal claiming to be one of ours, but we've confirmed that it isn't.
-We suspect the hacker named *Niko* created it and we have a hunch that it has something to do with
-Cristina. Be careful."
+New email from <cors@nypd.gov>:
+
+'The cyberteam has discovered some unauthorized access to the NYPD's infrastructure,
+we've matched the inbound IP addresses to *Jake*'s botnet. After your previous
+success, we want you to see what you can find on these machines.
+
+Additionally, take whatever you find with a grain of salt.'
+
+>Plot:
+>The login credentials are coincidentally related to Edward Cors, and one
+>of the suspects, when un-ROT13'd, is the same as the login credentials.
 
 ## Intended Solve
 
-Abuse the fact that a) the buffer is larger than the size of the string within the struct,
-and b) the fact that `strcpy` doesn't care how big the destination buffer is.
+There are two exploits, ret2win and ret2libc:
 
-The hacker is supposed to overwrite the currently logged in user's username and code to
-`cristina33` and `01843101` in order to win the challenge.
+Intended solve for ret2win:
+
+1. Decompile the program (of course) and find the credentials to login & to win.
+2. Overflow the `user_t user` struct on the stack to overwrite the username and code.
+3. Execute the `win` function and get the flag.
+
+Intended solve for ret2libc:
+
+1. Do steps 1 and 2 of ret2win.
+2. Use the fact that this challenge doens't have ASLR, therefore you can just go right into a rop chain
+3. Leak the addresses of the imported functions of libc.
+4. Find the correct version of libc, calculate its base address.
+5. Spawn a shell and get `flag.root.txt`.
 
 ## Handouts
 

