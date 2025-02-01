@@ -7,13 +7,13 @@ source ./scripts/assert.sh
 # Dockerfiles, and .gitignores
 
 CWD=$(pwd)
-mkdir -p "$CWD/dist"
 
-for chal in $CHALS; do
-    if [[ $chal != *"$1"* ]]; then
-        continue
-    fi
+# targets
+TARGETS=("$CHALS")
+[[ -n "$@" ]] && TARGETS="$@"
+# echo "all: $TARGETS"
 
+for chal in $TARGETS; do
     # updating the docker file
     cp -f ./base.Dockerfile "$CWD/$chal/src/Dockerfile"
     sed -i "s/BINARY_NAME/$chal/g" "$CWD/$chal/src/Dockerfile"
@@ -27,5 +27,8 @@ for chal in $CHALS; do
     echo "common.h" >> "$CWD/$chal/src/.gitignore"
 
     # copying the header file
-    cp "$CWD/common.h" "$CWD/$chal/src/common.h"
+    cp -f "$CWD/common.h" "$CWD/$chal/src/common.h"
+
+    # logging
+    echo "Regenerated files for $chal."
 done
