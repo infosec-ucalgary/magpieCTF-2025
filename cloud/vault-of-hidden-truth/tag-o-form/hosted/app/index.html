@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>String Matching Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Guess the Word</h1>
+  <p>Type the droplet tag below:</p>
+  <input type="text" id="userInput" placeholder="Enter your guess">
+  <button onclick="checkWord()">Submit</button>
+  <p id="message"></p>
+
+  <script>
+    const secretWord = "HzYKuCE6TvNQ9wWY8XJd"; // Change this to your desired word
+
+    function checkWord() {
+      const userInput = document.getElementById('userInput').value;
+      const message = document.getElementById('message');
+
+      if (userInput.toLowerCase() === secretWord) {
+        message.textContent = "magpie{i_like_your_funny_words_magic_man}";
+      } else {
+        message.textContent = "Try again!";
+        message.style.color = "red"; // Change color for incorrect guesses
+      }
+    }
+  </script>
+</body>
+</html>
