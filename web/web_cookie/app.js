@@ -14,7 +14,7 @@ app.get('/', (req, res)=>{
 });
 
 app.get('/hidden', (req, res)=>{
-    const user = req.cookies.user
+    const user = req.cookies.wgrj
     if (user != 'crzav'){
         res.status(200);
         res.sendFile(path.join(__dirname, 'templates', 'hidden.html'));

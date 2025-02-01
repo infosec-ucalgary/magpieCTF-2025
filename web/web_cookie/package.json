@@ -4,13 +4,18 @@
   "description": "magpie web challenge",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./styles.css -o ./public/css/styles.css --watch"
   },
   "author": "Mohammad Hashmi",
   "license": "ISC",
   "dependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "autoprefixer": "^10.4.20",
     "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.4.0"
+    "mongoose": "^8.4.0",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^4.0.0"
   }
 }
