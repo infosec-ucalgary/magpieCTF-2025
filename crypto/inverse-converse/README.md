@@ -1,4 +1,4 @@
-# RSA Precursor 1
+# Inverse Converse
 ## Category: Cryptography
 ### Author: Christina He (tomato_tomatoes)
 
