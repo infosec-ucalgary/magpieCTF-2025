@@ -17,9 +17,13 @@ Flag: `magpieCTF{aslr_isnt_foolproof}`
 New email from <cors@nypd.gov>:
 
 'We've identified some infected routers belonging to a botnet, ran by the
-hacker named "*Jake Kaylined*" (known aliases "*j@k3*", "*kaylined*")
+hacker named "*Jake Kaylined*" (known aliases "*netrunner*", "*kaylined*")
 coincidentally, one of our prime suspects in the murder of Christina Krypto.
 It's your job to break into that router and see what you can find.'
+
+>Plot:
+>The buffer that's supposed to hold the flag contains: "vasvygengvba_cynaarq_njnvgvat_pbasvezngvba", when unencrypted says:
+>"infiltration_planned_awaiting_confirmation".
 
 ## Intended Solve
 
