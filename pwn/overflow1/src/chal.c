@@ -3,11 +3,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define WIN_USER "cristina33"
-#define WIN_CODE "01843101"
+// need to login with these
+#define LOGIN_USER "cors33"
+#define LOGIN_CODE "7726404ea39cb43"
+
+// need to change the fields to this
+#define WIN_USER "netrunner2d"
+#define WIN_CODE "2d9d90b636318a"
 
 #define FIELD_LENGTH 32
-#define NUM_USERS 4
+#define NUM_SUSPECTS 4
 #define BUFFER_SIZE ((FIELD_LENGTH * 8) + 0x10)
 
 typedef struct _user {
@@ -16,11 +21,13 @@ typedef struct _user {
 } user_t;
 
 // suspects from the case files
-user_t user_table_g[NUM_USERS] = {
-    {.username = "hoover95", .code = "7123308"},
-    {.username = "runner86", .code = "7299126"},
-    {.username = "kaylined", .code = "5381272"},
-    {.username = "lenscroft12", .code = "7299126"},
+user_t suspect_table_g[NUM_SUSPECTS] = {
+    {.username = "hoover95", .code = "48e6b718e2672d"},
+    {.username = "runner86", .code = "d8b01b2435a39d"},
+    {.username = "lenscroft12", .code = "55c64d0fcd6f9d5"},
+
+    // uh oh, this guy shouldn't be here!
+    {.username = "pbef33", .code = "7726404rn39po43"},
 };
 
 void gift() {
@@ -32,7 +39,8 @@ void menu() {
     puts("-- NYPD Terminal v1 --");
     puts("1. Change username");
     puts("2. Admin login");
-    puts("3. Exit");
+    puts("3. Show suspects");
+    puts("4. Exit");
     printf("> ");
 }
 
@@ -49,25 +57,29 @@ int login(user_t *__user) {
     fgets(local_code, FIELD_LENGTH,
           stdin); // fgets by default reads n - 1 bytes
 
-    // looking thru all the users to find a match
-    for (int i = 0; i < NUM_USERS; i++) {
-        // using strncmp & strlen to not include the \n that fgets includes
-        if (strncmp(local_user, user_table_g[i].username,
-                    strlen(user_table_g[i].username)) != 0) {
-            continue;
-        }
-        if (strncmp(local_code, user_table_g[i].code,
-                    strlen(user_table_g[i].code)) != 0) {
-            continue;
-        }
-
-        // the information was correct, copying the data onto the stack
-        memcpy(__user, &user_table_g[i], sizeof(user_t));
-        return 1;
+    // check if the input matches up
+    if (strncmp(local_user, LOGIN_USER, strlen(LOGIN_USER)) != 0) {
+        // didn't input the correct user
+        return 0;
+    }
+    if (strncmp(local_code, LOGIN_CODE, strlen(LOGIN_CODE)) != 0) {
+        // didn't input the correct code
+        return 0;
     }
 
-    // the hacker didn't input a valid user
-    return 0;
+    // copy info out of the function
+    strncpy(__user->username, local_user, FIELD_LENGTH);
+    strncpy(__user->code, local_code, FIELD_LENGTH);
+
+    // success
+    return 1;
+}
+
+void show_suspects() {
+    for (int i = 0; i < NUM_SUSPECTS; ++i) {
+        fprintf(stdout, "Suspect %d: %20s, digital footprint %20s.\n", i + 1,
+                suspect_table_g[i].username, suspect_table_g[i].code);
+    }
 }
 
 void win(user_t __user) {
@@ -98,7 +110,11 @@ void win(user_t __user) {
     // read flag into buffer
     fgets(buffer, FLAG_SIZE - 1, fd);
     fclose(fd);
-    printf("Only you can be trusted with this... %s\n", buffer);
+
+    // print
+    printf("One of these things is not like the other... %s\n", buffer);
+
+    // cleanup
     free(buffer);
     exit(0);
 }
@@ -113,8 +129,8 @@ int main(int argc, char **argv) {
 
     // login
     if (!login(&user)) {
-        puts("Intruder!");
-        exit(1);
+        puts("Authentication failure.");
+        exit(ERR_CHALLENGE_FAILURE);
     }
 
     // main loop
@@ -140,7 +156,10 @@ int main(int argc, char **argv) {
         case 2: // try to win
             win(user);
             break;
-        case 3: // exit
+        case 3: // show suspects
+            show_suspects();
+            break;
+        case 4: // exit
             goto LOOP_EXIT;
         default:
             break;
