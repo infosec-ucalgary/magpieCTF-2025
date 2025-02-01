@@ -22,6 +22,10 @@ New email from <cors@nypd.gov>:
 has identified yet another device (out of presumably hundreds) that
 might have more clues as to what *Jake* was planning. Good luck.'
 
+>Plot:
+>The buffer that's supposed to hold the flag contains: "xelcgb_vf_tbar", when unencrypted says:
+>"krypto_is_gone".
+
 ## Intended Solve
 
 The flag is located in the global `.data` section again, but this time, the hacker
