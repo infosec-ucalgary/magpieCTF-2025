@@ -34,7 +34,8 @@ void __attribute__((noreturn)) vuln() {
     puts("-- j@k3ware bot v1.2 --");
 
     // for the plot
-    strncpy(buffer, "xelcgb_vf_tbar", FLAG_SIZE); // says krypto_is_gone
+    strncpy(buffer, "vasvygengvba_cynaarq_njnvgvat_pbasvezngvba",
+            FLAG_SIZE); // says infiltration_planned_awaiting_confirmation
 
     // -- exploit --
     printf("Any commands? ");

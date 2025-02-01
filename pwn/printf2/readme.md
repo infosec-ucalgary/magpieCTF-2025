@@ -15,8 +15,12 @@ Flag: `magpieCTF{printf_is_dangerous}`
 
 ## Backstory
 
-"We've identified yet another zombie device belonging to *Niko*'s botnet.
-This variant of malware isn't so... helpful this time around. Good luck soldier."
+New email from <cors@nypd.gov>:
+
+'It appears that *Jake* was using that zombie router to plan some sort of
+*infiltration*, presumably into Christina's manor. The cyberteam
+has identified yet another device (out of presumably hundreds) that
+might have more clues as to what *Jake* was planning. Good luck.'
 
 ## Intended Solve
 
@@ -37,12 +41,6 @@ The intended exploit is as follows:
 1. call `read_flag()`
 1. read the flag off of the stack
 1. win
-
->Side effects:  
->For whatever reason, after reading the flag, it appears that
->the contents of the stack (at least the data returned from `printf`)
->become *corrupted* and will include the payload I previously sent.
->I really don't know why this happens, but the challenge is still solvable despite this.
 
 ## Handouts
 

@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <unistd.h>
 
@@ -29,12 +30,15 @@ void vuln() {
     char buffer[BUFFER_SIZE];
     char *flag_ptr = 0;
 
+    // for the plot
+    strncpy(buffer, "xelcgb_vf_tbar", FLAG_SIZE); // says krypto_is_gone
+
     // main loop
     while (true) {
         int choice = -1;
 
         // asking for a choice
-        printf("n1k0@netgear2 $ ");
+        printf("j@k3@netgear2 $ ");
         fscanf(stdin, "%d", &choice);
         getchar(); // this consumes the space, or else this program becomes
                    // impossible
@@ -74,7 +78,7 @@ int main() {
              localtime(&time_struct));
 
     // some flare
-    printf("ssh n1k0@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
+    printf("ssh j@k3@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
            rand() % 256);
     sleep(1);
     printf("Linux netgear2 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
