@@ -1,4 +1,5 @@
 #include "./common.h"
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,16 +8,16 @@
 
 #define TARGET_USERNAME "n1k0th3gr3@t"
 #define TARGET_PASSWORD "cr1st1n@scks"
-#define LEN_USERNAME 0x40
-#define LEN_PASSWORD 0x40
-#define BUFFER_SIZE 0x20
+#define LEN_USERNAME 0x20
+#define LEN_PASSWORD 0x20
+#define READ_SIZE 0x100
 
-#define LEN_HOSTNAME 0x80
-#define LEN_TIME 0x80
-#define LEN_PRE (LEN_HOSTNAME + LEN_TIME)
-#define LEN_POST (LEN_USERNAME + LEN_PASSWORD + 0x180)
-#define LEN_LOGS (LEN_PRE + LEN_POST)
-#define MAX_LOGS 64
+#define LEN_HOSTNAME 0x30
+#define LEN_TIME 0x30
+#define LEN_PRE (LEN_HOSTNAME + LEN_TIME) // pre = hostname & timestamp
+#define LEN_LOGMSG (LEN_USERNAME + LEN_PASSWORD + 0x40) // the log content
+#define LEN_LOG (LEN_PRE + LEN_LOGMSG + 0x20)           // the length of the log
+#define MAX_LOGS 32
 
 char *logs_g[MAX_LOGS] = {0};
 int num_logs_g = 0;
@@ -27,7 +28,7 @@ void gift() {
 }
 
 // vulnerable!
-void log_entry(char *__input) {
+void log_entry(char *__input, ssize_t nb) {
     // check if we can log
     if (num_logs_g >= MAX_LOGS) {
         puts("This machine can't log anymore.");
@@ -35,7 +36,7 @@ void log_entry(char *__input) {
     }
 
     // malloc a chunk for logging
-    logs_g[num_logs_g] = malloc(sizeof(char) * LEN_LOGS * MAX_LOGS);
+    logs_g[num_logs_g] = malloc(sizeof(char) * LEN_LOG);
     if (logs_g[num_logs_g] == NULL) {
         puts("Failed to allocate memory for logs_g, cannot proceed.");
         exit(ERR_NO_MALLOC);
@@ -60,7 +61,7 @@ void log_entry(char *__input) {
              "organizers.");
         exit(ERR_NO_MALLOC);
     }
-    char *post = malloc(sizeof(char) * LEN_POST);
+    char *post = malloc(sizeof(char) * LEN_LOGMSG);
     if (post == NULL) {
         puts("Couldn't allocate memory for post, contact the CTF organizers.");
         exit(ERR_NO_MALLOC);
@@ -77,13 +78,13 @@ void log_entry(char *__input) {
     raw_time[LEN_TIME - 1] = '\0';
 
     // combine format string and user input together, unsafe!
-    strncpy(post, pre_format, LEN_POST);
-    strncat(post, __input, LEN_POST - strlen(post));
-    post[LEN_POST - 1] = '\0';
+    strncpy(post, pre_format, LEN_LOGMSG);
+    strncat(post, __input, LEN_LOGMSG - strlen(post));
+    post[LEN_LOGMSG - 1] = '\0';
 
     // use snprintf to format everything, unsafe!
     // vulnerable! unsafe due to user input potentially having format characters
-    snprintf(logs_g[num_logs_g], LEN_LOGS, post, hostname, raw_time);
+    snprintf(logs_g[num_logs_g], fmin(nb, LEN_LOG), post, hostname, raw_time);
 
     // incrementing the log count
     num_logs_g += 1;
@@ -110,14 +111,15 @@ void menu(int __auth) {
     printf("> ");
 }
 
-// this function is meant to generate logs
+// vulnerable! this is where the hacker will ret2libc
+// also, this function is responsible for generating logs
 int login(char *__username, char *__password) {
     // getting the username and password
     printf("Username: ");
-    fgets(__username, LEN_POST,
+    fgets(__username, LEN_LOGMSG,
           stdin); // vulnerable! read size is greater than buffer size!
     printf("Password: ");
-    fgets(__password, LEN_POST,
+    fgets(__password, LEN_LOGMSG,
           stdin); // vulnerable! read size is greater than buffer size!
 
     // this makes the output nicer (this shouldn't affect solvability)
@@ -125,7 +127,7 @@ int login(char *__username, char *__password) {
     __password[strlen(__password) - 1] = '\0';
 
     // logging to the audit log
-    char *message = malloc(sizeof(char) * LEN_POST);
+    char *message = malloc(sizeof(char) * LEN_LOGMSG);
     if (message == NULL) {
         puts("Couldn't allocate memory for message, contact the CTF "
              "organizers.");
@@ -135,10 +137,11 @@ int login(char *__username, char *__password) {
     // the `login` function isn't vulnerable, however passing in format
     // characters here makes this program vulnerable because of a logic error in
     // `log_entry`
-    snprintf(message, LEN_POST, "Attempted login, username %s, password %s.",
+    snprintf(message, LEN_LOGMSG, "Attempted login, username %s, password %s.",
              __username, __password);
 
-    log_entry(message);
+    // logging the message
+    log_entry(message, LEN_LOGMSG);
     free(message);
 
     // checking username
@@ -154,7 +157,7 @@ int login(char *__username, char *__password) {
     }
 
     // logging on success
-    printf("Welcome %s %s.\n", __username, __password);
+    printf("Welcome Niko.\n");
 
     return 1;
 }
@@ -213,10 +216,10 @@ int main(int argc, char **argv) {
     srand(time(NULL));
 
     // time information
-    char time_buffer[BUFFER_SIZE];
+    char time_buffer[LEN_TIME];
     time_t time_struct;
     time(&time_struct);
-    strftime(time_buffer, BUFFER_SIZE, "%a %b %d %k:%M:%S %Z %Y",
+    strftime(time_buffer, LEN_TIME, "%a %b %d %k:%M:%S %Z %Y",
              localtime(&time_struct));
 
     // some flare
