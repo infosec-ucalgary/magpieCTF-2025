@@ -13,29 +13,29 @@ help () {
 case "$1" in
     bui*)
         shift 1
-        ./.scripts/build.sh "$@"
+        ./scripts/build.sh "$@"
         ;;
     reb*)
         shift 1
-        ./.scripts/build.sh "$@"
+        ./scripts/build.sh "$@"
         ;;
     reg*)
         shift 1
-        ./.scripts/regenerate.sh "$@"
+        ./scripts/regenerate.sh "$@"
         ;;
     cle*)
         shift 1
-        ./.scripts/clean.sh "$@"
+        ./scripts/clean.sh "$@"
         ;;
     lib*)
         shift 1
-        ./.scripts/libc.sh "$@"
+        ./scripts/libc.sh "$@"
         ;;
     res*)
         shift 1
-        ./.scripts/clean.sh "$@"
-        ./.scripts/regenerate.sh "$@"
-        ./.scripts/build.sh "$@"
+        ./scripts/clean.sh "$@"
+        ./scripts/regenerate.sh "$@"
+        ./scripts/build.sh "$@"
         ;;
     *)
         help
