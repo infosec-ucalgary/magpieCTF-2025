@@ -5,8 +5,8 @@
 #include <time.h>
 #include <unistd.h>
 
-#define TARGET_USERNAME "n1k0th3gr3@t"
-#define TARGET_PASSWORD "cr1st1n@scks"
+#define TARGET_USERNAME "j@k3th3gr3@t"
+#define TARGET_PASSWORD "d3c31tfull3@d3r"
 #define LEN_USERNAME 0x40
 #define LEN_PASSWORD 0x40
 #define READ_SIZE 0x100
@@ -102,7 +102,7 @@ void view_logs() {
 }
 
 void menu(int __auth) {
-    puts("-- N1k0's PC --");
+    puts("-- j@k3's PC --");
     puts("1. Sign In");
     if (__auth == 1) {
         puts("2. View Audit Log");
@@ -157,7 +157,7 @@ int login(char *__username, char *__password) {
     }
 
     // logging on success
-    printf("Welcome Niko.\n");
+    printf("Welcome Jake.\n");
 
     return 1;
 }
@@ -213,21 +213,9 @@ int main(int argc, char **argv) {
     // setup io
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IONBF, 0);
-    srand(time(NULL));
-
-    // time information
-    char time_buffer[LEN_TIME];
-    time_t time_struct;
-    time(&time_struct);
-    strftime(time_buffer, LEN_TIME, "%a %b %d %k:%M:%S %Z %Y",
-             localtime(&time_struct));
 
     // some flare
-    printf("ssh n1k0@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
-           rand() % 256);
-    sleep(1);
-    printf("Linux balthazar 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
-           time_buffer);
+    ssh_login("netrunner2", "j@k3", "52.129.50.31", IP_JAKE);
 
     // -- exploit --
     vuln();

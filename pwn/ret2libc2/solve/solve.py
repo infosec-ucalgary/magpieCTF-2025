@@ -64,8 +64,8 @@ continue
 # Stripped:   No
 # Debuginfo:  Yes
 
-username = "n1k0th3gr3@t"
-password = "cr1st1n@scks"
+username = "j@k3th3gr3@t"
+password = "d3c31tfull3@d3r"
 
 
 def login(
@@ -88,7 +88,7 @@ def view_logs(io: process | connect) -> list[bytes]:
     io.sendline(b"2")
 
     # getting all logs
-    raw = io.recvuntil(b"-- N1k0", drop=True)
+    raw = io.recvuntil(b"-- j@k3", drop=True)
     return raw.split(b"\n")
 
 

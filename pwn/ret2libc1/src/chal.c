@@ -10,8 +10,8 @@
 #define BUFFER_SIZE 0x20
 #define READ_SIZE (BUFFER_SIZE * 8)
 
-#define USERNAME "n1k0th3gr3@t"
-#define PASSWORD "cr1st1n@scks"
+#define USERNAME "j@k3th3gr3@t"
+#define PASSWORD "inn0c3nc3"
 
 void gift() {
     asm("pop %rdi");
@@ -21,7 +21,7 @@ void gift() {
 // vulnerable!
 void vuln() {
     char buffer[BUFFER_SIZE] = {0};
-    puts("-- N1k0's PC --");
+    puts("-- j@k3's PC --");
 
     // get the username
     printf("Username: ");
@@ -50,21 +50,9 @@ int main() {
     // setup
     setvbuf(stdin, NULL, _IONBF, 0);
     setvbuf(stdout, NULL, _IONBF, 0);
-    srand(time(NULL));
-
-    // time information
-    char time_buffer[BUFFER_SIZE * 2];
-    time_t time_struct;
-    time(&time_struct);
-    strftime(time_buffer, BUFFER_SIZE, "%a %b %d %k:%M:%S %Z %Y",
-             localtime(&time_struct));
 
     // some flare
-    printf("ssh n1k0@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
-           rand() % 256);
-    sleep(1);
-    printf("Linux turnip 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
-           time_buffer);
+    ssh_login("netrunner1", "j@k3", "52.129.50.30", IP_CORS);
 
     // -- exploit --
     vuln();

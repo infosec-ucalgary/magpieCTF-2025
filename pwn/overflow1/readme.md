@@ -25,7 +25,7 @@ success, we want you to see what you can find on these machines.
 Additionally, take whatever you find with a grain of salt.
 
 >Plot: the login password is base64 encoded "innocent",
->there is an *anomalous* username which is half of a sha1 hash for "edwardcors",
+>there is an *anomalous* username which is a sha1 hash for "edwardcors",
 >and the password is base64 encoded "unexonorated".
 
 >Also, there is a file called `suspect.txt` which hints to the fact that the
