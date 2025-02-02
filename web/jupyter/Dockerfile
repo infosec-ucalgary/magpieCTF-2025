@@ -1,36 +1,54 @@
-FROM python:latest
+FROM python:3.9-slim
+WORKDIR /app
 
-WORKDIR /tmp
-
+# Install required packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    jupyter-notebook \
-    openssh-server \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+        jupyter-notebook \
+        openssh-server \
+        && apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /run/sshd && \
-    useradd -m magpie && echo "magpie:q8tt&#9P5^nCHb212ZD" | chpasswd && \
-    useradd -m hawk && echo "hawk:q8xx&#9P5^nCHb212ZD" | chpasswd && \
-    mkdir -p /home/magpie/.ssh /home/hawk/.ssh && \
-    chmod 700 /home/magpie/.ssh /home/hawk/.ssh
+# Setup SSH
+RUN mkdir /run/sshd
 
-COPY notebooks /home/hawk/notebooks
+# Create users
+RUN useradd -m -s /bin/bash ckrypto && \
+    useradd -m -s /bin/bash rhash && \
+    echo "ckrypto:m4gp13_n0_br3ach_2024!" | chpasswd && \
+    echo "rhash:pr0f_h4sh_1933!" | chpasswd
 
+# Setup SSH directories
+RUN mkdir -p /home/ckrypto/.ssh /home/rhash/.ssh && \
+    chmod 700 /home/ckrypto/.ssh /home/rhash/.ssh
+
+# Setup research environment
+RUN mkdir -p /home/rhash/notebooks /home/rhash/.local/share/research_data && \
+    mkdir -p /home/rhash/.config/backup_system/.keys
+
+# Copy notebook
+COPY notebooks /home/rhash/notebooks
+
+# Generate and configure SSH keys
 RUN ssh-keygen -A && \
-    ssh-keygen -t ed25519 -f /home/magpie/.ssh/id_ed25519 -N "" && \
-    cp /home/magpie/.ssh/id_ed25519.pub /home/magpie/.ssh/authorized_keys && \
-    chown -R magpie:magpie /home/magpie/.ssh && chmod 600 /home/magpie/.ssh/authorized_keys && \
-    mv /home/magpie/.ssh/id_ed25519 /home/hawk/.ssh/id_ed25519 && \
-    chown -R hawk:hawk /home/hawk/.ssh && chmod 600 /home/hawk/.ssh/id_ed25519
+    ssh-keygen -t ed25519 -f /home/ckrypto/.ssh/id_ed25519 -N "" && \
+    cp /home/ckrypto/.ssh/id_ed25519.pub /home/ckrypto/.ssh/authorized_keys && \
+    chown -R ckrypto:ckrypto /home/ckrypto/.ssh && \
+    chmod 600 /home/ckrypto/.ssh/authorized_keys && \
+    mv /home/ckrypto/.ssh/id_ed25519 /home/rhash/.local/share/research_data/.research_backup && \
+    chown -R rhash:rhash /home/rhash && \
+    chmod 600 /home/rhash/.local/share/research_data/.research_backup
 
-RUN mkdir -p /home/magpie/.hidden && \
-    echo "magpieCTF{f1nd_my_pr1v4t3_k3y}" > /home/magpie/.hidden/flag && \
-    chown -R magpie:magpie /home/magpie/.hidden && \
-    chmod 700 /home/magpie
+# Setup flag
+RUN mkdir -p /home/ckrypto/.private && \
+    echo "m4gp13CTF{cryp70_k3y_4cc3ss_gr4nt3d}" > /home/ckrypto/.private/partnership_agreement && \
+    chown -R ckrypto:ckrypto /home/ckrypto/.private && \
+    chmod 700 /home/ckrypto/.private
 
+# Expose required ports
 EXPOSE 8888 22
 
+# Copy and configure startup script
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
