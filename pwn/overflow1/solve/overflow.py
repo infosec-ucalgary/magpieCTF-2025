@@ -64,7 +64,7 @@ continue
 
 # from the binary
 login_user = "cors33"
-login_code = "7726404ea39cb43"
+login_code = "aW5ub2NlbnQ="
 
 win_user = "netrunner2d"
 win_code = "2d9d90b636318a"

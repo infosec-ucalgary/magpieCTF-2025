@@ -11,7 +11,7 @@ Author: oblivious_turnip
 ret2libc is hypothetically possible in this challenge since the struct that gets
 overwritten is on the stack.
 
-Host flag: `magpieCTF{tony_hawk_loves_strcpy}`
+Host flag: `magpieCTF{tony_hawk_loves_strcpy}`  
 Root flag: `magpieCTF{mind_your_buffer_size}`
 
 ## Backstory
@@ -24,9 +24,9 @@ success, we want you to see what you can find on these machines.
 
 Additionally, take whatever you find with a grain of salt.
 
->Plot:
->The login credentials are coincidentally related to Edward Cors, and one
->of the suspects, when un-ROT13'd, is the same as the login credentials.
+>Plot: the login password is base64 encoded "innocent",
+>there is an *anomalous* username which is half of a sha1 hash for "edwardcors",
+>and the password is base64 encoded "unexonorated".
 
 ## Intended Solve
 
