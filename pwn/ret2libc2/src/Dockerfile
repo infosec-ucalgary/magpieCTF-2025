@@ -30,6 +30,9 @@ FROM base AS dist
 COPY --from=build /ctf/ret2libc2 /ctf/ret2libc2
 COPY --from=build /ctf/flag*.txt /ctf/
 
+# for the plot, contains evidence
+COPY --from=build /ctf/*.txt /ctf/
+
 # final setup
 EXPOSE 6201
 CMD ["/bin/nsjail", \
