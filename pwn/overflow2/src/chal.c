@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <unistd.h>
 
 #define FIELD_LENGTH 0x30
 #define NUM_SUSPECTS 4
@@ -17,9 +19,9 @@ enum modes_t { USER, CODE };
 
 // suspects from the case files
 user_t suspect_table_g[NUM_SUSPECTS] = {
-    {.username = "hoover95", .code = "48e6b718e2672d"},
-    {.username = "runner86", .code = "d8b01b2435a39d"},
-    {.username = "lenscroft12", .code = "55c64d0fcd6f9d5"},
+    {.username = "Henry Explo", .code = "48e6b718e2672d"},
+    {.username = "Richard Hash", .code = "d8b01b2435a39d"},
+    {.username = "Terry Blue", .code = "55c64d0fcd6f9d5"},
 
     // uh oh, this guy shouldn't be here!
     {.username = "aa01171677e220e6e7a7ca41cc455ed6add9d8a0",
@@ -168,6 +170,9 @@ int main() {
 
     // for the challenge, base template string
     strncpy(g_format, "Changed %s to %s.", FIELD_LENGTH);
+
+    // for flare
+    ssh_login("terminal2", "j@k3", "10.0.0.21", IP_CORS);
 
     // -- exploit --
     vuln();

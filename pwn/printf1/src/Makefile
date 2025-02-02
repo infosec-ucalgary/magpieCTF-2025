@@ -9,12 +9,9 @@ DEBUG_FLAGS := $(GLOBAL_FLAGS) -ggdb3 -g -Wl,-rpath="${MAKEROOT}" \
 # main build target
 all: main
 
-dist: chal.c # for the docker container
-	gcc $(GLOBAL_FLAGS) -o $(PROG) $<
-
-main: chal.c
-	gcc $(GLOBAL_FLAGS) -o $(PROG) $<
-	gcc $(DEBUG_FLAGS) -o $(PROG).debug $<
+main:
+	gcc $(GLOBAL_FLAGS) -o $(PROG) chal.c common.c
+	gcc $(DEBUG_FLAGS) -o $(PROG).debug chal.c common.c
 
 clean:
 	rm $(PROG)*
