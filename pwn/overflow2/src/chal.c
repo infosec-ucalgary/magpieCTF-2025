@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define FIELD_LENGTH 32
-#define NUM_USERS 4
-#define READ_SIZE (FIELD_LENGTH * 8)
+#define FIELD_LENGTH 0x30
+#define NUM_SUSPECTS 4
+#define READ_SIZE (FIELD_LENGTH * 12)
 
 typedef struct _user {
     char username[FIELD_LENGTH];
@@ -16,11 +16,14 @@ typedef struct _user {
 enum modes_t { USER, CODE };
 
 // suspects from the case files
-user_t user_table_g[NUM_USERS] = {
-    {.username = "hoover95", .code = "7123308"},
-    {.username = "runner86", .code = "7299126"},
-    {.username = "kaylined", .code = "5381272"},
-    {.username = "lenscroft12", .code = "7299126"},
+user_t suspect_table_g[NUM_SUSPECTS] = {
+    {.username = "hoover95", .code = "48e6b718e2672d"},
+    {.username = "runner86", .code = "d8b01b2435a39d"},
+    {.username = "lenscroft12", .code = "55c64d0fcd6f9d5"},
+
+    // uh oh, this guy shouldn't be here!
+    {.username = "aa01171677e220e6e7a7ca41cc455ed6add9d8a0",
+     .code = "dW5leG9ub3JhdGVk"},
 };
 
 // global malloc chunk ptrs
@@ -70,11 +73,19 @@ void edit_user(user_t *user, mode_t mode) {
             FIELD_LENGTH);
 }
 
+void show_suspects() {
+    for (int i = 0; i < NUM_SUSPECTS; ++i) {
+        fprintf(stdout, "Suspect %d: %20s, digital footprint %20s.\n", i + 1,
+                suspect_table_g[i].username, suspect_table_g[i].code);
+    }
+}
+
 void menu() {
     puts("-- NYPD Admin Terminal --");
     puts("1. Change username");
     puts("2. Change code");
-    puts("3. Exit");
+    puts("3. View suspects");
+    puts("4. Exit");
     printf("> ");
 }
 
@@ -84,6 +95,7 @@ void vuln() {
     read_flag(flag_buffer);
 
     // -- exploit --
+VULN_START_LOOP:
     while (1) {
         int option = 0;
         int user = 0;
@@ -105,6 +117,9 @@ void vuln() {
             mode = CODE;
             break;
         case 3:
+            show_suspects();
+            goto VULN_START_LOOP;
+        case 4:
             goto LEAVE_VULN;
         default:
             continue;
@@ -122,7 +137,7 @@ void vuln() {
         }
 
         // call function
-        edit_user(&user_table_g[user - 1], mode);
+        edit_user(&suspect_table_g[user - 1], mode);
     }
 
 LEAVE_VULN:
@@ -147,7 +162,11 @@ int main() {
         exit(ERR_NO_MALLOC);
     }
 
-    // more setup
+    // for the plot, decrypts to: do_you_even_have_any_proof
+    strncpy(g_edit_buffer, "ZG9feW91X2V2ZW5faGF2ZV9hbnlfcHJvb2Y/",
+            FIELD_LENGTH);
+
+    // for the challenge, base template string
     strncpy(g_format, "Changed %s to %s.", FIELD_LENGTH);
 
     // -- exploit --

