@@ -5,7 +5,7 @@
 
 // need to login with these
 #define LOGIN_USER "cors33"
-#define LOGIN_CODE "7726404ea39cb43"
+#define LOGIN_CODE "aW5ub2NlbnQ="
 
 // need to change the fields to this
 #define WIN_USER "netrunner2d"
@@ -27,7 +27,7 @@ user_t suspect_table_g[NUM_SUSPECTS] = {
     {.username = "lenscroft12", .code = "55c64d0fcd6f9d5"},
 
     // uh oh, this guy shouldn't be here!
-    {.username = "pbef33", .code = "7726404rn39po43"},
+    {.username = "aa01171677e220e6e7a7", .code = "dW5leG9ub3JhdGVk"},
 };
 
 void gift() {

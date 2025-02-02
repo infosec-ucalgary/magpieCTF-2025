@@ -66,7 +66,7 @@ continue
 
 # creds
 login_user = "cors33"
-login_code = "7726404ea39cb43"
+login_code = "aW5ub2NlbnQ="
 
 
 def leave_prog(io: connect | process):
