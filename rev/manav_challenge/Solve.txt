@@ -1,5 +1,0 @@
-- Running the elf give you the function name to search for in ROT13
-- You need to convert the elf to byte code. Use 'pyinstxtractor.py' to get .pyc
-- Convert Which.pyc to bytecode using online resources. (ELF - pycdas)
-- You will get the assembly code on your terminal. Either read through it to find the flag
-  under the function name, or ask AI to convert the assembly to python code.
