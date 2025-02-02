@@ -17,6 +17,10 @@ Is this how she’s been making her real money? I need to crack this before our 
 
 The note is signed with Henry Explo's initials—H.E.. It’s clear that Henry was trying to uncover something buried deep within Krypto's work. But what exactly was he looking for?
 
+## Handouts
+
+- `black_market`
+
 ## Solve
 
 1. `xxd` the file and notice it is packed with `upx`.
