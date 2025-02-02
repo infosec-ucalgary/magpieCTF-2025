@@ -17,10 +17,10 @@ Flag: `magpieCTF{printf_is_dangerous}`
 
 New email from <cors@nypd.gov>:
 
-'It appears that *Jake* was using that zombie router to plan some sort of
+It appears that *Jake* was using that zombie router to plan some sort of
 *infiltration*, presumably into Christina's manor. The cyberteam
 has identified yet another device (out of presumably hundreds) that
-might have more clues as to what *Jake* was planning. Good luck.'
+might have more clues as to what *Jake* was planning. Good luck.
 
 >Plot:
 >The buffer that's supposed to hold the flag contains: "xelcgb_vf_tbar", when unencrypted says:

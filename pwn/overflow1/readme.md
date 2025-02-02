@@ -18,11 +18,11 @@ Root flag: `magpieCTF{mind_your_buffer_size}`
 
 New email from <cors@nypd.gov>:
 
-'The cyberteam has discovered some unauthorized access to the NYPD's infrastructure,
+The cyberteam has discovered some unauthorized access to the NYPD's infrastructure,
 we've matched the inbound IP addresses to *Jake*'s botnet. After your previous
 success, we want you to see what you can find on these machines.
 
-Additionally, take whatever you find with a grain of salt.'
+Additionally, take whatever you find with a grain of salt.
 
 >Plot:
 >The login credentials are coincidentally related to Edward Cors, and one
