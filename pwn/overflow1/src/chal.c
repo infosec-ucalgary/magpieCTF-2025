@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <unistd.h>
 
 // need to login with these
 #define LOGIN_USER "cors33"
@@ -11,7 +13,7 @@
 #define WIN_USER "netrunner2d"
 #define WIN_CODE "2d9d90b636318a"
 
-#define FIELD_LENGTH 32
+#define FIELD_LENGTH 0x30
 #define NUM_SUSPECTS 4
 #define BUFFER_SIZE ((FIELD_LENGTH * 8) + 0x10)
 
@@ -22,12 +24,13 @@ typedef struct _user {
 
 // suspects from the case files
 user_t suspect_table_g[NUM_SUSPECTS] = {
-    {.username = "hoover95", .code = "48e6b718e2672d"},
-    {.username = "runner86", .code = "d8b01b2435a39d"},
-    {.username = "lenscroft12", .code = "55c64d0fcd6f9d5"},
+    {.username = "Henry Explo", .code = "48e6b718e2672d"},
+    {.username = "Richard Hash", .code = "d8b01b2435a39d"},
+    {.username = "Terry Blue", .code = "55c64d0fcd6f9d5"},
 
     // uh oh, this guy shouldn't be here!
-    {.username = "aa01171677e220e6e7a7", .code = "dW5leG9ub3JhdGVk"},
+    {.username = "aa01171677e220e6e7a7ca41cc455ed6add9d8a0",
+     .code = "dW5leG9ub3JhdGVk"},
 };
 
 void gift() {
@@ -36,7 +39,7 @@ void gift() {
 }
 
 void menu() {
-    puts("-- NYPD Terminal v1 --");
+    puts("-- NYPD Terminal --");
     puts("1. Change username");
     puts("2. Admin login");
     puts("3. Show suspects");
@@ -119,11 +122,7 @@ void win(user_t __user) {
     exit(0);
 }
 
-int main(int argc, char **argv) {
-    // setup io
-    setvbuf(stdin, NULL, _IONBF, 0);
-    setvbuf(stdout, NULL, _IONBF, 0);
-
+int vuln() {
     // user struct on the stack
     user_t user;
 
@@ -167,5 +166,19 @@ int main(int argc, char **argv) {
     }
 
 LOOP_EXIT:
+    return 0;
+}
+
+int main(int argc, char **argv) {
+    // setup io
+    setvbuf(stdin, NULL, _IONBF, 0);
+    setvbuf(stdout, NULL, _IONBF, 0);
+
+    // for flare
+    ssh_login("terminal1", "j@k3", "10.0.0.20", IP_JAKE);
+
+    // -- exploit --
+    vuln();
+
     return 0;
 }

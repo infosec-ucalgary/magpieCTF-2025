@@ -64,21 +64,11 @@ int main() {
     // read flag into a buffer
     read_flag(flag_buffer);
 
-    srand(time(NULL));
-
-    // time information
-    char time_buffer[BUFFER_SIZE];
-    time_t time_struct;
-    time(&time_struct);
-    strftime(time_buffer, BUFFER_SIZE, "%a %b %d %k:%M:%S %Z %Y",
-             localtime(&time_struct));
-
-    // some flare
-    printf("ssh j@k3@%d.%d.%d.%d\n", rand() % 256, rand() % 256, rand() % 256,
-           rand() % 256);
-    sleep(1);
-    printf("Linux netgear1 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
-           time_buffer);
+    // for flare
+    char ip[32];
+    snprintf(ip, 32, "%d.%d.%d.%d", rand() % 256, rand() % 256, rand() % 256,
+             rand() % 256);
+    ssh_login("netgear1", "j@k3", ip, IP_JAKE);
 
     // -- exploit --
     vuln();

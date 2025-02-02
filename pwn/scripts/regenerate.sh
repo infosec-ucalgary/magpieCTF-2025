@@ -25,9 +25,11 @@ for chal in $TARGETS; do
     # update the gitignore
     echo "$chal*" > "$CWD/$chal/src/.gitignore"
     echo "common.h" >> "$CWD/$chal/src/.gitignore"
+    echo "common.c" >> "$CWD/$chal/src/.gitignore"
 
     # copying the header file
     cp -vu "$CWD/common.h" "$CWD/$chal/src/common.h"
+    cp -vu "$CWD/common.c" "$CWD/$chal/src/common.c"
 
     # logging
     echo "Regenerated files for $chal."
