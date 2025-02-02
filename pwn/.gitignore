@@ -9,3 +9,4 @@ objs/
 build/
 *.zip
 **/solve/flag*.txt
+nsjail
