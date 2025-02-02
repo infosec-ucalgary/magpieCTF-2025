@@ -11,12 +11,24 @@ Author: oblivious_turnip
 ret2libc is hypothetically possible because you could hypothetically create a rop-chain
 using the vulnerable format string.
 
-Host flag: `magpieCTF{i_love_insecure_format_strings}`
+Host flag: `magpieCTF{i_love_insecure_format_strings}`  
 Root flag: `magpieCTF{printf_can_create_rop_chains}`
 
 ## Backstory
 
-"It seems that the hacker *Niko* has made another fake terminal, again including our case files! We need you to hack into the terminal and see what you can find."
+New email from <cors@nypd.gov>:
+
+After you hacked the first terminal, it appears that you triggered a deadman's
+switch, spawning a new "*admin*" NYPD terminal. We need you to break into
+this *terminal* and find out what it contains.
+
+Additionally, tt is prudent of me to inform you that Jake is a pathological liar.
+And everything he says should not be trusted. After all, it is in a criminals's
+nature.
+
+>Plot: the login password is base64 encoded "innocent",
+>there is an *anomalous* username which is sha1 hash for "edwardcors",
+>and the password is base64 encoded "unexonorated".
 
 ## Intended Solve
 
