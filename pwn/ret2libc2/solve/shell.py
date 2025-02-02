@@ -199,16 +199,7 @@ def exploit() -> bool:
     exit_prog(io)
 
     # enjoy the shell
-    io.sendline(b"cat flag.txt")
-    flag = io.recvuntil(b"\n", drop=True).decode("ascii")
-
-    # comparing to the actual flag
-    with open("./flag.txt", "r") as f_in:
-        buf = f_in.readline().strip()
-        if buf in flag:
-            io.success(f"Flag: {flag}")
-            return True
-        return False
+    io.interactive()
 
 
 if __name__ == "__main__":

