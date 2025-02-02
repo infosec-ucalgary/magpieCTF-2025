@@ -22,8 +22,16 @@ Flag: `magpieCTF{beware_of_what_you_log}`
 
 ## Backstory
 
-"Nicely done soldier! However, that last computer, after inspection, was a dud.
-We're hoping that this is the real one now, things line up better here now."
+New email from <cors@nypd.gov>:
+
+Thanks to your previous exploit, we've uncovered that *Jake*'s PC
+contained the layout of Cristina's manor! Very damning evidence, now
+we need you to break into this next machine to find where *Jake* is
+hiding out.
+
+>Plot:
+>You're hacking into Jake's PC. The password is "d3c31tfull3@d3r" and there's a file called
+>`location.txt` which has the coordinates for London, UK.
 
 ## Intended Solve
 

@@ -175,7 +175,7 @@ int main(int argc, char **argv) {
     setvbuf(stdout, NULL, _IONBF, 0);
 
     // for flare
-    ssh_login("terminal1", "j@k3", "10.0.0.20", IP_JAKE);
+    ssh_login("terminal1", "j@k3", "10.0.0.20", IP_CORS);
 
     // -- exploit --
     vuln();
