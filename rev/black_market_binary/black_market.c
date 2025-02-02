@@ -53,12 +53,48 @@ void decryptFiles() {
         printf("Decrypting with the tools you’ve gathered...\n");
 
         int i;
-        unsigned char encryptedData[] = {0x1F, 0x4D, 0x30, 0x7E, 0x55, 0x2A, 0x11, 0x6F};
+        unsigned char encryptedData[] = {
+          0xA2,
+          0x98,
+          0x96,
+          0x88,
+          0x8B,
+          0x47,
+          0x49,
+          0x6C,
+          0x19,
+          0x4E,
+          0x2C,
+          0x3F,
+          0x60,
+          0xD4,
+          0xDC,
+          0xFE,
+          0x7D,
+          0x56,
+          0x1F,
+          0x2D,
+          0xF4,
+          0xF2,
+          0x84,
+          0x9C,
+          0x4A,
+          0xC1,
+          0x31,
+          0xBC,
+          0x6E,
+          0x69,
+          0x3C,
+          0xC9,
+          0x57,
+          0x17,
+          0x2F
+        };
 
         printf("Attempting decryption...\n");
 
         for (i = 0; i < sizeof(encryptedData); i++) {
-            printf("Decrypting byte %d: 0x%X -> 0x%X\n", i, encryptedData[i], encryptedData[i] ^ 0xFF);
+            printf("Trying to decrypt byte %d: 0x%X\n", i, encryptedData[i]);
         }
         printf("Decryption failed! You need to crack the final layer.\n");
     }
@@ -98,9 +134,9 @@ void gameLoop() {
         printf("3. Hide from Surveillance\n");
         printf("4. Gather More Tools\n");
         printf("5. Attempt to Crack the Encryption\n");
-        printf("6. Escape the Network\n");
-        printf("7. Check Your Progress\n");
-        printf("8. Decrypt Final Clue\n");
+        printf("6. Decrypt Hidden Files\n");
+        printf("7. Escape the Network\n");
+        printf("8. Check your Progress\n");
         printf("9. Exit Investigation\n");
 
         choice = getchar();
@@ -123,13 +159,13 @@ void gameLoop() {
                 printf("Cracking the encryption... You’re getting closer...\n");
                 break;
             case '6':
+                decryptFiles();
+                break;
+            case '7':
                 printf("You’ve backed out. The case is still open.\n");
                 return;
-            case '7':
-                printf("Security Level: %d | Tools Available: %d | Clues Found: %d\n", securityLevel, toolsAvailable, cluesFound);
-                break;
             case '8':
-                scrambleData();
+                printf("Security Level: %d | Tools Available: %d | Clues Found: %d\n", securityLevel, toolsAvailable, cluesFound);
                 break;
             case '9':
                 printf("You’ve decided to pull out. Investigation terminated.\n");

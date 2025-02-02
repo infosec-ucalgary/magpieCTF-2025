@@ -3,7 +3,7 @@
 #include <math.h>
 
 int main() {
-	char flag[] = "magpieCTF{sh1ft3d_s3crets}";
+	char flag[] = "magpieCTF{kr1pt0_bl4ckm4rk3t_d34ls}";
 	unsigned char obf[50];
 	int v1 = strlen(flag);
 	int v2 = 15;
