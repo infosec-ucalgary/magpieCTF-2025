@@ -22,13 +22,17 @@ After you hacked the first terminal, it appears that you triggered a deadman's
 switch, spawning a new "*admin*" NYPD terminal. We need you to break into
 this *terminal* and find out what it contains.
 
-Additionally, tt is prudent of me to inform you that Jake is a pathological liar.
+Additionally, it is prudent of me to inform you that Jake is a pathological liar.
 And everything he says should not be trusted. After all, it is in a criminals's
 nature.
 
 >Plot: the login password is base64 encoded "innocent",
 >there is an *anomalous* username which is sha1 hash for "edwardcors",
 >and the password is base64 encoded "unexonorated".
+
+>Also, there is a file called `vocabulary_profiling.txt` which points to two things:
+>a) the hacker wasn't the first one to have entered into the machine and b)
+>the name of the file should hint at two different speakers.
 
 ## Intended Solve
 
