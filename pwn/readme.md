@@ -28,10 +28,12 @@ In a terminal run:
 ./pwn reset # cleans up, builds files, then challenges & images in that order
 ```
 
-- `regenerate` builds all the programs
-  - the programs to be given out are in `dist/`
-  - the programs for testing and debugging are in the respective challenge folder
-- `build` builds all the docker images
+- `build [challenges...]` - builds all challenges and docker images
+- `rebuild [challenges...]` - an alias of build
+- `regenerate [challenges...]` - updates the Makefile, Dockerfile and header files of the challenges
+- `clean` - removes all debug binaries and cleans up the docker images
+- `libc` - pulls the linker and libc from the docker image
+- `reset` - executes clean, regenerate and build, in that order
 
 For building the images, the script expects to have [nsjail](https://github.com/google/nsjail) pre-built on your machine as a Docker image,
 and named `nsjailcontainer`.
