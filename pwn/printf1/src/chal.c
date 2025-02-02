@@ -7,8 +7,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#define BUFFER_SIZE 0x60
-
 // default location for program to read flag into
 char flag_buffer[FLAG_SIZE];
 
@@ -26,7 +24,7 @@ void read_flag(char *buffer) {
 }
 
 // vulnerable! the hacker has arbitrary read access
-void __attribute__((noreturn)) vuln() {
+void vuln() {
     // stack vars
     char buffer[FLAG_SIZE];
     unsigned long long loc = 0;
