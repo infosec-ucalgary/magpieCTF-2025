@@ -44,3 +44,12 @@ and named `nsjailcontainer`.
 ## Sources
 
 - <https://gist.github.com/jrelo/f5c976fdc602688a0fd40288fde6d886>
+
+## Plot & Evidence
+
+- `printf1` - has text confirming that Jake wanted to do an infiltration of Christina's manor
+- `printf2` - has text confirming that Jake knows Krypto is dead
+- `overflow1` - has a file that hints to the hacker to check the suspects
+- `overflow2` - has a file that contains all the IPs of people (it's here because this is the hardest exploit)
+- `ret2libc1` - has a file that contains the IP range of NYPD's infrastructure
+- `ret2libc2` - has a location pointing to London, UK, hinting where Jake currently is
