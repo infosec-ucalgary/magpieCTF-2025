@@ -28,6 +28,9 @@ Additionally, take whatever you find with a grain of salt.
 >there is an *anomalous* username which is half of a sha1 hash for "edwardcors",
 >and the password is base64 encoded "unexonorated".
 
+>Also, there is a file called `suspect.txt` which hints to the fact that the
+>the number of suspects should be 3, but is actually 4.
+
 ## Intended Solve
 
 There are two exploits, ret2win and ret2libc:
