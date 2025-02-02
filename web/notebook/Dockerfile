@@ -41,7 +41,7 @@ RUN ssh-keygen -A && \
 
 # Setup flag
 RUN mkdir -p /home/ckrypto/.private && \
-    echo "m4gp13CTF{cryp70_k3y_4cc3ss_gr4nt3d}" > /home/ckrypto/.private/partnership_agreement && \
+    echo "magpieCTF{cryp70_k3y_4cc3ss_gr4nt3d}" > /home/ckrypto/.private/partnership_agreement && \
     chown -R ckrypto:ckrypto /home/ckrypto/.private && \
     chmod 700 /home/ckrypto/.private
 

@@ -4,7 +4,7 @@ Author: Dante
 
 >Difficulty: medium
 
-Flag: `m4gp13CTF{cryp70_k3y_4cc3ss_gr4nt3d}`
+Flag: `magpieCTF{cryp70_k3y_4cc3ss_gr4nt3d}`
 
 ## Backstory
 
