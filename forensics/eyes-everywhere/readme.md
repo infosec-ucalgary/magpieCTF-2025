@@ -9,7 +9,15 @@ Flag: `magpieCTF{B1INDnES5_!s_4_PRIV47e_Ma7t3R_83twE3n_A_PER$on_aND_tHE_3YE5_Wi7
 ---
 
 ## Backstory  
-A security breach at a surveillance facility has left behind fragmented and corrupted images from a critical camera feed. Investigators suspect the attackers hid clues within the footage to taunt the facility’s security team. Your task is to reconstruct the corrupted data, uncover hidden messages, and decode the final flag to identify the perpetrators.  
+Surveillance cameras never lie… or do they? The footage from Christina Krypto’s mansion on the night of her murder has gaps—corrupted frames, missing segments, and unexplained distortions. Someone tampered with the system, but who and why?
+
+The Cybercrime Division recently recovered fragments of a surveillance image, but it's a mess. Your task is to piece it back together, extract any hidden data, and uncover the truth.
+
+Rumors suggest that Jake "Kaylined" might have been up to his usual tricks, but was he really there? Or is someone else pulling the strings?
+### Hints:
+   - The image is broken into multiple pieces—reconstruct it carefully.
+   - Look beyond what’s visible; something might be hiding in the noise.
+   - Tools like Steghide and Base64 decoding will be useful.
 
 ---
 
