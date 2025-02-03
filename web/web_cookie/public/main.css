@@ -1,17 +1,18 @@
 h1{
     font-size: 90px;
-    font-family: garamond;
+    font-family: "Exo 2";
 }
 
 h3 {
     font-size: 25px;
-    font-family: garamond;
+    font-family: "Exo 2";
     margin-bottom: 5px;
 }
 
 body {
-    height: 100vh;
-    background: linear-gradient(to bottom, black, purple);
+    font-family: "Exo 2";
+    height: 110vh;
+    background: linear-gradient(to bottom, black, #1D1d8C );
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -32,16 +33,55 @@ button:hover {
 
 .parentDiv {
     height: 50vh;
-    width: 35%;
+    width: 100%;
     display: flex;
 }
 
 .childDiv {
+    padding-top: 10px;
+    padding-left: 10px;
     margin: 30px;
     border: solid;
     border-radius: 2px;
     border-color: white;
     color: white;
-    height: 50vh;
+    height: 70vh;
     width: 200%;
+}
+
+.dot {
+    height: 25px;
+    width: 25px;
+    background-color: darkgreen;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.finished {
+    text-decoration: line-through;
+}
+
+.dotFinished {
+    height: 25px;
+    width: 25px;
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+h5 {
+    text-decoration: bold;
+    font-size: 20px;
+}
+
+p {
+    margin-right: 2px;
 }
