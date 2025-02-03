@@ -1,1 +1,0 @@
-# magpiectf-2025-challenges
