@@ -1,6 +1,18 @@
 #!/bin/bash
+# Check if steghide is installed
+if ! command -v steghide &>/dev/null; then
+    echo "Installing steghide..."
+    sudo apt-get update && sudo apt-get install -y steghide
+    
+    # Verify installation
+    if ! command -v steghide &>/dev/null; then
+        echo "Error: steghide installation failed. Please install manually:"
+        echo "sudo apt-get install steghide"
+        exit 1
+    fi
+fi
 
-# Array of text pieces to embed
+# Array of text pieces to embed (in original split order)
 texts=(
     'bWFncGllQ1R$<$Ge0Ix$Y$SU5EbkVTNV$9'
     '$8hc180X1$Q$BSSVY0N2VfTWE$!$3dDN$H'
@@ -12,41 +24,57 @@ texts=(
 
 # Directory containing images
 image_dir="security_footage_set"
+order_file="solve/split_order.txt"
 
 # Create a temporary directory for text files
 temp_dir=$(mktemp -d)
 
-# Ensure the image directory exists
+# Validate environment
 if [ ! -d "$image_dir" ]; then
     echo "Error: Directory '$image_dir' does not exist."
     exit 1
 fi
 
-# Process each text piece
-for i in "${!texts[@]}"; do
-    image_path="$image_dir/camera_$((i+1)).jpg"
-    
-    # Check if the image exists
+if [ ! -f "$order_file" ]; then
+    echo "Error: Order file '$order_file' not found."
+    exit 1
+fi
+
+# Read the split order from file
+mapfile -t ordered_files < "$order_file"
+
+# Verify array lengths match
+if [ ${#ordered_files[@]} -ne ${#texts[@]} ]; then
+    echo "Error: Number of images (${#ordered_files[@]}) doesn't match number of text pieces (${#texts[@]})"
+    exit 1
+fi
+
+# Process files in original split order
+for index in "${!ordered_files[@]}"; do
+    filename="${ordered_files[$index]}"
+    image_path="$image_dir/$filename"
+    text="${texts[$index]}"
+
+    # Validate image exists
     if [ ! -f "$image_path" ]; then
-        echo "Error: Image '$image_path' not found. Skipping."
+        echo "Warning: Image '$filename' not found, skipping index $index"
         continue
     fi
 
-    # Create a temporary file for the current text
-    text_file="$temp_dir/text_$((i+1)).txt"
-    echo "${texts[$i]}" > "$text_file"
+    # Create temporary text file
+    text_file="$temp_dir/text_$((index+1)).txt"
+    echo "$text" > "$text_file"
 
-    # Embed the text into the image
-    echo "Embedding text into 'camera_$((i+1)).jpg'..."
+    # Embed metadata
+    echo "Processing $filename (piece $((index+1)) of ${#ordered_files[@]})..."
     if steghide embed -cf "$image_path" -ef "$text_file" -p "" -q; then
-        echo "Successfully embedded into 'camera_$((i+1)).jpg'."
+        echo "Successfully embedded data into $filename"
     else
-        echo "Failed to embed into 'camera_$((i+1)).jpg'."
+        echo "Failed to embed data into $filename"
     fi
     echo "-------------------"
 done
 
-# Clean up temporary files
+# Cleanup
 rm -rf "$temp_dir"
-
-echo "All files processed!"
+echo "Processing complete. Results in: $image_dir"
