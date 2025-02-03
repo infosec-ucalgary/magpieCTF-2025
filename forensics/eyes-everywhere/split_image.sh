@@ -74,7 +74,7 @@ montage "${piece_files[@]}" -tile 2x3 -geometry +5+5 "${solve_dir}/${filename}_m
 echo -e "\nCreated montage: ${solve_dir}/${filename}_montage.${extension}"
 
 # Save split order to file
-printf "%s\n" "${piece_files[@]##*/}" > "${output_dir}/split_order.txt"
+printf "%s\n" "${piece_files[@]##*/}" > "${solve_dir}/split_order.txt"
 
 # Display the order of splits with actual filenames
 echo -e "\nSplit order (left to right, top to bottom):"
