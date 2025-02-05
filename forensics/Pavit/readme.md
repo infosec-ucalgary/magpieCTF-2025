@@ -20,7 +20,7 @@ In this challenge, after Krypto's Mansion Security was compromised, a PCAP file 
 - Some packets are noise and will need to be filtered out.
 - A string is hidden within the packets in a IP range.
 - Hidden String is splitted into 3 parts and must be combined to get deciphered
-- You might have to manually decode the final flag, which will **not** follow a typical flag format (like MAGPIE{flag})—it will be just a string so that its easier to decipher. once u get the string submit it with the flag like this MAGPIE{String u decoded}.
+- You might have to manually decode the final flag as its a morse code u might not be able to use a online decoder for the morse code as I have added extra layer of noise in the audio and modified timings of beeps, which will **not** follow a typical flag format (like MAGPIE{flag})—it will be just a string so that its easier to decipher. once u get the string submit it with the flag like this MAGPIE{String u decoded}.
 - Understanding network forensics and packet analysis tools like Wireshark is necessary to succeed.
 
 
