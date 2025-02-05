@@ -12,7 +12,7 @@ Forensics
 The flag is located inside the image that is inside a zip file.
 
 The intended method to solve:
- - 1. Find the TLS certification.
+   1. Find the TLS certification.
    2. Decrypt all the packets.
    3. Extract the zip file.
    4. Find the packets that contain different headers from the rest.
