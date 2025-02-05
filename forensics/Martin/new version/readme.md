@@ -1,6 +1,5 @@
 
-## CTF name: TBA
-
+## CTF name: s3cr3ts pl4ns
 ## Category
 Forensics
 
