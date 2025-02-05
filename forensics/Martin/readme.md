@@ -1,18 +1,9 @@
-## CTF name: TBA
-
+## CTF name: s3cr3ts pl4ns
 ## Category
 Forensics
 
-## Description
-You need to find the nickname of the "person" you are looking for, also his favorite number is 7?
-
-(In this version of the challenge, the flag does not have the magpieCTF format)
-
-## Hints
-
-The flag is divided into two parts
-
-You will need to decrypt some files in order to access the flag parts. But do not get confused and read well.
+## Backstory
+"Terry’s activity has been traced to having sent messages to various people within Krypto’s company, effectively having her spied on."
 
 ## Difficulty:
 Medium
