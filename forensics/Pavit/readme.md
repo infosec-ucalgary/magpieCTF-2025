@@ -23,6 +23,9 @@ In this challenge, after Krypto's Mansion Security was compromised, a PCAP file 
 - You can manually decode the final flag as its a morse code or you can use a online decoder, This will **not** follow a typical flag format (like MAGPIE{flag})—it will be just a string so that its easier to decipher. once u get the string submit it with the flag like this MAGPIE{String u decoded}.
 - Understanding network forensics and packet analysis tools like Wireshark is necessary to succeed.
 
+## Challenge Flag
+- The flag string is JAKEISSUS which user will get after decoding from the youtube video
+- The complete flag would be MAGPIECTF{JAKEISSUS}
 
 ## Tools & Resources
 
