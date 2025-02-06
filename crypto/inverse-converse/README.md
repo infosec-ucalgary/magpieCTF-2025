@@ -2,7 +2,7 @@
 
 Author: *Christina*
 
->Difficulty: medium
+>Difficulty: easy
 
 Flag: `magpieCTF{1nv3rs3_cr34t3s_fr1ct10n}`
 
