@@ -29,5 +29,4 @@ The truth is locked away in the binary. Decode it, and uncover whether the CEO i
 
 ## Handouts
 
-- https://github.com/extremecoders-re/pyinstxtractor/blob/master/pyinstxtractor.py
-- https://github.com/zrax/pycdc
+- Which
