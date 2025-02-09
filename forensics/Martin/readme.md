@@ -19,6 +19,8 @@ The intended method to solve:
    5. Get the password for the zip file.
    6. Analyze the image inside the zip file.
    7. Get the flag.
+## Challenge Flag  
+`magpieCTF{KryPt0_h4s_b3en_F0und_x9130401}`
 
 
 
