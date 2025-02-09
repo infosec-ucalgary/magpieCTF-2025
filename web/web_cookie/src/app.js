@@ -8,9 +8,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 
 app.get('/', (req, res)=>{
-    res.status(200);
-    res.cookie('wgrj', 'iirkb')
-    res.sendFile(path.join(__dirname, 'templates', 'index.html'));
+    res.cookie('wgrj', 'iirkb', { 
+        httpOnly: true, 
+        secure: true, // set to true if using HTTPS
+        sameSite: 'lax'
+    });
+    res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
 app.get('/hidden', (req, res)=>{
@@ -20,7 +23,7 @@ app.get('/hidden', (req, res)=>{
         res.sendFile(path.join(__dirname, 'public', 'hidden.html'));
     } else {
         res.status(200);
-        res.sendFile(path.join(__dirname, 'templates', 'flag.html'));
+        res.sendFile(path.join(__dirname, 'public', 'flag.html'));
     }
 });
 
