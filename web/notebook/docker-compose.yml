@@ -2,7 +2,7 @@ services:
   ctf_service:
     container_name: jupyter
     build:
-      context: .
+      context: ./src
       dockerfile: Dockerfile
     ports:
       - "8888:8888"
