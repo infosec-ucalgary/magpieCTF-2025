@@ -28,7 +28,7 @@ def hash_passwords_for_users(users_file, password, output_file):
 if __name__ == "__main__":
     # Input file containing usernames and the desired password
     users_file = "users.txt"
-    password = "password123"  # You can change this password if needed
+    password = "ihatechristina"  # You can change this password if needed
     output_file = "shadow_output.txt"  # The output file that will be written
 
     # Call the function to process the users
