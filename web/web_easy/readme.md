@@ -1,5 +1,4 @@
 # **Kaylined: The Most Wanted**  
-**Author:** Ananya
 
 **Difficulty:** Easy  
 
