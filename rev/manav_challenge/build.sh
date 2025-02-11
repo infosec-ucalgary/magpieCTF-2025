@@ -8,7 +8,8 @@ then
 fi
 
 # Run PyInstaller
-pyinstaller --onefile Which.py
+pyinstaller --onefile src/Which.py
+mv /path/to/Which dist/Which
 
 # Notify user
 echo "Build complete. Executable is in the dist directory."
