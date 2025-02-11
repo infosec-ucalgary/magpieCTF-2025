@@ -9,7 +9,9 @@ fi
 
 # Run PyInstaller
 pyinstaller --onefile src/Which.py
-mv /path/to/Which dist/Which
+mv dist/Which rev/dist/Which
+
+sha1sum rev/dist/Which > rev/dist/Which.sha1.sig
 
 # Notify user
 echo "Build complete. Executable is in the dist directory."
