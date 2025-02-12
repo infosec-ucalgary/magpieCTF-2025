@@ -1,1 +1,1 @@
-magpieCTF{printf_can_create_rop_chains}
+magpieCTF{s3c0nd_3ntr@nc3}

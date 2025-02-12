@@ -1,1 +1,1 @@
-magpieCTF{ret2libc_is_fun}
+magpieCTF{c0rr8pt_1ns1d3r_c0nn3ct10n}

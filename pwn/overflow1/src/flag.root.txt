@@ -1,1 +1,1 @@
-magpieCTF{mind_your_buffer_size}
+magpieCTF{an0m@l0us_u$3r}

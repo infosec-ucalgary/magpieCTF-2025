@@ -18,7 +18,7 @@ For intermediate/advanced hackers, this is decently trivial.
 But for this will be harder for beginners that aren't used to dealing with
 these things.
 
-Flag: `magpieCTF{beware_of_what_you_log}`
+Flag: `magpieCTF{l0gs_c@n_l3@k}`
 
 ## Backstory
 
@@ -47,7 +47,7 @@ The intended exploit is as follows:
 1. realize that the logging function is vulnerable (the user can input format characters into `__input` which get evaluated by `snprintf`)
 1. sign in using the username and password from decompilation
 1. leak `main`'s return address (and therefore `main`) and the stack canary
-1. form a small rop chain using the vulnerable `login` function (buffer overflow)
+1. create a ropchain using the buffer overflow in `login` and execute when leaving `vuln`
 1. ret2libc
 
 ## Handouts

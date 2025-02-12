@@ -1,1 +1,1 @@
-magpieCTF{beware_of_what_you_log}
+magpieCTF{l0gs_c@n_l3@k}

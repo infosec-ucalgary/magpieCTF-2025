@@ -13,7 +13,7 @@ A simple ret2libc, with ASLR (might change) nor canaries. Simple.
 >If ASLR is mistakenly enabled, the challenge is still solvable because you can
 >leak the address of `main`, then fix it after you enter in the password.
 
-Flag: `magpieCTF{ret2libc_is_fun}`
+Flag: `magpieCTF{c0rr8pt_1ns1d3r_c0nn3ct10n}`
 
 ## Backstory
 
@@ -32,11 +32,8 @@ Becareful of what you mind find.
 
 ## Intended Solve
 
-Because the `buffer` is a fraction of the size compared to what's being read, this challenge is automatically ret2libc.
-
 The intended solve is as follows:
 
-- use the prompt for the username to leak the stack canary
-- enter in the password, stack canary, `rbp` and use a partial overwrite of the return address to redirect execution back to main
-- from this loop, leak the addresses of the various functions
-- ret2libc
+1. Decompile the binary to obtain the correct username and password.
+2. Since there's no ASLR nor canaries, immediately execute a ROP chain.
+3. ret2libc
