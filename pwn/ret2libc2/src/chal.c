@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 #define TARGET_USERNAME "j@k3th3gr3@t"
-#define TARGET_PASSWORD "d3c31tfull3@d3r"
+#define TARGET_PASSWORD "d3c31tful_l3@d3r"
 #define LEN_USERNAME 0x40
 #define LEN_PASSWORD 0x40
 #define READ_SIZE 0x100
@@ -215,7 +215,7 @@ int main(int argc, char **argv) {
     setvbuf(stdout, NULL, _IONBF, 0);
 
     // some flare
-    ssh_login("netrunner2", "j@k3", "52.129.50.31", IP_JAKE);
+    ssh_login("netrunner2", "j@k3", IP_NETRUNNER2, IP_JAKE);
 
     // -- exploit --
     vuln();

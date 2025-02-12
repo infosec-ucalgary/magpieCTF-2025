@@ -22,6 +22,9 @@
 #define IP_BLUE "89.167.8.45"
 #define IP_JAKE "52.129.50.254"
 
+#define IP_NETRUNNER1 "52.129.50.30"
+#define IP_NETRUNNER2 "52.129.50.31"
+
 void ssh_login(const char *__hostname, const char *__user, const char *__dst_ip,
                const char *__src_ip);
 

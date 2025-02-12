@@ -52,7 +52,7 @@ int main() {
     setvbuf(stdout, NULL, _IONBF, 0);
 
     // some flare
-    ssh_login("netrunner1", "j@k3", "52.129.50.30", IP_CORS);
+    ssh_login("netrunner1", "j@k3", IP_NETRUNNER1, IP_CORS);
 
     // -- exploit --
     vuln();
