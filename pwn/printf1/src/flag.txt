@@ -1,1 +1,1 @@
-magpieCTF{aslr_isnt_foolproof}
+magpieCTF{pr1ntf_b3@ts_b0tn3t}

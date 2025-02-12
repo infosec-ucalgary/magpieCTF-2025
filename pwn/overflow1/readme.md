@@ -11,8 +11,8 @@ Author: oblivious_turnip
 ret2libc is hypothetically possible in this challenge since the struct that gets
 overwritten is on the stack.
 
-Host flag: `magpieCTF{tony_hawk_loves_strcpy}`  
-Root flag: `magpieCTF{mind_your_buffer_size}`
+Host flag: `magpieCTF{t0ny_h@wk_b8ff3r_0v3rfl0w}`  
+Root flag: `magpieCTF{an0m@l0us_u$3r}`
 
 ## Backstory
 

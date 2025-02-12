@@ -1,1 +1,1 @@
-magpieCTF{printf_is_dangerous}
+magpieCTF{n3tr8nn3r_1s_c@p4bl3}

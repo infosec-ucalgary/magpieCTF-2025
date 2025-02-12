@@ -10,7 +10,7 @@ Author: oblivious_turnip
 
 ret2libc isn't possible here because of the call to `exit` in the `vuln` function.
 
-Flag: `magpieCTF{aslr_isnt_foolproof}`
+Flag: `magpieCTF{pr1ntf_b3@ts_b0tn3t}`
 
 ## Backstory
 

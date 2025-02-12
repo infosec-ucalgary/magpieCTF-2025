@@ -1,1 +1,1 @@
-magpieCTF{i_love_insecure_format_strings}
+magpieCTF{h3@p_0r_b8ff3r_0v3rfL0w}

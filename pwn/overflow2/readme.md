@@ -11,8 +11,8 @@ Author: oblivious_turnip
 ret2libc is hypothetically possible because you could hypothetically create a rop-chain
 using the vulnerable format string.
 
-Host flag: `magpieCTF{i_love_insecure_format_strings}`  
-Root flag: `magpieCTF{printf_can_create_rop_chains}`
+Host flag: `magpieCTF{h3@p_0r_b8ff3r_0v3rfL0w}`  
+Root flag: `magpieCTF{s3c0nd_3ntr@nc3}`
 
 ## Backstory
 
@@ -39,9 +39,19 @@ nature.
 The exploit isn't quite obvious, what happens is there are two malloc chunks allocated,
 one to edit the contents of a user, the other stores a format string for `printf`.
 
-The idea here is that in the `edit_user` function, the hacker overflows the `g_edit_buffer`
-malloc chunk into the `g_format` chunk to include more format characters than intended,
-leaking the flag off of the stack.
+>Note:  
+>If these two chunks aren't allocated in the order of buffer -> format string, then the ret2win exploit is impossible! (but not ret2libc.)
+
+Intended solve for ret2win:
+
+1. Realize that the malloc chunks are (memory-wise) allocated side-by-side and are vulnerable to buffer overflows.
+2. Overflow the `g_format` buffer to include more format characters than intendended and leak the flag off of the stack.
+
+Intended solve for ret2libc:
+
+1. Perform the same steps as in ret2win.
+2. Remember that you can use `%n` to write memory.
+3. Use `printf` to write a ropchain on the stack and then ret2libc.
 
 ## Handouts
 
