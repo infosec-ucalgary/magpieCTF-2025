@@ -1,14 +1,14 @@
-# \<Christina's Journal>
+# Christina's Journal
 
 Author: Yazeed Badr
 
->Difficulty: \<easy>
+>Difficulty: easy
 
 Flag: `magpieCTF{Spider Was Here}`
 
 ## Backstory
 
-You are tasked with uncovering the secrets hidden within Christina  journal. Christina has documented the final stages of her groundbreaking encryption technology. As you explore her journal, uncover the clue left behind. The page source will reveal the secret key, encrypted and waiting to be decoded.
+You are tasked with uncovering the secrets hidden within Christina  journal. Christina has documented the final stages of her groundbreaking encryption technology. As you explore her journal, you must uncover the clue left behind. The page source will reveal the secret key, encrypted and waiting to be decoded.
 
 ## Intended Solve
 

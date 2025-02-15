@@ -1,8 +1,8 @@
-# \<Cookie Trail>
+# Cookie Trail
 
 Author: Yazeed Badr
 
->Difficulty: \<easy>
+>Difficulty: easy
 
 Flag: `magpieCTF{christina_exposed_spider}`
 
