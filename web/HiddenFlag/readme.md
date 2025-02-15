@@ -1,0 +1,25 @@
+# \<Christina's Journal>
+
+Author: Yazeed Badr
+
+>Difficulty: \<easy>
+
+Flag: `magpieCTF{Spider Was Here}`
+
+## Backstory
+
+You are tasked with uncovering the secrets hidden within Christina  journal. Christina has documented the final stages of her groundbreaking encryption technology. As you explore her journal, uncover the clue left behind. The page source will reveal the secret key, encrypted and waiting to be decoded.
+
+## Intended Solve
+
+1. Visit the homepage to read Christina's journal entry
+2. Notice that the journal contains hidden information in the page source
+3. Inspect the page source and locate the hidden flag
+4. Base64 decode the hidden string to reveal the actual flag
+
+## Handouts
+
+- `app.py`
+- `static/style.css` 
+- `docker-compose.yml`
+- `solve_hiddenflag.sh`

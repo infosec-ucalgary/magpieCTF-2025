@@ -1,4 +1,4 @@
-# Cookies CTF
+# \<Cookie Trail>
 
 Author: Yazeed Badr
 
