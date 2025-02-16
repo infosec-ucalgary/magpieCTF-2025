@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Protected Page</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin-top: 50px;
+        }
+        img {
+            width: 500px; /* Make the image larger */
+            height: auto; /* Maintain aspect ratio */
+            transform: rotate(90deg); /* Rotate the image 90 degrees */
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        (() => {
+            const checkPassword = (input) => input === "ajBrZXNfMG5feXUw"; // Correct password
+
+            const password = prompt("Enter the password:"); // Prompt user for password
+            if (checkPassword(password)) {
+                // Correct password: show the image
+                document.body.innerHTML = `
+                    <h1>Find?</h1>
+                    <h1></h1>
+                    <h1></h1>
+                    <h1></h1>
+
+                    <img src="wh0.jpg_original" alt="Hidden Flag">
+                `;
+            } else {
+                // Incorrect password: show an error message
+                document.body.innerHTML = `
+                    <h1> Denied</h1>
+                    <p>Did you f1nd h3r?</p>
+                `;
+            }
+        })();
+    </script>
+</body>
+</html>
+
