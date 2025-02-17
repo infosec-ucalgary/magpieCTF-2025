@@ -1,7 +1,7 @@
 CC = gcc
 LDFLAGS = -lm
 SRC_DIR = .
-DIST_DIR = ../dist
+DIST_DIR = ../../dist
 SRC = black_market.c
 OBJ = $(SRC:.c=.o)
 TARGET = $(DIST_DIR)/black_market
