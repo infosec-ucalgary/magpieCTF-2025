@@ -2,7 +2,7 @@
 
 All the challenges for the 2025 magpies CTF.
 
-Flag format: `magpieCTF{}`
+Flag format: `magpieCTF{...}`
 
 The offered categories are:
 
@@ -22,22 +22,24 @@ Here is the challenge folder structure:
 ```sh
 ./
     cloud/
-        # code to build
-        - readme.md # contains manifest of challenges
-        - dist/ # contains all challenges (binaries mainly, or scripts)
+        readme.md # contains manifest of challenges and other details
+        dist/ # contains all challenges (binaries mainly, or scripts)
                 # to be given to the participants
                 # sha1 signatures are good to provide
                 # (really only for files or compiled binaries), but optional
             binaries...
-        - challenge1/
-            # challenge files...
-            # source code... (if applicable)
-            # code to build the challenge...(if applicable)
-            # the file that contains the flag
-            flag.txt # if applicable
-            # file about the challenge (based off of readme.template.md)
-            readme.md # contains info about the challenge
-        - challenge2/
+        challenge1/
+            src/    # source code... (if applicable)
+                chal.c
+                Makefile
+                Dockerfile
+                flag.txt # if applicable
+                ...
+            solve/  # code to solve the challenge (if applicable)
+                ...
+            # code to build the challenge... (if applicable)
+            readme.md # file about the challenge (based off of readme.template.md)
+        challenge2/
             ...
         ...
     pwn/
@@ -54,17 +56,26 @@ The `readme.md` file in every category (i.e., `pwn/readme.md`) should have:
 - any required build instructions
 - some resources if any (although this is mainly for you, the author)
 
+There should be a `readme.md` file in every single challenge folder (i.e., `pwn/printf1/readme.md`),
+this should be based off of the file `readme.template.md` in the root folder of this repo.
+
+>All readme files for the challenges **should have the flag in them**.
+
 ## Building Challenges
 
-For building, each challenge (or subsection) should have a tool, script,
-whatever to build the challenge.
+For building, each challenge (or subsection) should have a tool, script, and
+whatever else required to build the challenge. (If applicable.)
 
 >For ease of use, if you can just have a script to automatically download
 >all the tools and packages you need in order to build the challenges.
 
 For challenges that are dockerized (primarily `pwn`, `rev`, binary exploitation challenges), we're using [nsjail](https://github.com/google/nsjail).
 
-Additionally, the binary (if compiled) must be built inside of the container, then copied out into `category/dist/name_of_challenge` i.e., `pwn/dist/printf1`.
+Additionally, the binary (if compiled) must be;
+
+1. built inside of the container
+2. then copied out into `category/dist/name_of_challenge` i.e., `pwn/dist/printf1`
+3. a sha1 hash of the binary should be included in `dist/` i.e., `pwn/dist/printf1.sha1.sig`
 
 >Look at the script `pwn` in `pwn/` to see how all the binary exploitation
 >challenges are built.
