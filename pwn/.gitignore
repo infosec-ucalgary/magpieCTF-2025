@@ -7,6 +7,5 @@ objs/
 *.deb
 *.tar.xz
 build/
-dist/
 *.zip
-
+**/solve/flag*.txt

@@ -1,24 +1,20 @@
 include ./flags.mk
 .PHONY: all clean
 
-DIST_DIR	:= dist
 PROG		:= overflow1
 GLOBAL_FLAGS:= $(FLAGS) -w
-DEBUG_FLAGS := $(FLAGS) -ggdb3 -g -Wl,-rpath="$(PWD)/../../" \
+DEBUG_FLAGS := $(GLOBAL_FLAGS) -ggdb3 -g -Wl,-rpath="$(PWD)/../../" \
 				 -Wl,--dynamic-linker="$(PWD)/../../ld-linux-x86-64.so.2"
 
 # main build target
-all: challenge
+all: main
 
-DIST_DIR:
-	mkdir -p "$(PWD)/../../$(DIST_DIR)/"
+dist: chal.c # for the docker container
+	gcc $(GLOBAL_FLAGS) -o $(PROG) $<
 
-debug: chal.c | DIST_DIR
-	gcc -w $(GLOBAL_FLAGS) chal.c -o "$(PWD)/../../$(DIST_DIR)/overflow1"
-	gcc -w $(DEBUG_FLAGS) chal.c -o overflow1
-
-challenge: chal.c | DIST_DIR
-	gcc -w $(GLOBAL_FLAGS) chal.c -o overflow1
+main: chal.c
+	gcc $(GLOBAL_FLAGS) -o $(PROG) $<
+	gcc $(DEBUG_FLAGS) -o $(PROG).debug $<
 
 clean:
-	rm overflow1*
+	rm $(PROG)*

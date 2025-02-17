@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../common.h"
+#include "./common.h"
 
 #define WIN_USER "cristina33"
 #define WIN_CODE "01843101"
@@ -70,16 +70,14 @@ int login(user_t *__user) {
 
 // vulnerable! the buffer size is greater than the size of the string in the struct
 void change_username(user_t *__user) {
-    char *buffer = malloc(sizeof(char) * BUFFER_SIZE);
-    if (buffer == NULL) {
-        puts("Failed to allocate memory for buffer, cannot proceed.");
-        exit(-2);
-    }
+    char buffer[BUFFER_SIZE];
 
+    // get new username
     printf("Enter new username: ");
     fgets(buffer, BUFFER_SIZE - 1, stdin);
+
+    // vulnerable! buffer is larger than user_t.username
     strcpy(__user->username, buffer); // vulnerable!
-    free(buffer);
 }
 
 void win(user_t __user) {

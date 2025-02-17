@@ -1,4 +1,4 @@
-#include "../../common.h"
+#include "./common.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -80,6 +80,7 @@ int main() {
     printf("Linux netgear2 6.1.21-v8+ #1642 SMP PREEMPT %s aarch64\n",
            time_buffer);
 
+    // -- exploit --
     vuln();
 
     return 0;

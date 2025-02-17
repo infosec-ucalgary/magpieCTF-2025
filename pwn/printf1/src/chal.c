@@ -1,4 +1,4 @@
-#include "../../common.h"
+#include "./common.h"
 #include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -25,7 +25,7 @@ void read_flag(char *buffer) {
     fclose(fd);
 }
 
-void vuln() {
+void __attribute__((noreturn)) vuln() {
     // stack vars
     char buffer[FLAG_SIZE];
     unsigned long long loc = 0;
@@ -44,7 +44,11 @@ void vuln() {
     memcpy(buffer, (void *)loc, FLAG_SIZE - 1);
     buffer[FLAG_SIZE - 1] = 0;
 
+    // potentially printing out the flag
     printf("I doubt this is interesting: %s\n", buffer);
+
+    // preventing ret2libc
+    exit(0);
 }
 
 int main() {

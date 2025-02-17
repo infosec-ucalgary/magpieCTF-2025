@@ -7,7 +7,7 @@ objs/
 *.deb
 *.tar.xz
 build/
-dist/
+*.zip
 *.pyc
 .DS_store
 .vscode/
@@ -30,7 +30,6 @@ node_modules
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
