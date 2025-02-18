@@ -19,4 +19,7 @@ You are tasked with uncovering the secrets hidden within Christina  journal. Chr
 
 ## Handouts
 
-- `IP`
+- `app.py`
+- `static/style.css` 
+- `docker-compose.yml`
+- `solve_hiddenflag.sh`

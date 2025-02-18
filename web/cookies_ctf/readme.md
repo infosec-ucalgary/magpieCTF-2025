@@ -13,13 +13,10 @@ You’ll be trying to uncover the truth behind the mysterious hacker known as Sp
 ## Intended Solve
 
 1. Explore the homepage and read the provided hints and the form that triggers the search query
-
 2. Submit the "casefile" query via the form, which causes the server to set a name cookie
-
 3. Inspect the cookies to determine the state of the investigation
-
 4. Interact with the /check endpoint using different name values in the cookie to uncover different pieces of the story
 
 ## Handouts
 
-- `IP`
+- IP of the website
