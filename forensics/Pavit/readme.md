@@ -1,22 +1,21 @@
-# CTF Challenge: Mansion-Recovery
+# Mansion-Recovery
 
-## Overview
+Author: itspavit
+
+>Difficulty: medium
+
+Flag: `magpieCTF{JAKEISSUS}`
+
+## Backstory
+
 In this challenge, after Krypto's Mansion Security was compromised, a PCAP file was recovered. The goal is to analyze the PCAP file to uncover the flag related to the event and possibly identify the killer. The challenge requires network forensics, packet analysis, and some manual decoding.
 
-## Challenge Details
+## Handouts
 
-- **Difficulty**: Medium
-- **Estimated Time to Solve**: 10-20 minutes
-- **Tools Required**: 
-  - Wireshark
-  - Scapy
-  - A little brain power
-  
-## Files Provided
-- **mansion-security.pcapng**: The packet capture file containing important network data.
-
+- mansion-security.pcapng
 
 ## Challenge Hints
+
 - Some packets are noise and will need to be filtered out.
 - A string is hidden within the packets in a IP range.
 - Hidden String is splitted into 3 parts and must be combined to get deciphered
@@ -24,6 +23,7 @@ In this challenge, after Krypto's Mansion Security was compromised, a PCAP file 
 - Understanding network forensics and packet analysis tools like Wireshark is necessary to succeed.
 
 ## Challenge Flag
+
 - The flag string is JAKEISSUS which user will get after decoding from the youtube video
 - The complete flag would be magpieCTF{JAKEISSUS}
 
@@ -32,6 +32,14 @@ In this challenge, after Krypto's Mansion Security was compromised, a PCAP file 
 - **Wireshark**: A network protocol analyzer used to inspect packet captures.
 - **Scapy**: A Python library used for packet manipulation and analysis.
 
+## Challenge Details
+
+- **Estimated Time to Solve**: 10-20 minutes
+- **Tools Required**:
+  - Wireshark
+  - Scapy
+  - A little brain power
 
 ## Final Note
+
 This challenge will test your ability to filter out noise from the actual data, along with your skills in decoding hidden information within network traffic. Good luck, and happy hunting!
