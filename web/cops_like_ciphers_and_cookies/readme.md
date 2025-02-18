@@ -20,9 +20,9 @@ A glimpse into the NYPD as a new employee. Attackers will get to navigate throug
 - Upon decoding they find that it's a cookie for user
 - They can encode 'admin' using the same key and once they set that to the value of the cookie and refresh the page they'll find the flag (with some lore)
 
-## Hosting
-- The challenge is dockerized and the exposed port on the server for this challenge is 3000
+## Handouts
 
+- IP of the server
 
 ## Hints
 
