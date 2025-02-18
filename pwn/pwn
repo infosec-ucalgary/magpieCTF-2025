@@ -9,6 +9,7 @@ help () {
     echo -e "\tclean\t\t\tRemoves all binaries, made images & dangling images."
     echo -e "\tlibc\t\t\tGets the linker and libc from any of the docker images."
     echo -e "\treset\t\t\tExecutes clean, regenerate and build, in that order."
+    echo -e "\tcheck\t\t\tChecks the flags of the challenges."
 }
 
 case "$1" in
@@ -37,6 +38,10 @@ case "$1" in
         ./scripts/clean.sh "$@"
         ./scripts/regenerate.sh "$@"
         ./scripts/build.sh "$@"
+        ;;
+    che*)
+        shift 1
+        ./scripts/build.sh -c
         ;;
     *)
         help
