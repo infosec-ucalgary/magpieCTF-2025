@@ -1,14 +1,17 @@
 # s3cr3ts pl4ns
 
+Author: deikas
+
 >Difficulty: intermediate 
 
-## Category
-Forensics
+Flag: `magpieCTF{KryPt0_h4s_b3en_F0und_x9130401}`
 
 ## Backstory:
+
 "Terry’s activity has been traced to having sent messages to various people within Krypto’s company, effectively having her spied on."
 
 ## Intended Solve:
+
 The flag is located inside the image that is inside a zip file.
 
 The intended method to solve:
@@ -21,9 +24,5 @@ The intended method to solve:
    7. Get the flag.
 
 ## Handout
-**s3cre3t_pl4ns.pcapng**
-## Challenge Flag  
-`magpieCTF{KryPt0_h4s_b3en_F0und_x9130401}`
 
-
-
+- s3cre3t_pl4ns.pcapng
