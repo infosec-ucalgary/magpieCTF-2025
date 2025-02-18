@@ -23,21 +23,20 @@ function check_chals() {
         echo "readelf isn't on the path, cannot verify challenge functionality."
         return
     fi
-    
-    # checking challenges for canaries
-    assert_eq $(check_canary dist/printf1) 0 "printf1 should have a canary"
-    assert_eq $(check_canary dist/printf2) 0 "printf2 should have a canary"
-    assert_not_eq $(check_canary dist/overflow1) 0 "overflow1 shouldn't have a canary"
-    assert_not_eq $(check_canary dist/overflow2) 0 "overflow2 shouldn't have a canary"
-    assert_not_eq $(check_canary dist/ret2libc1) 0 "ret2libc1 shouldn't have a canary"
-    assert_eq $(check_canary dist/ret2libc2) 0 "ret2libc2 should have a canary"
-    
-    # checking aslr
-    assert_eq $(check_pie dist/printf1) 0 "printf1 should have ASLR"
-    assert_eq $(check_pie dist/printf2) 0 "printf2 should have ASLR"
-    assert_not_eq $(check_pie dist/overflow1) 0 "overflow1 shouldn't have ASLR"
-    assert_eq $(check_pie dist/overflow2) 0 "overflow2 should have ASLR"
-    assert_not_eq $(check_pie dist/ret2libc1) 0 "ret2libc1 shouldn't have ASLR"
-    assert_eq $(check_pie dist/ret2libc2) 0 "ret2libc2 should have ASLR"
-}
 
+    # checking challenges for canaries
+    assert_eq $(check_canary printf1/dist/printf1) 0 "printf1 should have a canary"
+    assert_eq $(check_canary printf2/dist/printf2) 0 "printf2 should have a canary"
+    assert_not_eq $(check_canary overflow1/dist/overflow1) 0 "overflow1 shouldn't have a canary"
+    assert_not_eq $(check_canary overflow2/dist/overflow2) 0 "overflow2 shouldn't have a canary"
+    assert_not_eq $(check_canary ret2libc1/dist/ret2libc1) 0 "ret2libc1 shouldn't have a canary"
+    assert_eq $(check_canary ret2libc2/dist/ret2libc2) 0 "ret2libc2 should have a canary"
+
+    # checking aslr
+    assert_eq $(check_pie printf1/dist/printf1) 0 "printf1 should have ASLR"
+    assert_eq $(check_pie printf2/dist/printf2) 0 "printf2 should have ASLR"
+    assert_not_eq $(check_pie overflow1/dist/overflow1) 0 "overflow1 shouldn't have ASLR"
+    assert_eq $(check_pie overflow2/dist/overflow2) 0 "overflow2 should have ASLR"
+    assert_not_eq $(check_pie ret2libc1/dist/ret2libc1) 0 "ret2libc1 shouldn't have ASLR"
+    assert_eq $(check_pie ret2libc2/dist/ret2libc2) 0 "ret2libc2 should have ASLR"
+}
