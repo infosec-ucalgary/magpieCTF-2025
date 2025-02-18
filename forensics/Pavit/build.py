@@ -184,8 +184,9 @@ for i in range(1950):  # Remaining packets for noise
     packets[-1].time = random_time
 
 # Write packets to a PCAPNG file
+fname = "dist/mansion-security.pcapng"
 try:
-    wrpcap("mansion-security.pcapng", packets)
-    print("PCAPNG file created: mansion-security.pcapng")
+    wrpcap(fname, packets)
+    print(f"PCAPNG file created: {fname}")
 except Exception as e:
-    print(f"Error writing PCAP: {e}")
+    print(f"Error creating {fname}: {e}")
