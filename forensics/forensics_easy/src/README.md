@@ -30,10 +30,11 @@ Cyber-Solutions was once the top name in security, but ever since Krypto arrived
 ---
 
 ## **Other Notes**  
-1. Check the metadata of the image for useful information.
-2. The paraphrase is empty.
-3. Look for anything encoded that might need decoding.
-4. Use a tool designed for extracting hidden data from images.
+1. Form.pdf This file shows evidence of Terry Blue selling off property. It further incriminates him by providing motive. 
+2. Check the metadata of the image for useful information.
+3. The paraphrase is empty.
+4. Look for anything encoded that might need decoding.
+5. Use a tool designed for extracting hidden data from images.
 
 
 
