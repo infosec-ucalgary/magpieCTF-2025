@@ -1,4 +1,4 @@
-# Cookies and Vigenere
+# Cops Like Ciphers and Cookies
 
 Author: Mohammad Hashmi
 
@@ -19,6 +19,9 @@ A glimpse into the NYPD as a new employee. Attackers will get to navigate throug
 - These are encoded with a Vigenère Cipher (hardest part of the challenge) where consistency is the key (Hence the reason for the link in the first page)
 - Upon decoding they find that it's a cookie for user
 - They can encode 'admin' using the same key and once they set that to the value of the cookie and refresh the page they'll find the flag (with some lore)
+
+## Hosting
+- The challenge is dockerized and the exposed port on the server for this challenge is 3000
 
 
 ## Hints
