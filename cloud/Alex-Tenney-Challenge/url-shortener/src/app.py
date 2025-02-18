@@ -16,13 +16,13 @@ def check_url():
     if request.method == "POST":
         url = request.form.get("url", "").strip()
         try:
-            # Fetch the page content
+            # Fetch the page content (no longer converting to lowercase)
             response = requests.get(url, timeout=5)
-            content = response.text.lower()
+            content = response.text  # Keep original case!
 
             # Parse the URL
             parsed_url = urlparse(url)
-            domain = parsed_url.netloc.lower()
+            domain = parsed_url.netloc.lower()  # Only domain should be lowercase
 
             # 1. Check for suspicious links (e.g., mismatched domains)
             if 'http://' in content or 'https://' in content:
@@ -30,7 +30,7 @@ def check_url():
 
             # 2. Check for brand spoofing (e.g., known brands in content)
             for brand in KNOWN_BRANDS:
-                if brand in content:
+                if brand.lower() in content.lower():  # Convert only for comparison
                     issues.append(f"Possible brand spoofing detected: {brand}.")
 
             # 3. Check for unusual URL patterns (e.g., long subdomains or hyphens)

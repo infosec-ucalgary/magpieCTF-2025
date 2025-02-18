@@ -9,13 +9,12 @@ resource "aws_key_pair" "deployer" {
 
 # 1. Create the S3 Flag Bucket (magpie2025-secret)
 resource "aws_s3_bucket" "flag_bucket" {
-  bucket = "magpie2025-secret"
-  acl    = "private"
+  bucket = "magpie2025-secret-25"
+}
 
-  tags = {
-    Name        = "magpie2025-secret"
-    Environment = "Production"
-  }
+resource "aws_s3_bucket_acl" "flag_bucket_acl" {
+  bucket = aws_s3_bucket.flag_bucket.id
+  acl    = "private"  # Will now work after fixing Object Ownership
 }
 
 # Add a file to the S3 bucket
@@ -50,16 +49,25 @@ resource "aws_iam_policy" "s3_read_only_policy" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
+      # Fix 1: Allow listing **all** S3 buckets (fixes `aws s3 ls`)
       {
-        "Action": ["s3:Get*","s3:List*","s3:Describe*","s3-object-lambda:Get*","s3-object-lambda:List*"],
-        Effect   = "Allow"
-        Resource = [
-          "arn:aws:s3:::magpie2025-secret/*"
+        "Effect": "Allow",
+        "Action": "s3:ListAllMyBuckets",
+        "Resource": "*"
+      },
+      # Fix 2: Allow listing **and** getting objects from magpie2025-secret
+      {
+        "Effect": "Allow",
+        "Action": ["s3:GetObject", "s3:ListBucket"],
+        "Resource": [
+          "arn:aws:s3:::magpie2025-secret-25",
+          "arn:aws:s3:::magpie2025-secret-25/*"
         ]
       }
     ]
   })
 }
+
 
 resource "aws_iam_role_policy_attachment" "attach_s3_policy" {
   policy_arn = aws_iam_policy.s3_read_only_policy.arn
@@ -117,13 +125,16 @@ resource "aws_instance" "my_ec2_with_user_data" {
     }
   }
 
-   provisioner "remote-exec" {
-    script = "./startup.sh"
+  # Upload the script to EC2 (but DO NOT auto-execute it)
+  provisioner "file" {
+    source      = "./startup.sh"   # Your local startup script
+    destination = "/home/ubuntu/startup.sh"
+
     connection {
       type        = "ssh"
-      user        = "ubuntu"  
-      private_key = file("./id_ed25519")  # Path to your private key for SSH access
-      host        = self.public_ip  # Use the public IP of the instance
+      user        = "ubuntu"
+      private_key = file("./id_ed25519")  # Your SSH private key
+      host        = self.public_ip
     }
   }
 
@@ -141,4 +152,8 @@ resource "aws_instance" "my_ec2_with_user_data" {
   tags = {
     Name = "Magpie Cloud 1"
   }
+}
+
+output "ec2_public_ip" {
+  value = aws_instance.my_ec2_with_user_data.public_ip
 }
