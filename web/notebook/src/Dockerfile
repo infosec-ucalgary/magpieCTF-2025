@@ -45,8 +45,11 @@ RUN mkdir -p /home/ckrypto/.private && \
     chown -R ckrypto:ckrypto /home/ckrypto/.private && \
     chmod 700 /home/ckrypto/.private
 
+# Change ssh port
+RUN sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config
+
 # Expose required ports
-EXPOSE 8888 22
+EXPOSE 8888 2222
 
 # Copy and configure startup script
 COPY start.sh /usr/local/bin/start.sh

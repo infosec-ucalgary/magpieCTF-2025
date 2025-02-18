@@ -9,6 +9,7 @@ from io import StringIO
 
 HOSTNAME = "localhost"
 PORT = 8888
+SSH_PORT = 2222
 BASE_URL = f"http://{HOSTNAME}:{PORT}"
 NOTEBOOK_PATH = "/notebook.ipynb"
 USERNAME = "ckrypto"
@@ -108,7 +109,9 @@ def solve():
 
     try:
         private_key_obj = paramiko.Ed25519Key.from_private_key(StringIO(ssh_key))
-        ssh_connection = ssh(host=HOSTNAME, user=USERNAME, key=private_key_obj)
+        ssh_connection = ssh(
+            host=HOSTNAME, port=SSH_PORT, user=USERNAME, key=private_key_obj
+        )
         print("[*] Successfully logged into the machine.")
 
         # Attempt to retrieve the flag
@@ -126,4 +129,7 @@ def solve():
 
 
 if __name__ == "__main__":
-    print(solve())
+    try:
+        print(f"MagpieCTF - Black Market Binary : {solve()}")
+    except Exception:
+        print("MagpieCTF - Black Market Binary : False")
