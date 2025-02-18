@@ -31,7 +31,7 @@ def check():
         '7': 'Spider vowed to uncover the truth behind his arrest.',
         '8': 'Spider discovered hidden logs on a server pointing to Christina’s involvement.',
         '9': 'Spider realized Christina used her encryption device to monitor his activities.',
-        '10': 'Spider uncovered an email proving Christina orchestrated his arrest. The flag is magpieCTF{christina_exposed_spider}.'
+        '10': 'Spider uncovered an email proving Christina orchestrated his arrest. The flag is magpieCTF{chr15t1n@_3xp0$3d_$p1d3r}.'
     }
     if name in story:
         message = story[name]

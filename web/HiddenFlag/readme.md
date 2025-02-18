@@ -4,7 +4,7 @@ Author: Yazeed Badr
 
 >Difficulty: easy
 
-Flag: `magpieCTF{Spider Was Here}`
+Flag: `magpieCTF{$p1d3r_W4$_H3r3}`
 
 ## Backstory
 
@@ -19,4 +19,4 @@ You are tasked with uncovering the secrets hidden within Christina  journal. Chr
 
 ## Handouts
 
-- IP of the server
+- IP of the website

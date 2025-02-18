@@ -4,7 +4,7 @@ Author: Yazeed Badr
 
 >Difficulty: easy
 
-Flag: `magpieCTF{christina_exposed_spider}`
+Flag: `magpieCTF{chr15t1n@_3xp0$3d_$p1d3r}`
 
 ## Backstory
 
