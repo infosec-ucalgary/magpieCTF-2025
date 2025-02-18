@@ -49,6 +49,9 @@ function build_image() {
 
     # building the production image
     docker build . -t "$TAGROOT-$prog:latest" --build-arg MAKEROOT="$CWD"
+
+    # exit out
+    cd -
 }
 
 function get_program() {
@@ -65,8 +68,9 @@ function get_program() {
     docker export "$(docker create "$TAGROOT-$prog:build")" --output /tmp/image.tar
 
     # copying out the proglenges
-    tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$prog" --strip-components=1
-    tar -xvf /tmp/image.tar -C "$CWD/dist/" "ctf/$prog.sha1.sig" --strip-components=1
+    mkdir -p "$CWD/$prog/dist/"
+    tar -xvf /tmp/image.tar -C "$CWD/$prog/dist/" "ctf/$prog" --strip-components=1
+    tar -xvf /tmp/image.tar -C "$CWD/$prog/dist/" "ctf/$prog.sha1.sig" --strip-components=1
     tar -xvf /tmp/image.tar -C "$CWD/$prog/src/" "ctf/$prog.debug" --strip-components=1
 
     # clean up
@@ -106,7 +110,6 @@ if [ $PROGS -eq 1 ]; then
     echo "Program targets: $TARGETS"
 
     # extracting
-    mkdir -p "$CWD/dist/"
     for chal in $TARGETS; do
         echo "Extracing program: $chal"
         get_program $chal
