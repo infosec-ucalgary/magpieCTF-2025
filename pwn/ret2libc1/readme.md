@@ -2,7 +2,7 @@
 
 Author: oblivious_turnip
 
->Difficulty: intermediate
+>Difficulty: medium
 
 - [ ] stack canaries
 - [ ] ASLR
