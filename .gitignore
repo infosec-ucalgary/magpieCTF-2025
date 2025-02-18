@@ -7,7 +7,6 @@ objs/
 *.deb
 *.tar.xz
 build/
-*.zip
 *.pyc
 .DS_store
 .vscode/
