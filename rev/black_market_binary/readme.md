@@ -29,4 +29,3 @@ The note is signed with Henry Explo's initials—H.E.. It’s clear that Henry w
 hex values in a rev program.
 4. Open the file in ghidra, or another similar program, and find the `scrambleData` function.
 5. Reverse the logic and make a script to decrypt the hex values and get the flag. 
-
