@@ -6,14 +6,14 @@ Flag format: `magpieCTF{...}`
 
 The offered categories are:
 
-- cloud
-- crypto
-- forensics
-- misc
-- osint
-- pwn
-- rev
-- web
+- cloud (1)
+- crypto (6)
+- forensics (?)
+- misc (0)
+- osint (0)
+- pwn (6)
+- rev (?)
+- web (?)
 
 ## Subfolder Structure
 
@@ -21,30 +21,30 @@ Here is the challenge folder structure:
 
 ```sh
 ./
-    cloud/
-        readme.md # contains manifest of challenges and other details
-        dist/ # contains all challenges (binaries mainly, or scripts)
-                # to be given to the participants
-                # sha1 signatures are good to provide
-                # (really only for files or compiled binaries), but optional
-            binaries...
-        challenge1/
-            src/    # source code... (if applicable)
-                chal.c
-                Makefile
-                Dockerfile
-                flag.txt # if applicable
+    - cloud/
+        - readme.md # contains manifest of challenges and other details
+        - challenge1/
+            - dist/ # contains all challenges (binaries mainly, or scripts)
+                    # to be given to the participants
+                    # sha1 signatures should be calculated for
+                    # comparison
+                - binaries...
+            - src/    # source code... (if applicable)
+                - chal.c
+                - Makefile
+                - Dockerfile
+                - flag.txt # if applicable
                 ...
-            solve/  # code to solve the challenge (if applicable)
+            - solve/  # code to solve the challenge (if applicable)
                 ...
             # code to build the challenge... (if applicable)
-            readme.md # file about the challenge (based off of readme.template.md)
-        challenge2/
+            - readme.md # file about the challenge (based off of readme.template.md)
+        - challenge2/
             ...
         ...
-    pwn/
+    - pwn/
         ...
-    rev/
+    - rev/
         ...
     ...
 ```
@@ -73,9 +73,9 @@ For challenges that are dockerized (primarily `pwn`, `rev`, binary exploitation 
 
 Additionally, the binary (if compiled) must be;
 
-1. built inside of the container
-2. then copied out into `category/dist/name_of_challenge` i.e., `pwn/dist/printf1`
-3. a sha1 hash of the binary should be included in `dist/` i.e., `pwn/dist/printf1.sha1.sig`
+1. built inside of the container (`nsjail`)
+2. then copied out into `category/challenge/dist/...` i.e., `pwn/printf1/dist/printf1`
+3. a sha1 hash of the binary should be included in `dist/` i.e., `pwn/printf1/dist/printf1.sha1.sig`
 
 >Look at the script `pwn` in `pwn/` to see how all the binary exploitation
 >challenges are built.
