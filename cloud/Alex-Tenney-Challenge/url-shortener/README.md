@@ -163,6 +163,9 @@ terraform destroy -auto-approve
 
 Most of the ` magpie2025-secret` refrences are changed to the actual s3 bucket name which is ` magpie2025-secret-25` in this instant and may be subject to change
 
+# Handouts
+fuck all. LEARN CLOUD NOW
+
 # Flag
 
-magpie{14m_15_700_345y_70_m355_up}
+magpieCTF{14m_15_700_345y_70_m355_up}
