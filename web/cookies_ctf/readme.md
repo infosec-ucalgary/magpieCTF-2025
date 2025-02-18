@@ -4,7 +4,7 @@ Author: Yazeed Badr
 
 >Difficulty: easy
 
-Flag: `magpieCTF{christina_exposed_spider}`
+Flag: `magpieCTF{chr15t1n@_3xp0$3d_$p1d3r}`
 
 ## Backstory
 
@@ -22,8 +22,4 @@ You’ll be trying to uncover the truth behind the mysterious hacker known as Sp
 
 ## Handouts
 
-- `app.py`
-- `Templates/index.html`
-- `Templates/check.html`
-- `docker-compose.yml`
-- `solve_cookiesctf.sh`
+- `IP`
