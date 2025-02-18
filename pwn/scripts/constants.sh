@@ -16,6 +16,12 @@ function check_pie() {
     echo "$?"
 }
 
+function check_nx() {
+    # check if nx is enabled
+    readelf -e "$1" 2>/dev/null | grep "GNU_STACK" -A 1 | grep "RWE" >/dev/null
+    echo "$?"
+}
+
 function check_chals() {
     # setup
     which readelf 1>/dev/null 2>/dev/null
@@ -23,6 +29,14 @@ function check_chals() {
         echo "readelf isn't on the path, cannot verify challenge functionality."
         return
     fi
+
+    # checking nx
+    assert_eq $(check_nx printf1/dist/printf1) 1 "printf1 should have nx"
+    assert_eq $(check_nx printf2/dist/printf2) 1 "printf2 should have nx"
+    assert_eq $(check_nx overflow1/dist/overflow1) 1 "overflow1 should have nx"
+    assert_not_eq $(check_nx overflow2/dist/overflow2) 1 "overflow2 shouldn't have nx"
+    assert_eq $(check_nx ret2libc1/dist/ret2libc1) 1 "ret2libc1 should have nx"
+    assert_eq $(check_nx ret2libc2/dist/ret2libc2) 1 "ret2libc2 should have nx"
 
     # checking challenges for canaries
     assert_eq $(check_canary printf1/dist/printf1) 0 "printf1 should have a canary"
