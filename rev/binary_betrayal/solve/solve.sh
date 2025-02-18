@@ -26,9 +26,9 @@ if [[ -f "$PYC_FILE" ]]; then
     FLAG=$(cat "$PYC_FILE" | strings | grep -o 'magpieCTF{[^}]*}')
     
     if [[ -n "$FLAG" ]]; then
-        echo "\n[+] Flag found successfully"
+        echo "\n MagpieCTF - binary_betrayal : True"
     else
-        echo "\n[-] Flag not found in the extracted file."
+        echo "\n MagpieCTF - binary_betrayal : False."
     fi
 else
     echo "\n[-] Extracted PYC file not found."
