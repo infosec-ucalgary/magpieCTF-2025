@@ -89,7 +89,7 @@ def exploit() -> bool:
     leaked = leaked.split(b"|")[1]
     leaked = leaked.split(b"\n")[0]
     leaked = leaked.split(b".")
-    leaked = list(map(lambda x: x.rjust(4, b"0"), leaked))
+    leaked = list(map(lambda x: x.rjust(6, b"0"), leaked))
     io.debug(leaked)
 
     # forming the flag
