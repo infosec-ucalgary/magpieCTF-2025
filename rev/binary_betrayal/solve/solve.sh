@@ -4,15 +4,16 @@
 ELF_FILE="Which"
 
 # Step 1: Check if pyinstxtractor is installed
-if ! [[ -f "pyinstxtractor.py" ]]; then
-    echo "[-] Error: pyinstxtractor.py not found!"
-    echo "[*] Please download it from: https://github.com/extremecoders-re/pyinstxtractor"
+command -v "pyinstxtractor" >/dev/null 2>&1
+if [[ $? -eq 1 ]]; then
+    echo "[-] This script expects 'pyinstxtractor' to be a standalone executable (or some shell script)."
+    echo "[*] The program can be found here: https://github.com/extremecoders-re/pyinstxtractor"
     exit 1
 fi
 
 # Step 2: Run pyinstxtractor on the ELF file
 echo "[*] Extracting $ELF_FILE using pyinstxtractor..."
-python3 pyinstxtractor.py "$ELF_FILE"
+pyinstxtractor "./$ELF_FILE"
 
 # Step 3: Locate the extracted .pyc file
 EXTRACTED_DIR="${ELF_FILE}_extracted"
