@@ -2,7 +2,7 @@
 
 Author: oblivious_turnip
 
->Difficulty: intermediate (hard if they don't know what to do)
+>Difficulty: medium (hard if they don't know what to do)
 
 - [x] stack canaries
 - [x] ASLR
