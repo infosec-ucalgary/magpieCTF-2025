@@ -9,7 +9,6 @@ The offered categories are:
 - cloud (1)
 - crypto (6)
 - forensics (?)
-- misc (0)
 - osint (0)
 - pwn (6)
 - rev (?)
