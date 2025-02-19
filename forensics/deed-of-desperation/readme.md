@@ -12,13 +12,12 @@ Cyber-Solutions was once the top name in security, but ever since Krypto arrived
 
 ## Intended Solve
 
-Run the following lines:
+The intended solve is as follows:
 
-- `steghide extract -sf wallpaper.jpg`
-- Leave paraphrase empty
-- Decode password using Base64 (result -> my_secret_password)
-- `unzip -P my_secret_password flag.zip`
-- `cat flag.txt`
+- use `exiftool` (or `file`) to see that the comment property is a base64 encoded string
+- use `steghide --extract` **with no password** to extract the zip file from the image
+- decode the base64 string and use that as the password for the zip file
+- extract the file contents and get the flag
 
 ## Handouts
 
@@ -26,7 +25,7 @@ Run the following lines:
 
 ## Other Notes  
 
-1. Form.pdf This file shows evidence of Terry Blue selling off property. It further incriminates him by providing motive. 
+1. Form.pdf This file shows evidence of Terry Blue selling off property. It further incriminates him by providing motive.
 2. Check the metadata of the image for useful information.
 3. The paraphrase is empty.
 4. Look for anything encoded that might need decoding.
