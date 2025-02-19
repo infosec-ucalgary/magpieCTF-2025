@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 TARGET_ZIP=flag.zip
 STEG_PASSWORD=""
 ZIP_PASSWORD=F0rS4l3!2025
@@ -15,7 +17,13 @@ steghide --embed -v -e none \
     -p "$STEG_PASSWORD" \
     --stegofile "dist/$SRC_IMAGE" \
     --coverfile "src/$SRC_IMAGE" \
-    --embedfile build/flag.zip
+    --embedfile build/flag.zip -f
 
 # adding the base64 encoded password as a comment
 exiftool -Comment="$ENCRYPTED" "dist/$SRC_IMAGE"
+
+# hashing the image
+sha1sum "dist/$SRC_IMAGE" > "dist/$(cut -d '.' -f 1 <<< $SRC_IMAGE).sha1.sig"
+
+# cleanup
+rm -v dist/*_original
