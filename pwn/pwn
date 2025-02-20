@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 help () {
     echo "Usage: $0 <build|regenerate|prune|reset>"

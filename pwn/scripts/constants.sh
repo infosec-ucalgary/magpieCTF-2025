@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 source ./scripts/assert.sh
 
 CHALS=$(echo printf{1..2} overflow{1..2} ret2libc{1..2})

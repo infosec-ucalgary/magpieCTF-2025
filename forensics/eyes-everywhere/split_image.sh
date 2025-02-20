@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Check if ImageMagick is installed
 if ! command -v convert &>/dev/null || ! command -v montage &>/dev/null; then
