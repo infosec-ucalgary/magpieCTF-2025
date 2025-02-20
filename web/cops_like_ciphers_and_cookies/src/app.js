@@ -35,6 +35,12 @@ function vigenere_encrypt(plaintext, key) {
   let _base = "a".charCodeAt(0);
 
   for (let i = 0; i < _str.length; i++) {
+    // testing if not alpha
+    if (/[a-z]/.test(_str[i]) === false) {
+      cipher_text += _str[i];
+      continue;
+    }
+
     // converting in range 0-25
     let x =
       (_str[i].charCodeAt(0) - _base + (_key[i].charCodeAt(0) - _base)) % 26;
@@ -42,6 +48,7 @@ function vigenere_encrypt(plaintext, key) {
     // convert into alphabets(ASCII)
     cipher_text += String.fromCharCode(x + _base);
   }
+
   return cipher_text;
 }
 
@@ -71,8 +78,8 @@ function vigenere_decrypt(ciphertext, key) {
 // -- server code --
 
 // encryption related
-const key = "consi";
-const user = "user";
+const key = "jakewashere";
+const user = "current-user";
 const admin_user = "admin";
 const guest_user = "guest";
 
@@ -125,9 +132,6 @@ app.get("/login", (req, res) => {
 });
 
 app.listen(PORT, (error) => {
-  if (!error)
-    console.log(
-      "Server is Successfully Running, and App is listening on port " + PORT
-    );
-  else console.log("Error occurred, server can't start", error);
+  if (!error) console.log(`App running on port ${PORT}`);
+  else console.log("Error on start:", error);
 });
