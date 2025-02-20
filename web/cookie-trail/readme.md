@@ -16,7 +16,7 @@ The deeper you investigate, the more you’ll unravel the hidden secrets of the 
 
 1. Submit some random text (using the form) so that the `/search` endpoint gives you a cookie `name=-1`
 2. Realize that `name` is actually bound to an integer on the backend
-3. Increment the value of `name` to `10` and obtain the flag.
+3. Increment the value of `name` to `10` and obtain the flag
 
 ## Handouts
 
