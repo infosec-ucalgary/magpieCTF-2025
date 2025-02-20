@@ -34,6 +34,7 @@ function vigenere_encrypt(plaintext, key) {
   let _key = vigenere_key(_str, key);
   let _base = "a".charCodeAt(0);
 
+  let index = 0;
   for (let i = 0; i < _str.length; i++) {
     // testing if not alpha
     if (/[a-z]/.test(_str[i]) === false) {
@@ -43,7 +44,7 @@ function vigenere_encrypt(plaintext, key) {
 
     // converting in range 0-25
     let x =
-      (_str[i].charCodeAt(0) - _base + (_key[i].charCodeAt(0) - _base)) % 26;
+      (_str[i].charCodeAt(0) - _base + (_key[index++].charCodeAt(0) - _base)) % 26;
 
     // convert into alphabets(ASCII)
     cipher_text += String.fromCharCode(x + _base);
