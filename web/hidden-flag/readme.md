@@ -1,4 +1,4 @@
-# Christina's Journal
+# hidden-flag
 
 Author: Yazeed Badr
 
