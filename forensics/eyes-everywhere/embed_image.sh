@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Check if steghide is installed
 if ! command -v steghide &>/dev/null; then
     echo "Installing steghide..."

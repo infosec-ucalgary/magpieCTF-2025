@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -ex  # Exit on error, print commands
 
 echo "Starting Cyber URL Checker setup on EC2..."
