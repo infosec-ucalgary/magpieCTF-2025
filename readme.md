@@ -8,11 +8,10 @@ The offered categories are:
 
 - cloud (1)
 - crypto (6)
-- forensics (?)
-- osint (0)
+- forensics (5)
 - pwn (6)
-- rev (?)
-- web (?)
+- rev (2)
+- web (5)
 
 ## Subfolder Structure
 
