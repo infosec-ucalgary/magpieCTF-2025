@@ -1,30 +1,32 @@
 # Cops Like Ciphers and Cookies
 
-Author: Mohammad Hashmi
+Author: Mohammad Hashmi, obliviousturnip
 
->Difficulty: \<easy to medium> 
+>Difficulty: easy to medium
 
 Flag: `magpieCTF{wh3r3_w4s_Jake}`
 
 ## Backstory
 
-A glimpse into the NYPD as a new employee. Attackers will get to navigate through their servers to find out the truth about who killed Kristina. This challenge will frame Jake, however, his innocence will be proven later
+A glimpse into the NYPD as a new employee.
+Attackers will get to navigate through their servers to find out the truth about who killed Kristina.
+This challenge will frame Jake, however, his innocence will be proven later.
 
 ## Intended Solve
-- Explore the home page a little bit and read the texts
-- One of the classes has an odd span of text
-- Base64 decode that text and you find out there is a hidden.html page
-- Upon arriving to the hidden page the user is greeted with a big message
-- When they look around they'll see some cookies that are encoded
-- These are encoded with a Vigenère Cipher (hardest part of the challenge) where consistency is the key (Hence the reason for the link in the first page)
-- Upon decoding they find that it's a cookie for user
-- They can encode 'admin' using the same key and once they set that to the value of the cookie and refresh the page they'll find the flag (with some lore)
+
+This is the intended solve of the challenge:
+
+- Explore the homepage and find a specific `<li>` element with a base64 encoded string which says "We need someone to fix /login, it's been broken for far too long."
+- The hacker goes to `/login`
+- The following hints are given to the hacker from this new page:
+  - there's a meta tag that says *vigenere* in base64
+  - the word *admin* is italized
+  - it mentions cookies too
+- The hacker is supposed to break the vigenere cipher of the cookies, realize what it does, and encrypt *admin* using the obtained key
+- The hacker is then supposed to refresh the page to resend the request, after which he is then prompted with the flag
+
+>The key is located in `src/app.js:76`
 
 ## Handouts
 
 - IP of the server
-
-## Hints
-
-Hint 1: Remember, consistency is key
-Hint 2: The NYPD used to be fans of Vigenère Ciphers but a bad intern encoded something with base64
