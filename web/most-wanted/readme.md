@@ -1,8 +1,10 @@
 # most-wanted
 
-Difficulty: Easy
+Author: totoclick
 
-Flag: `magpieCTF{Jake_Kaylined_is_wanted}`
+>Difficulty: Easy
+
+Flag: `magpieCTF{k@yl1n3d_1s_w@nt3d}`
 
 ## Backstory
 
