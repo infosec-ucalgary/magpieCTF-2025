@@ -8,7 +8,7 @@ WORKDIR /usr/share/nginx/html
 COPY src /usr/share/nginx/html
 
 # Replace placeholder in flag.html with the actual flag
-RUN sed -i 's/FLAG_TEMPLATE_STRING/magpieCTF{Jake_Kaylined_is_wanted}/g' /usr/share/nginx/html/mcdata/flag.html
+RUN sed -i 's/FLAG_TEMPLATE_STRING/magpieCTF{k@yl1n3d_1s_w@nt3d}/g' /usr/share/nginx/html/mcdata/flag.html
 
 # Copy custom Nginx configuration
 COPY nginx.conf /etc/nginx/nginx.conf
