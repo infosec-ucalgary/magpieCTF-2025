@@ -1,0 +1,13 @@
+services:
+  most-wanted:
+    privileged: true
+    build: "."
+    restart: unless-stopped
+    ports:
+      - 13000:80
+    networks:
+      - magpiesctf2025
+
+networks:
+  magpiesctf2025:
+    driver: bridge
