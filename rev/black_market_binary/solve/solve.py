@@ -50,4 +50,12 @@ for i in range(flag_length):
     decrypted_flag.append(chr(char))
 
 decrypted_flag_str = "".join(decrypted_flag)
-print("Decrypted Flag:", decrypted_flag_str)
+
+# checking for the flag
+flag = "magpieCTF{kr1pt0_bl4ckm4rk3t_d34ls}"
+if flag in decrypted_flag_str:
+    print("MagpieCTF - black-market-binary : True")
+    exit(0)
+else:
+    print("MagpieCTF - black-market-binary : False")
+    exit(1)
