@@ -1,6 +1,5 @@
 services:
   cops-like-ciphers-and-cookies:
-    privileged: true
     build: "./src"
     restart: unless-stopped
     ports:
