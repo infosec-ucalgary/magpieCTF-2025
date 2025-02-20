@@ -40,7 +40,6 @@ function vigenere_encrypt(plaintext, key) {
       (_str[i].charCodeAt(0) - _base + (_key[i].charCodeAt(0) - _base)) % 26;
 
     // convert into alphabets(ASCII)
-    console.log(`${_str[i]} + ${_key[i]} = ${String.fromCharCode(x + _base)}`);
     cipher_text += String.fromCharCode(x + _base);
   }
   return cipher_text;
@@ -64,7 +63,6 @@ function vigenere_decrypt(ciphertext, key) {
       (_str[i].charCodeAt(0) - _base + (_key[i].charCodeAt(0) - _base)) % 26;
 
     // convert into alphabets(ASCII)
-    console.log(`${_str[i]} + ${_key[i]} = ${String.fromCharCode(x + _base)}`);
     orig_text += String.fromCharCode(x + _base);
   }
   return orig_text;
