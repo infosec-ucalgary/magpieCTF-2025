@@ -20,6 +20,11 @@ The *overflow* challenges are guaranteed to...
 >These are the same files, verified by sha1 hashes. These exploits are still possible,
 >it's just really weird.
 
+## Hosting
+
+All of the challenges must be run in a **privileged** docker container.
+They will **not** work otherwise.
+
 ## Building
 
 In a terminal run:
