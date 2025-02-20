@@ -5,7 +5,7 @@ FROM nginx:alpine
 WORKDIR /usr/share/nginx/html
 
 # Copy website files into Nginx's serving directory
-COPY src /usr/share/nginx/html
+COPY static /usr/share/nginx/html
 
 # Replace placeholder in flag.html with the actual flag
 RUN sed -i 's/FLAG_TEMPLATE_STRING/magpieCTF{k@yl1n3d_1s_w@nt3d}/g' /usr/share/nginx/html/mcdata/flag.html
