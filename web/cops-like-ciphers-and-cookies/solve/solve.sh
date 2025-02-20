@@ -15,7 +15,7 @@ CNAME="lubvanl-bwvv"
 CVALUE="jdwmj"
 
 # request to the server
-RESPONSE=$(curl -s -b "$CNAME=$CVALUE" http://$HOST:$PORT/check)
+RESPONSE=$(curl -s -b "$CNAME=$CVALUE" http://$HOST:$PORT/login)
 
 # checking the response
 echo "$RESPONSE" | grep -q "magpieCTF"
