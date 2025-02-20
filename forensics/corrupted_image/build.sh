@@ -1,9 +1,9 @@
 #!/bin/bash
 
-input_image="chalkenge image.png"
-output_folder="image"
+input_image="src/image.png"
+output_folder="build"
 output_image="$output_folder/image.png"
-zip_file="image.zip"
+zip_file="dist/corrupted_image.zip"
 
 # Create output directory if it doesn't exist
 mkdir -p "$output_folder"
@@ -19,6 +19,7 @@ fi
 
 
 # Zip the modified image with the correct structure
-zip -r "$zip_file" "$output_folder"
+zip -rj "$zip_file" "$output_folder"
 
 echo "Hex edit complete. Archive saved as $zip_file"
+
