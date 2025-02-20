@@ -126,8 +126,9 @@ def exploit() -> bool:
     with open("./flag.txt", "r") as f_in:
         buf = f_in.readline().strip()
         if buf in flag:
-            io.success(f"Flag: {flag}")
+            io.success("MagpieCTF - printf1 : True")
             return True
+        io.failure("MagpieCTF - printf1 : False")
         return False
 
 
