@@ -59,7 +59,7 @@ def fetch_notebook():
 
 # WebSocket connection to the kernel
 def connect_to_kernel(kernel_id):
-    ws = websocket.WebSocket() # this just doesn't work!
+    ws = websocket.WebSocket()
     ws_url = f"ws://{HOSTNAME}:{PORT}/api/kernels/{kernel_id}/channels"
     ws.connect(ws_url)
     print(f"[*] Connected to kernel {kernel_id} via WebSocket.")
@@ -127,7 +127,7 @@ def solve():
     try:
         private_key_obj = paramiko.Ed25519Key.from_private_key(StringIO(ssh_key))
         ssh_connection = ssh(
-            host=HOSTNAME, port=SSH_PORT, user=USERNAME, key=private_key_obj
+            host=HOSTNAME, port=int(SSH_PORT), user=USERNAME, key=private_key_obj
         )
         print("[*] Successfully logged into the machine.")
 

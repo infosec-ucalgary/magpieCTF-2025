@@ -1,4 +1,4 @@
 paramiko
 requests
-websocket
+websocket-client
 pwntools
