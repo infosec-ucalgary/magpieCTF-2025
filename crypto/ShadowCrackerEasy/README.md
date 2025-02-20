@@ -4,25 +4,20 @@ Author: *Royce*
 
 >Difficulty: \<easy> 
 
-Flag: `magpieCTF{Christina}`
+Flag: `magpieCTF{christinadeath}`
 
 ## Backstory
-
-*Insert backstory or narrative of the challenge here.*
+The NYDP seized the computer of [InsertSuspect] and obtained the etc/shadow file. Unfortunately it appears to be encrypted, and no one at the NYDP has the time to crack it. find the password. 
 
 ## Intended Solve
 
-*Insert what the intended solve of the challenge is here.*
+Use rockyou.txt with john the ripper to get the flag
 
 ## Handouts
 
 *Insert list of things that must be given out so that the challenge is actually possible.*
 
-- program
-- libc.so.6
-- solve.py
-- ...
+- shadow
 
-## Other
-
-*Only include this if there are things that should be known, that don't fit into any other section.*
+## TODO
+Assign this challenge to a suspect, and set the username to said suspect. 
