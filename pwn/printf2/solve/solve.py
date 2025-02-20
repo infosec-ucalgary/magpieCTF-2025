@@ -151,9 +151,9 @@ def exploit() -> bool:
         buf = f_in.readline().strip()
         if buf in flag:
             io.success("MagpieCTF - printf2 : True")
-            return True
+            return 0
         io.failure("MagpieCTF - printf2 : False")
-        return False
+        return 1
 
 
 if __name__ == "__main__":
