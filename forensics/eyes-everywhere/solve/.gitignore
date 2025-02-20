@@ -1,4 +1,2 @@
-flag_noise.txt
-split_order.txt
-image_set
+image_set/
 *.txt

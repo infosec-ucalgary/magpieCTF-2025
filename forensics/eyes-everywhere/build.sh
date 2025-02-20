@@ -49,9 +49,5 @@ zip -rj "$OUTDIR/security_footage.zip" "$BUILDDIR/out" "$BUILDDIR/out"
 cp -vf "$BUILDDIR/split_order.txt" "$SOLVEDIR/split_order.txt"
 cp -vf "$BUILDDIR/flag_noise.txt" "$SOLVEDIR/flag_noise.txt"
 
-# gitignore those files
-echo "flag_noise.txt" >"$SOLVEDIR/.gitignore"
-echo "split_order.txt" >>"$SOLVEDIR/.gitignore"
-
 # logging for the end user
 echo "Build complete"
