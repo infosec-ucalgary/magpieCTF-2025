@@ -16,10 +16,10 @@ This WikiHow-style webpage documents his methods—perhaps even revealing a hidd
 
 ## Intended Solve  
 
-- Competitors must enumerate directories to discover hidden pages.  
-- Brute-force common paths (e.g., using `gobuster` or `dirbuster`) to locate the secret members-only page.  
+- Competitors must enumerate directories to discover hidden pages.
+- Brute-force common paths (e.g., using `gobuster` or `dirbuster`) to locate the secret members-only page.
 - The flag is embedded within `flag.html` in an undisclosed directory.  
-- No explicit hints are given—only a subtle comment in the source code suggests directory enumeration.  
+- No explicit hints are given—only a subtle comment in the source code suggests directory enumeration.
 
 ## Handouts
 
