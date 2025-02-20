@@ -6,6 +6,8 @@ services:
     ports:
       - "13010:8888"
       - "13011:2222"
+    networks:
+      - magpiesctf2025
     stdin_open: true
     tty: true
 
@@ -25,6 +27,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "13030:5000"
+    networks:
+      - magpiesctf2025
     environment:
       - FLASK_APP=app.py
     depends_on:
@@ -37,6 +41,8 @@ services:
       dockerfile: Dockerfile.nginx
     ports:
       - "13031:80"
+    networks:
+      - magpiesctf2025
 
   hidden-flag:
     container_name: hidden-flag
@@ -46,6 +52,8 @@ services:
     restart: unless-stopped
     ports:
       - "13040:5001"
+    networks:
+      - magpiesctf2025
     environment:
       - FLASK_APP=app.py
     depends_on:
@@ -59,6 +67,8 @@ services:
     restart: unless-stopped
     ports:
       - "13041:80"
+    networks:
+      - magpiesctf2025
 
   most-wanted:
     container_name: most-wanted
