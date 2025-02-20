@@ -1,6 +1,6 @@
-# Cops Like Ciphers and Cookies
+# cops-like-ciphers-and-cookies
 
-Author: Mohammad Hashmi, obliviousturnip
+Author: Mohammad Hashmi
 
 >Difficulty: easy to medium
 
@@ -9,7 +9,7 @@ Flag: `magpieCTF{wh3r3_w4s_Jake}`
 ## Backstory
 
 A glimpse into the NYPD as a new employee.
-Attackers will get to navigate through their servers to find out the truth about who killed Kristina.
+Attackers will get to navigate through their servers to find out the truth about who killed Christina.
 This challenge will frame Jake, however, his innocence will be proven later.
 
 ## Intended Solve
@@ -25,7 +25,7 @@ This is the intended solve of the challenge:
 - The hacker is supposed to break the vigenere cipher of the cookies, realize what it does, and encrypt *admin* using the obtained key
 - The hacker is then supposed to refresh the page to resend the request, after which he is then prompted with the flag
 
->The key is located in `src/app.js:76`
+>The key `jakewashere` is located in `src/app.js:81`
 
 ## Handouts
 
