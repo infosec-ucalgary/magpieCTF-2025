@@ -28,8 +28,10 @@ if [[ -f "$PYC_FILE" ]]; then
     
     if [[ -n "$FLAG" ]]; then
         echo "\n MagpieCTF - binary_betrayal : True"
+        exit 0
     else
         echo "\n MagpieCTF - binary_betrayal : False."
+        exit 1
     fi
 else
     echo "\n[-] Extracted PYC file not found."
