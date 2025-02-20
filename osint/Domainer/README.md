@@ -4,7 +4,7 @@ Author: *Royce*
 
 >Difficulty: \<easy> 
 
-Flag: `magpieCTF{}`
+Flag: `ucsec{temporary_flag}`
 
 ## Backstory
 
@@ -17,5 +17,6 @@ Upon inspecting DNS traffic logs, it was found that secard.ca appeared as an ano
 
 - https://secard.ca/
 
-## Other
+## TODO
 Please change challenge name.
+Change the flag from temporary to real flag. 
