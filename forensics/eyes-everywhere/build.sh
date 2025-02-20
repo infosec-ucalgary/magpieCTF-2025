@@ -43,11 +43,15 @@ fi
 
 # pack challenge
 rm -v "$OUTDIR/security_footage.zip"
-zip -rj "$OUTDIR/security_footage.zip" "$BUILDDIR/out" "$BUILDDIR/out"
+zip -rj "$OUTDIR/security_footage.zip" "$BUILDDIR/out"
+
+# generate SHA-1 hash of the zip file {NO IDEA WHY}
+sha1sum "$OUTDIR/security_footage.zip" | awk '{print $1}' > "$OUTDIR/security_footage.zip.sha1"
 
 # copying files into solve
 cp -vf "$BUILDDIR/split_order.txt" "$SOLVEDIR/split_order.txt"
 cp -vf "$BUILDDIR/flag_noise.txt" "$SOLVEDIR/flag_noise.txt"
 
-# logging for the end user
-echo "Build complete"
+# logging for the end user 
+echo "Build complete. SHA-1 hash generated:"
+cat "$OUTDIR/security_footage.zip.sha1"
