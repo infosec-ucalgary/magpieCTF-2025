@@ -8,6 +8,6 @@ PORT="8080"
 URL="http://"+HOST+":"+PORT
 res=re.head(URL)
 if flag in res.headers['FLAG']:
-    print("MagpieCTF - headers : True")
+    print("MagpieCTF - helmet : True")
 else:
-    print("MagpieCTF - headers : False")
+    print("MagpieCTF - helmet : False")
