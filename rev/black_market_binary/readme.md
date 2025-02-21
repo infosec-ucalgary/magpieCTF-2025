@@ -15,7 +15,7 @@ you dig, the more troubling things become. You find a note hastily scribbled nex
 "Found this running on Christina’s laptop during the demonstration. Looks like a simple bank security test, but there’s encrypted data hidden in the binary.
 Is this how she’s been making her real money? I need to crack this before our meeting tomorrow... The encryption is strange, but I’m sure I can break it."
 
-The note is signed with Henry Explo's initials—H.E.. It’s clear that Henry was trying to uncover something buried deep within Krypto's work. But what exactly was he looking for?
+The note is signed with Harriette Explo's initials—H.E.. It’s clear that Harriette was trying to uncover something buried deep within Krypto's work. But what exactly was he looking for?
 
 ## Handouts
 
