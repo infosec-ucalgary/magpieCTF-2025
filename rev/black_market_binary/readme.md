@@ -1,6 +1,6 @@
 # The Black Market Binary
 
-Author: Dante 
+Author: Dante
 
 >Difficulty: medium
 
@@ -25,7 +25,6 @@ The note is signed with Henry Explo's initials—H.E.. It’s clear that Henry w
 
 1. `xxd` the file and notice it is packed with `upx`.
 2. Unpack it with `upx -d`.
-3. Play around with the game until you get the hex values of the flag. This step can be done before unpacking as well. You can even find the 
-hex values in a rev program.
+3. Play around with the game until you get the hex values of the flag. This step can be done before unpacking as well. You can even find the hex values in a rev program.
 4. Open the file in ghidra, or another similar program, and find the `scrambleData` function.
-5. Reverse the logic and make a script to decrypt the hex values and get the flag. 
+5. Reverse the logic and make a script to decrypt the hex values and get the flag.

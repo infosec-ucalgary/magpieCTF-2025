@@ -1,0 +1,84 @@
+services:
+  notebook:
+    container_name: notebook
+    build: "./notebook/src"
+    restart: unless-stopped
+    ports:
+      - "13010:8888"
+      - "13011:2222"
+    networks:
+      - magpiesctf2025
+    stdin_open: true
+    tty: true
+
+  cops-like-ciphers-and-cookies:
+    container_name: cops-like-ciphers-and-cookies
+    build: "./cops-like-ciphers-and-cookies/src"
+    restart: unless-stopped
+    ports:
+      - 13020:3000
+    networks:
+      - magpiesctf2025
+
+  cookie-trail:
+    container_name: cookie-trail
+    build:
+      context: "./cookie-trail/src"
+      dockerfile: Dockerfile
+    ports:
+      - "13030:5000"
+    networks:
+      - magpiesctf2025
+    environment:
+      - FLASK_APP=app.py
+    depends_on:
+      - cookie-trail-nginx
+
+  cookie-trail-nginx:
+    container_name: cookie-trail-nginx
+    build:
+      context: "./cookie-trail/src"
+      dockerfile: Dockerfile.nginx
+    ports:
+      - "13031:80"
+    networks:
+      - magpiesctf2025
+
+  hidden-flag:
+    container_name: hidden-flag
+    build:
+      context: "./hidden-flag/src"
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "13040:5001"
+    networks:
+      - magpiesctf2025
+    environment:
+      - FLASK_APP=app.py
+    depends_on:
+      - hidden-flag-nginx
+
+  hidden-flag-nginx:
+    container_name: hidden-flag-nginx
+    build:
+      context: "./hidden-flag/src"
+      dockerfile: Dockerfile.nginx
+    restart: unless-stopped
+    ports:
+      - "13041:80"
+    networks:
+      - magpiesctf2025
+
+  most-wanted:
+    container_name: most-wanted
+    build: "./most-wanted/src/"
+    restart: unless-stopped
+    ports:
+      - 13050:80
+    networks:
+      - magpiesctf2025
+
+networks:
+  magpiesctf2025:
+    driver: bridge

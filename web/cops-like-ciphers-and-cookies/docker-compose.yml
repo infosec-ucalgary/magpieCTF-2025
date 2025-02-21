@@ -1,0 +1,12 @@
+services:
+  cops-like-ciphers-and-cookies:
+    build: "./src"
+    restart: unless-stopped
+    ports:
+      - 13000:3000
+    networks:
+      - magpiesctf2025
+
+networks:
+  magpiesctf2025:
+    driver: bridge

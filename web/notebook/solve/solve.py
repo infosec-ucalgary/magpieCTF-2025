@@ -6,11 +6,18 @@ import datetime
 import uuid
 import websocket
 from io import StringIO
+import sys
 
-HOSTNAME = "localhost"
-PORT = 8888
-SSH_PORT = 2222
+# checking arguments
+if len(sys.argv) < 3:
+    print("Usage: solve.py <hostname> <website-port> <ssh-port>")
+    sys.exit(1)
+
+HOSTNAME = sys.argv[1]
+PORT = sys.argv[2]
+SSH_PORT = sys.argv[3]
 BASE_URL = f"http://{HOSTNAME}:{PORT}"
+
 NOTEBOOK_PATH = "/notebook.ipynb"
 USERNAME = "ckrypto"
 FLAG_FILE = "/home/ckrypto/.private/partnership_agreement"
@@ -22,8 +29,16 @@ FLAG = "magpieCTF{cryp70_k3y_4cc3ss_gr4nt3d}"
 def get_kernel_id():
     url = BASE_URL + "/api/kernels"
     response = requests.get(url)
-    kernel = json.loads(response.text)
-    kernel_id = kernel[0]["id"]
+    kernels = json.loads(response.text)
+
+    # checking if there's a kernel running
+    if len(kernels) < 1:
+        print(
+            "[!] There are no running kernels, run the notebook once to generate one."
+        )
+        sys.exit(2)
+
+    kernel_id = kernels[0]["id"]
     print(f"[*] Using Kernel with ID: {kernel_id}")
     return kernel_id
 
@@ -45,7 +60,7 @@ def fetch_notebook():
 # WebSocket connection to the kernel
 def connect_to_kernel(kernel_id):
     ws = websocket.WebSocket()
-    ws_url = f"ws://localhost:8888/api/kernels/{kernel_id}/channels"
+    ws_url = f"ws://{HOSTNAME}:{PORT}/api/kernels/{kernel_id}/channels"
     ws.connect(ws_url)
     print(f"[*] Connected to kernel {kernel_id} via WebSocket.")
     return ws
@@ -87,7 +102,9 @@ def solve():
     if not fetch_notebook():
         return False
 
+    print("AAAAA")
     ws = connect_to_kernel(kernel_id)
+    print("BBBBB")
 
     solve_code = f"""
     import os
@@ -110,7 +127,7 @@ def solve():
     try:
         private_key_obj = paramiko.Ed25519Key.from_private_key(StringIO(ssh_key))
         ssh_connection = ssh(
-            host=HOSTNAME, port=SSH_PORT, user=USERNAME, key=private_key_obj
+            host=HOSTNAME, port=int(SSH_PORT), user=USERNAME, key=private_key_obj
         )
         print("[*] Successfully logged into the machine.")
 
@@ -129,7 +146,12 @@ def solve():
 
 
 if __name__ == "__main__":
+    print(f"Solving challenge running on {HOSTNAME}:{PORT}, ssh on {SSH_PORT}")
+
     try:
-        print(f"MagpieCTF - Black Market Binary : {solve()}")
-    except Exception:
-        print("MagpieCTF - Black Market Binary : False")
+        print(f"MagpieCTF - notebook : {solve()}")
+        sys.exit(0)
+    except Exception as e:
+        print(e)
+        print("MagpieCTF - notebook : False")
+        sys.exit(1)
