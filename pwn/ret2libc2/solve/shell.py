@@ -66,7 +66,7 @@ continue
 # Debuginfo:  Yes
 
 username = "j@k3th3gr3@t"
-password = "d3c31tfull3@d3r"
+password = "d3c31tful_l3@d3r"
 
 
 def login(

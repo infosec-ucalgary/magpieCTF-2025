@@ -66,7 +66,7 @@ continue
 # Debuginfo:  Yes
 
 username = "j@k3th3gr3@t"
-password = "d3c31tfull3@d3r"
+password = "d3c31tful_l3@d3r"
 
 
 def login(
@@ -206,9 +206,9 @@ def exploit() -> bool:
     with open("./flag.txt", "r") as f_in:
         buf = f_in.readline().strip()
         if buf in flag:
-            io.success("MagpieCTF - overflow1 : True")
+            io.success("MagpieCTF - ret2libc2 : True")
             return 0
-        io.failure("MagpieCTF - overflow1 : False")
+        io.failure("MagpieCTF - ret2libc2 : False")
         return 1
 
 
