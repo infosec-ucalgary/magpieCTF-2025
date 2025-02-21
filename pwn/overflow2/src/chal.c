@@ -19,7 +19,7 @@ enum modes_t { USER, CODE };
 
 // suspects from the case files
 user_t suspect_table_g[NUM_SUSPECTS] = {
-    {.username = "Henry Explo", .code = "48e6b718e2672d"},
+    {.username = "Harriette Explo", .code = "48e6b718e2672d"},
     {.username = "Richard Hash", .code = "d8b01b2435a39d"},
     {.username = "Terry Blue", .code = "55c64d0fcd6f9d5"},
 
