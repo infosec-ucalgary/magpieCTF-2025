@@ -420,9 +420,9 @@ def exploit() -> bool:
     with open("./flag.root.txt", "r") as f_in:
         buf = f_in.readline().strip()
         if buf in flag:
-            io.success("MagpieCTF - ret2libc2 : True")
+            io.success("MagpieCTF - overflow2 : True")
             return SOLVE_OK
-        io.failure("MagpieCTF - ret2libc2 : False")
+        io.failure("MagpieCTF - overflow2 : False")
         return SOLVE_FAILURE
 
 
