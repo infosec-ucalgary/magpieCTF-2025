@@ -4,11 +4,10 @@ Author: *Royce*
 
 >Difficulty: \<easy> 
 
-Flag: `ucsec{temporary_flag}`
+Flag: `magpieCTF{N0w5_Th3_cH4Nc3}`
 
 ## Backstory
-
-Upon inspecting DNS traffic logs, it was found that secard.ca appeared as an anomaly in the logs. The NYPD seized the website but couldnt find anything. Maybe there is somehting they are missing?
+"The NYPD has seized a site owned by: SECARD; Security Experts & Cyber Attack Response Division. A group funded by Terry Blue, and supported by Richard Hash. The slogan "Security not built on greed." was added to the site, the day after Krypto's demise, leading to the seizure. The NYPD believes that his group had some influence in the crime, or rather one of Terry Blue or Hash have more pull in the group than we knew. The NYPD has still yet to find any useful information. Let's see if your further investigation is able to uncover something of note."
 ## Intended Solve
 
 *To solve, just lookup secard.ca TXT records haha.*
@@ -17,6 +16,3 @@ Upon inspecting DNS traffic logs, it was found that secard.ca appeared as an ano
 
 - https://secard.ca/
 
-## TODO
-Please change challenge name.
-Change the flag from temporary to real flag. 
