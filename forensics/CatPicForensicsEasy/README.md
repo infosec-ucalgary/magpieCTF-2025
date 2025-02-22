@@ -14,7 +14,4 @@ Flag: `magpieCTF{p1ctur36_In_PicTuR37}`
 To complete this challenge, the users need to simply cat the file. They will be greeted with an embedded script which changes the desktop background to a new image. The users need to find this new image and get the flag which is inside of it's metadata
 
 ## Handouts
-
-*Insert list of things that must be given out so that the challenge is actually possible.*
-
 - nonsuspiciousimage.png
