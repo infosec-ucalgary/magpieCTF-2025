@@ -18,10 +18,3 @@ To complete this challenge, the users need to simply cat the file. They will be 
 *Insert list of things that must be given out so that the challenge is actually possible.*
 
 - nonsuspiciousimage.png
-
-
-
-## TODO
-Jake pls give me AWS access, I need to host the images!!! Have Jason make new images for the challenge. Jason if you are reading this, pls make a cover image and a chatlog image (once we have a narative suspect assigned to this challenge). 
-
-Assign suspect to image. 
