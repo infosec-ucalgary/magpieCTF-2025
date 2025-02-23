@@ -57,6 +57,6 @@ RUN chmod +x /usr/local/bin/start.sh
 
 RUN chmod a-w /home/rhash 
 RUN chmod a-w /home/ckrypto 
-RUN chmod -w /home/rhash/notebooks/notebook.ipynb
+RUN chmod a-w /home/rhash/notebooks/notebook.ipynb
 
 CMD ["/usr/local/bin/start.sh"]
