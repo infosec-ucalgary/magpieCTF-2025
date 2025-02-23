@@ -43,7 +43,7 @@ RUN ssh-keygen -A && \
 RUN mkdir -p /home/ckrypto/.private && \
     echo "magpieCTF{cryp70_k3y_4cc3ss_gr4nt3d}" > /home/ckrypto/.private/partnership_agreement && \
     chown -R ckrypto:ckrypto /home/ckrypto/.private && \
-    chmod 700 /home/ckrypto/.private
+    chmod 600 /home/ckrypto/.private
 
 # Change ssh port
 RUN sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config
@@ -55,8 +55,7 @@ EXPOSE 8888 2222
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
-RUN chmod a-w /home/rhash 
-RUN chmod a-w /home/ckrypto 
-RUN chmod a-w /home/rhash/notebooks/notebook.ipynb
+RUN chmod a-w /home/rhash && chmod a-w /home/ckrypto && chmod a-w /home/rhash/notebooks/notebook.ipynb && \
+    chmod a-w /home/rhash/notebooks
 
 CMD ["/usr/local/bin/start.sh"]
