@@ -1,2 +1,2 @@
 User-Agent: *
-Disallow: mcdata/flag.txt
+Disallow: mcdata/flag.html
