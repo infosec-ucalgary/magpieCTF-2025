@@ -103,7 +103,7 @@ app.get("/", (req, res) => {
   // setting the cookie
   res.cookie(_key, _value, {
     httpOnly: true,
-    secure: true, // set to true if using HTTPS
+    secure: false, // set to true if using HTTPS
     sameSite: "lax",
   });
   res.sendFile(path.join(__dirname, "public", "home.html"));
