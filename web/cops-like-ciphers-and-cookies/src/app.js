@@ -44,7 +44,8 @@ function vigenere_encrypt(plaintext, key) {
 
     // converting in range 0-25
     let x =
-      (_str[i].charCodeAt(0) - _base + (_key[index++].charCodeAt(0) - _base)) % 26;
+      (_str[i].charCodeAt(0) - _base + (_key[index++].charCodeAt(0) - _base)) %
+      26;
 
     // convert into alphabets(ASCII)
     cipher_text += String.fromCharCode(x + _base);
@@ -79,7 +80,7 @@ function vigenere_decrypt(ciphertext, key) {
 // -- server code --
 
 // encryption related
-const key = "jakewashere";
+const key = "consistency";
 const user = "current-user";
 const admin_user = "admin";
 const guest_user = "guest";
@@ -96,7 +97,7 @@ app.get("/", (req, res) => {
   console.log(
     `Created cookie ${_key} = ${_value} for ${
       req.headers["x-forwarded-for"] || req.socket.remoteAddress
-    }`
+    }`,
   );
 
   // setting the cookie
@@ -122,8 +123,8 @@ app.get("/login", (req, res) => {
     console.log(
       `Hacker cracked the cipher: cookies.${vigenere_encrypt(
         user,
-        key
-      )}(${user}) = ${vigenere_encrypt(admin_user, key)}(${admin_user})`
+        key,
+      )}(${user}) = ${vigenere_encrypt(admin_user, key)}(${admin_user})`,
     );
     res.sendFile(path.join(__dirname, "public", "flag.html"));
   } else {

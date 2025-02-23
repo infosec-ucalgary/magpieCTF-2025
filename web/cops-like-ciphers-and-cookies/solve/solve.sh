@@ -11,8 +11,8 @@ HOST="$1"
 PORT="$2"
 
 # hardcoding encrypted cookie info
-CNAME="lubvanl-bwvv"
-CVALUE="jdwmj"
+CNAME="eiejmfm-yfgp"
+CVALUE="crzav"
 
 # request to the server
 RESPONSE=$(curl -s -b "$CNAME=$CVALUE" http://$HOST:$PORT/login)
