@@ -47,7 +47,7 @@ def financial_records(data):
     temp = [ord(char) for char in data]
     for _ in range(5):
         temp = [((val * 7) >> 3) % 256 for val in temp]
-    str = "magpieCTF{H1dd3n_1n_Pl41n_S1gh7}"
+    str = "magpieCTF{Rich_3nou9h_7o_$+@y_C1e@n}"
     return ''.join([chr(val) for val in temp])
 
 def resolution_notes(a, b, c):

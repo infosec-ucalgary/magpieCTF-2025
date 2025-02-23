@@ -24,7 +24,7 @@ if [[ -f "$PYC_FILE" ]]; then
     echo "\n[*] Extracted PYC file found: $PYC_FILE"
     
     # Step 5: Print the .pyc content and extract the flag
-    FLAG=$(cat "$PYC_FILE" | strings | grep -o 'magpieCTF{[^}]*}')
+    FLAG=$(cat "$PYC_FILE" | strings | grep -o 'magpieCTF{Rich_3no')
     
     if [[ -n "$FLAG" ]]; then
         echo "\n MagpieCTF - binary_betrayal : True"
