@@ -6,3 +6,7 @@ All the reverse engineering challenges reside here.
 
 - `black_market_binary`
 - `binary_betrayal`
+- `SMalwareTP`
+
+
+![Alt text](dsstore.png)
