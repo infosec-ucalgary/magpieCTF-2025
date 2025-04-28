@@ -1,8 +1,7 @@
-
 services:
   flask:
     build:
-      context: .
+      context: ./src
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
@@ -11,7 +10,7 @@ services:
 
   nginx:
     build:
-      context: .
+      context: ./src
       dockerfile: Dockerfile.nginx
     ports:
       - "80:80"
